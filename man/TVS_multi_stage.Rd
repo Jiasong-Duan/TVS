@@ -16,6 +16,7 @@ TVS_multi_stage(
   B_final = 300,
   group_cutoff = 3/20,
   indiv_cutoff = 3/20,
+  sig_cutoff = 0.05,
   group_size = 4,
   init_beta0_TVS = 1,
   init_nu_TVS = 1,

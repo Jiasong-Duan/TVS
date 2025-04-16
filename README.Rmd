@@ -1,0 +1,64 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# TVS
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+**TVS** is an R package for *Testing-driven Variable Selection in Modal Regression*.
+It implements efficient Bayesian variable selection methods based on a permutation-based hypothesis testing.
+
+## Installation
+
+You can install the development version of TVS from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("Jiasong-Duan/TVS")
+```
+
+Or,
+```r
+# install.packages("devtools")
+devtools::install_github("Jiasong-Duan/TVS")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(TVS)
+# Load example data containing:
+# - Response: matrix with 100 subjects (rows) and 1 column
+# - Predictors: matrix with 100 subjects (rows) and 8 predictors (columns)
+# Note: Among the 8 predictors, only the first and third are truly important predictors
+data(data_tvs)
+head(data_tvs$Y)
+head(data_tvs$X)
+#Parameter estimation
+par_est <- TVS_EM(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+par_est[1:7]
+#Variable selection with pre-screening. Requires about 30 seconds.
+VS_withscreening <- TVS_multi_stage(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+# The output contains selected variables and the p-values for each predictor
+# while a p-value of "-1" denotes a variable that was not selected.
+print(VS_withscreening)
+#Variable selection without pre-screening. Requires about 80 seconds.
+VS_noscreening <- TVS(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+print(VS_noscreening)
+```
+

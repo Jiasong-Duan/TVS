@@ -59,6 +59,8 @@ arma::vec TVS_cpp(
     arma::uvec test_j = {static_cast<unsigned int>(j)};
     int j_index_cpp = j + 1;
 
+    Rcpp::Rcout << "Predictor " << j_index_cpp << std::endl;
+
     //observed CiSj
     double CiS_orig = CiS_group_fun_cpp(test_j+1,
                                         Rcpp::as<arma::vec>(em_orig["beta"]),
@@ -72,7 +74,7 @@ arma::vec TVS_cpp(
 
     for (int b = 0; b < B; ++b) {
 
-      Rcpp::Rcout << "Running perm #" << b+1 << ", predictor " << j_index_cpp << std::endl;
+      // Rcpp::Rcout << "Running perm #" << b+1 << ", predictor " << j_index_cpp << std::endl;
 
       double CiS_perm = per_fun_cpp(j_index_cpp, wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
                                     dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
@@ -103,6 +105,7 @@ Rcpp::List TVS_multi_stage_cpp(
     int B_final,
     double group_cutoff,
     double indiv_cutoff,
+    double sig_cutoff,
     int group_size,
     double init_beta0_TVS,
     double init_nu_TVS,
@@ -160,7 +163,7 @@ Rcpp::List TVS_multi_stage_cpp(
       if (perm_CiS >= CiS_orig) count++;
     }
 
-    double pval_group = static_cast<double>(count + 1) / (group_B + 1);
+    double pval_group = static_cast<double>(count) / (group_B);
     if (pval_group <= group_cutoff) {
       selected_groups.push_back(group_indices);
     }
@@ -202,7 +205,7 @@ Rcpp::List TVS_multi_stage_cpp(
       if (perm_CiS >= CiS_orig) count++;
     }
 
-    double pval = static_cast<double>(count + 1) / (indiv_B + 1);
+    double pval = static_cast<double>(count) / (indiv_B);
     if (pval <= indiv_cutoff) {
       predictors_pass.push_back(j_idx - 1); // save as 0-based index
     }
@@ -234,9 +237,12 @@ Rcpp::List TVS_multi_stage_cpp(
       if (perm_CiS >= CiS_orig) count++;
     }
 
-    double final_pval = static_cast<double>(count + 1) / (B_final + 1);
+    double final_pval = static_cast<double>(count) / (B_final);
     final_pvals(j) = final_pval;
-    final_selected.push_back(j);
+    // Only include predictor in final selection if final pval <= indiv_cutoff
+    if(final_pval <= sig_cutoff) {
+      final_selected.push_back(j);
+    }
   }
   Rcpp::Rcout << "[Info] Final step done.\n";
 
