@@ -55,7 +55,7 @@ par_est[1:7]
 #Variable selection with pre-screening. Requires about 30 seconds.
 VS_withscreening <- TVS_multi_stage(data_tvs)
 # The output contains selected variables and the p-values for each predictor
-# while a p-value of "-1" denotes a variable that was not selected.
+# A p-value of -1 indicates a variable that was not selected during the initial two screening steps.
 print(VS_withscreening)
 #Variable selection without pre-screening. Requires about 80 seconds.
 VS_noscreening <- TVS(data_tvs)

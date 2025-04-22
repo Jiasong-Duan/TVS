@@ -99,7 +99,7 @@ VS_withscreening <- TVS_multi_stage(data_tvs)
 #> [Info] Individual screening done.
 #> [Info] Final step done.
 # The output contains selected variables and the p-values for each predictor
-# while a p-value of "-1" denotes a variable that was not selected.
+# A p-value of -1 indicates a variable that was not selected during the initial two screening steps.
 print(VS_withscreening)
 #> $selected_indices
 #>      [,1]
@@ -107,15 +107,15 @@ print(VS_withscreening)
 #> [2,]    3
 #> 
 #> $p_values
-#>            [,1]
-#> [1,]  0.0000000
-#> [2,]  0.1333333
-#> [3,]  0.0000000
-#> [4,]  0.2666667
-#> [5,] -1.0000000
-#> [6,] -1.0000000
-#> [7,] -1.0000000
-#> [8,] -1.0000000
+#>       [,1]
+#> [1,]  0.00
+#> [2,]  0.14
+#> [3,]  0.00
+#> [4,] -1.00
+#> [5,] -1.00
+#> [6,] -1.00
+#> [7,] -1.00
+#> [8,] -1.00
 #Variable selection without pre-screening. Requires about 80 seconds.
 VS_noscreening <- TVS(data_tvs)
 #> Predictor 1
@@ -135,11 +135,11 @@ print(VS_noscreening)
 #> $p_values
 #>           [,1]
 #> [1,] 0.0000000
-#> [2,] 0.1400000
+#> [2,] 0.1266667
 #> [3,] 0.0000000
-#> [4,] 0.2933333
-#> [5,] 0.3200000
-#> [6,] 0.7833333
-#> [7,] 0.7766667
-#> [8,] 0.6233333
+#> [4,] 0.2800000
+#> [5,] 0.3533333
+#> [6,] 0.7500000
+#> [7,] 0.8100000
+#> [8,] 0.6066667
 ```
