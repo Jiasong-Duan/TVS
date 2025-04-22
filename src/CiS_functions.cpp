@@ -88,10 +88,6 @@ double CiS_j_fun_cpp(int test_index,
 
 // [[Rcpp::export]]
 double per_fun_cpp(int j_index,
-                   Rcpp::Function wrapper_beta,
-                   Rcpp::Function wrapper_beta0,
-                   Rcpp::Function wrapper_nu,
-                   Rcpp::Function wrapper_gamma,
                    Rcpp::List dataXY,
                    arma::vec init_beta_per,
                    double init_beta0_per,
@@ -164,8 +160,7 @@ double per_fun_cpp(int j_index,
     Rcpp::Named("X") = dat_X
   );
 
-  Rcpp::List em_results_per_j = TVS_EM_cpp(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
-                                           dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
+  Rcpp::List em_results_per_j = TVS_EM_cpp(dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
                                            SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per,
                                            hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_val, max_iter_per, tol_per);
 
@@ -232,10 +227,6 @@ double CiS_group_fun_cpp(const arma::uvec& test_indices,
 
 // [[Rcpp::export]]
 double per_group_fun_cpp(const arma::uvec& j_indices,
-                         Rcpp::Function wrapper_beta,
-                         Rcpp::Function wrapper_beta0,
-                         Rcpp::Function wrapper_nu,
-                         Rcpp::Function wrapper_gamma,
                          Rcpp::List dataXY,
                          arma::vec init_beta_per,
                          double init_beta0_per,
@@ -282,8 +273,7 @@ double per_group_fun_cpp(const arma::uvec& j_indices,
   );
 
   // Run E-M algorithm
-  Rcpp::List em_results = TVS_EM_cpp(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
-                                     dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
+  Rcpp::List em_results = TVS_EM_cpp(dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
                                      SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per,
                                      hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_val, max_iter_per, tol_per);
 

@@ -15,10 +15,6 @@ using namespace RcppParallel;
 //
 // [[Rcpp::export]]
 Rcpp::List TVS_EM_cpp(
-    Rcpp::Function wrapper_beta,
-    Rcpp::Function wrapper_beta0,
-    Rcpp::Function wrapper_nu,
-    Rcpp::Function wrapper_gamma,
     Rcpp::List dataXY,
     arma::vec init_beta,
     double init_beta0,
@@ -82,6 +78,12 @@ Rcpp::List TVS_EM_cpp(
 
   int iter = 0;
   bool converged = false;
+
+  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TVS");
+  Rcpp::Function wrapper_beta = pkg_env["wrapper_beta"];
+  Rcpp::Function wrapper_beta0 = pkg_env["wrapper_beta0"];
+  Rcpp::Function wrapper_nu = pkg_env["wrapper_nu"];
+  Rcpp::Function wrapper_gamma = pkg_env["wrapper_gamma"];
 
   for (iter = 0; iter < max_iter; ++iter) {
     beta_pre_pre = beta_pre;

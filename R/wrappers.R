@@ -96,10 +96,6 @@ wrapper_gamma <- function(gamma, nu, error_lk, hyper_c, hyper_d) {
 
 #' EM algorithm for TVS
 #'
-#' @param wrapper_beta Function wrapper for beta
-#' @param wrapper_beta0 Function wrapper for beta0
-#' @param wrapper_nu Function wrapper for nu
-#' @param wrapper_gamma Function wrapper for gamma
 #' @param dataXY List containing data X and Y
 #' @param init_beta Initial vector for beta
 #' @param init_beta0 Initial value for beta0 (default: 1)
@@ -122,10 +118,6 @@ wrapper_gamma <- function(gamma, nu, error_lk, hyper_c, hyper_d) {
 #' @return List of results from the EM algorithm
 #' @export
 TVS_EM <- function(
-    wrapper_beta,
-    wrapper_beta0,
-    wrapper_nu,
-    wrapper_gamma,
     dataXY,
     init_beta = rep(1,8),
     init_beta0 = 1,
@@ -146,10 +138,6 @@ TVS_EM <- function(
     tol = 1e-6,
     conv_type = "param") {
   TVS_EM_cpp(
-    wrapper_beta = wrapper_beta,
-    wrapper_beta0 = wrapper_beta0,
-    wrapper_nu = wrapper_nu,
-    wrapper_gamma = wrapper_gamma,
     dataXY = dataXY,
     init_beta = init_beta,
     init_beta0 = init_beta0,
@@ -227,10 +215,6 @@ CiS_j_fun <- function(test_index,
 #' Calculate permutation value for a single index
 #'
 #' @param j_index Index for permutation
-#' @param wrapper_beta Function wrapper for beta
-#' @param wrapper_beta0 Function wrapper for beta0
-#' @param wrapper_nu Function wrapper for nu
-#' @param wrapper_gamma Function wrapper for gamma
 #' @param dataXY List containing data X and Y
 #' @param init_beta_per Initial vector for beta
 #' @param init_beta0_per Initial value for beta0 (default: 1)
@@ -253,10 +237,6 @@ CiS_j_fun <- function(test_index,
 #' @return Permutation function value
 #' @export
 per_fun <- function(j_index,
-                    wrapper_beta,
-                    wrapper_beta0,
-                    wrapper_nu,
-                    wrapper_gamma,
                     dataXY,
                     init_beta_per = rep(1,8),
                     init_beta0_per = 1,
@@ -279,10 +259,6 @@ per_fun <- function(j_index,
 
   per_fun_cpp(
     j_index = j_index,
-    wrapper_beta = wrapper_beta,
-    wrapper_beta0 = wrapper_beta0,
-    wrapper_nu = wrapper_nu,
-    wrapper_gamma = wrapper_gamma,
     dataXY = dataXY,
     init_beta_per = init_beta_per,
     init_beta0_per = init_beta0_per,
@@ -338,10 +314,6 @@ CiS_group_fun <- function(test_indices,
 #' Calculate permutation value for a group of indices
 #'
 #' @param j_indices Vector of indices for permutation
-#' @param wrapper_beta Function wrapper for beta
-#' @param wrapper_beta0 Function wrapper for beta0
-#' @param wrapper_nu Function wrapper for nu
-#' @param wrapper_gamma Function wrapper for gamma
 #' @param dataXY List containing data X and Y
 #' @param init_beta_per Initial vector for beta
 #' @param init_beta0_per Initial value for beta0 (default: 1)
@@ -364,10 +336,6 @@ CiS_group_fun <- function(test_indices,
 #' @return Group permutation function value
 #' @export
 per_group_fun <- function(j_indices,
-                          wrapper_beta,
-                          wrapper_beta0,
-                          wrapper_nu,
-                          wrapper_gamma,
                           dataXY,
                           init_beta_per = rep(1,8),
                           init_beta0_per = 1,
@@ -390,10 +358,6 @@ per_group_fun <- function(j_indices,
 
   per_group_fun_cpp(
     j_indices = j_indices,
-    wrapper_beta = wrapper_beta,
-    wrapper_beta0 = wrapper_beta0,
-    wrapper_nu = wrapper_nu,
-    wrapper_gamma = wrapper_gamma,
     dataXY = dataXY,
     init_beta_per = init_beta_per,
     init_beta0_per = init_beta0_per,
@@ -418,13 +382,10 @@ per_group_fun <- function(j_indices,
 
 #' Calculate TVS values
 #'
-#' @param wrapper_beta Function wrapper for beta
-#' @param wrapper_beta0 Function wrapper for beta0
-#' @param wrapper_nu Function wrapper for nu
-#' @param wrapper_gamma Function wrapper for gamma
 #' @param dataXY List containing data X and Y
 #' @param init_beta_TVS Initial vector for beta
 #' @param B Number of iterations (default: 300)
+#' @param sig_cutoff Threshold used for significance cutoff in variable selection (default: 0.05)
 #' @param init_beta0_TVS Initial value for beta0 (default: 1)
 #' @param init_nu_TVS Initial value for nu (default: 1)
 #' @param init_gamma_TVS Initial value for gamma (default: 1)
@@ -444,13 +405,11 @@ per_group_fun <- function(j_indices,
 #' @param add_correc_CiS Correction factor for CiS (default: 0.001)
 #' @return Vector of TVS values
 #' @export
-TVS <- function(wrapper_beta,
-                wrapper_beta0,
-                wrapper_nu,
-                wrapper_gamma,
+TVS <- function(
                 dataXY,
                 init_beta_TVS = rep(1,8),
                 B = 300,
+                sig_cutoff = 0.05,
                 init_beta0_TVS = 1,
                 init_nu_TVS = 1,
                 init_gamma_TVS = 1,
@@ -470,13 +429,10 @@ TVS <- function(wrapper_beta,
                 add_correc_CiS = 0.001) {
 
   TVS_cpp(
-    wrapper_beta = wrapper_beta,
-    wrapper_beta0 = wrapper_beta0,
-    wrapper_nu = wrapper_nu,
-    wrapper_gamma = wrapper_gamma,
     dataXY = dataXY,
     init_beta_TVS = init_beta_TVS,
     B = B,
+    sig_cutoff = sig_cutoff,
     init_beta0_TVS = init_beta0_TVS,
     init_nu_TVS = init_nu_TVS,
     init_gamma_TVS = init_gamma_TVS,
@@ -499,10 +455,6 @@ TVS <- function(wrapper_beta,
 
 #' Multi-stage TVS algorithm
 #'
-#' @param wrapper_beta Function wrapper for beta
-#' @param wrapper_beta0 Function wrapper for beta0
-#' @param wrapper_nu Function wrapper for nu
-#' @param wrapper_gamma Function wrapper for gamma
 #' @param dataXY List containing data X and Y
 #' @param init_beta_TVS Initial vector for beta
 #' @param group_B Number of iterations for group stage (default: 20)
@@ -510,6 +462,7 @@ TVS <- function(wrapper_beta,
 #' @param B_final Number of iterations for final stage (default: 300)
 #' @param group_cutoff Cutoff value for group stage (default: 3.0/20.0)
 #' @param indiv_cutoff Cutoff value for individual stage (default: 3.0/20.0)
+#' @param sig_cutoff Threshold used for significance cutoff in variable selection (default: 0.05)
 #' @param group_size Size of groups (default: 4)
 #' @param init_beta0_TVS Initial value for beta0 (default: 1)
 #' @param init_nu_TVS Initial value for nu (default: 1)
@@ -530,10 +483,7 @@ TVS <- function(wrapper_beta,
 #' @param add_correc_CiS Correction factor for CiS (default: 0.001)
 #' @return List of multi-stage TVS results
 #' @export
-TVS_multi_stage <- function(wrapper_beta,
-                            wrapper_beta0,
-                            wrapper_nu,
-                            wrapper_gamma,
+TVS_multi_stage <- function(
                             dataXY,
                             init_beta_TVS = rep(1,8),
                             group_B = 20,
@@ -562,10 +512,6 @@ TVS_multi_stage <- function(wrapper_beta,
                             add_correc_CiS = 0.001) {
 
   TVS_multi_stage_cpp(
-    wrapper_beta = wrapper_beta,
-    wrapper_beta0 = wrapper_beta0,
-    wrapper_nu = wrapper_nu,
-    wrapper_gamma = wrapper_gamma,
     dataXY = dataXY,
     init_beta_TVS = init_beta_TVS,
     group_B = group_B,

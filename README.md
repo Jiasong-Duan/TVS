@@ -29,7 +29,8 @@ devtools::install_github("Jiasong-Duan/TVS")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to perform variable
+selection with the **TVS** method:
 
 ``` r
 library(TVS)
@@ -62,7 +63,7 @@ head(data_tvs$X)
 #> [5,] -0.55869661  0.8474600
 #> [6,] -0.80676768  0.2660220
 #Parameter estimation
-par_est <- TVS_EM(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+par_est <- TVS_EM(data_tvs)
 par_est[1:7]
 #> $beta
 #>               [,1]
@@ -93,7 +94,7 @@ par_est[1:7]
 #> $converged
 #> [1] TRUE
 #Variable selection with pre-screening. Requires about 30 seconds.
-VS_withscreening <- TVS_multi_stage(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+VS_withscreening <- TVS_multi_stage(data_tvs)
 #> [Info] Group screening done.
 #> [Info] Individual screening done.
 #> [Info] Final step done.
@@ -106,17 +107,17 @@ print(VS_withscreening)
 #> [2,]    3
 #> 
 #> $p_values
-#>             [,1]
-#> [1,]  0.00000000
-#> [2,]  0.08666667
-#> [3,]  0.00000000
-#> [4,] -1.00000000
-#> [5,] -1.00000000
-#> [6,] -1.00000000
-#> [7,] -1.00000000
-#> [8,] -1.00000000
+#>            [,1]
+#> [1,]  0.0000000
+#> [2,]  0.1333333
+#> [3,]  0.0000000
+#> [4,]  0.2666667
+#> [5,] -1.0000000
+#> [6,] -1.0000000
+#> [7,] -1.0000000
+#> [8,] -1.0000000
 #Variable selection without pre-screening. Requires about 80 seconds.
-VS_noscreening <- TVS(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+VS_noscreening <- TVS(data_tvs)
 #> Predictor 1
 #> Predictor 2
 #> Predictor 3
@@ -126,13 +127,19 @@ VS_noscreening <- TVS(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, da
 #> Predictor 7
 #> Predictor 8
 print(VS_noscreening)
+#> $selected_indices
+#>      [,1]
+#> [1,]    1
+#> [2,]    3
+#> 
+#> $p_values
 #>           [,1]
 #> [1,] 0.0000000
-#> [2,] 0.1500000
+#> [2,] 0.1400000
 #> [3,] 0.0000000
-#> [4,] 0.2500000
-#> [5,] 0.3766667
-#> [6,] 0.7566667
-#> [7,] 0.7733333
-#> [8,] 0.6433333
+#> [4,] 0.2933333
+#> [5,] 0.3200000
+#> [6,] 0.7833333
+#> [7,] 0.7766667
+#> [8,] 0.6233333
 ```

@@ -5,13 +5,10 @@
 \title{Calculate TVS values}
 \usage{
 TVS(
-  wrapper_beta,
-  wrapper_beta0,
-  wrapper_nu,
-  wrapper_gamma,
   dataXY,
   init_beta_TVS = rep(1, 8),
   B = 300,
+  sig_cutoff = 0.05,
   init_beta0_TVS = 1,
   init_nu_TVS = 1,
   init_gamma_TVS = 1,
@@ -32,19 +29,13 @@ TVS(
 )
 }
 \arguments{
-\item{wrapper_beta}{Function wrapper for beta}
-
-\item{wrapper_beta0}{Function wrapper for beta0}
-
-\item{wrapper_nu}{Function wrapper for nu}
-
-\item{wrapper_gamma}{Function wrapper for gamma}
-
 \item{dataXY}{List containing data X and Y}
 
 \item{init_beta_TVS}{Initial vector for beta}
 
 \item{B}{Number of iterations (default: 300)}
+
+\item{sig_cutoff}{Threshold used for significance cutoff in variable selection (default: 0.05)}
 
 \item{init_beta0_TVS}{Initial value for beta0 (default: 1)}
 

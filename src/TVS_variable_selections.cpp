@@ -14,14 +14,11 @@ using namespace RcppParallel;
 // [[Rcpp::depends(RcppParallel)]]
 //
 // [[Rcpp::export]]
-arma::vec TVS_cpp(
-    Rcpp::Function wrapper_beta,
-    Rcpp::Function wrapper_beta0,
-    Rcpp::Function wrapper_nu,
-    Rcpp::Function wrapper_gamma,
+Rcpp::List TVS_cpp(
     Rcpp::List dataXY,
     arma::vec init_beta_TVS,
     int B,
+    double sig_cutoff,
     double init_beta0_TVS,
     double init_nu_TVS,
     double init_gamma_TVS,
@@ -48,12 +45,12 @@ arma::vec TVS_cpp(
   double hyper_b_theta_val = (hyper_b_theta_TVS < 0) ? p : hyper_b_theta_TVS;
 
   // Original CiS
-  Rcpp::List em_orig = TVS_EM_cpp(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
-                                  dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
+  Rcpp::List em_orig = TVS_EM_cpp(dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
                                   SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
                                   hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS);
 
   arma::vec pvals(p, arma::fill::zeros);
+  std::vector<int> final_selected;
 
   for (int j = 0; j < p; ++j) {
     arma::uvec test_j = {static_cast<unsigned int>(j)};
@@ -76,7 +73,7 @@ arma::vec TVS_cpp(
 
       // Rcpp::Rcout << "Running perm #" << b+1 << ", predictor " << j_index_cpp << std::endl;
 
-      double CiS_perm = per_fun_cpp(j_index_cpp, wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
+      double CiS_perm = per_fun_cpp(j_index_cpp,
                                     dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
                                     SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
                                     hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS, add_correc_CiS
@@ -85,19 +82,24 @@ arma::vec TVS_cpp(
       if (CiS_perm >= CiS_orig) count++;
     }
 
-    pvals(j) = static_cast<double>(count) / (B); // add 1 for smoothing
+    pvals(j) = static_cast<double>(count) / (B);
+    // Only include predictor in final selection if final pvals <= sig_cutoff
+    if (pvals(j) <= sig_cutoff) {
+      final_selected.push_back(j);
+    }
   }
+  arma::uvec arma_vec_final_selected = arma::conv_to<arma::uvec>::from(final_selected);
+  arma::uvec final_selected_1based = arma_vec_final_selected + 1;
 
-  return pvals;
+  return Rcpp::List::create(
+    Rcpp::Named("selected_indices") = final_selected_1based,
+    Rcpp::Named("p_values") = pvals
+  );
 }
 
 
 // [[Rcpp::export]]
 Rcpp::List TVS_multi_stage_cpp(
-    Rcpp::Function wrapper_beta,
-    Rcpp::Function wrapper_beta0,
-    Rcpp::Function wrapper_nu,
-    Rcpp::Function wrapper_gamma,
     Rcpp::List dataXY,
     arma::vec init_beta_TVS,
     int group_B,
@@ -135,8 +137,7 @@ Rcpp::List TVS_multi_stage_cpp(
   double hyper_b_theta_val = (hyper_b_theta_TVS < 0) ? p : hyper_b_theta_TVS;
 
   // Original model fit
-  Rcpp::List em_orig = TVS_EM_cpp(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
-                                  dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
+  Rcpp::List em_orig = TVS_EM_cpp(dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
                                   SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
                                   hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS);
   arma::vec beta_orig = em_orig["beta"];
@@ -155,7 +156,7 @@ Rcpp::List TVS_multi_stage_cpp(
 
     int count = 0;
     for (int b = 0; b < group_B; ++b) {
-      double perm_CiS = per_group_fun_cpp(group_indices, wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
+      double perm_CiS = per_group_fun_cpp(group_indices,
                                           dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
                                           SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
                                           hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS, add_correc_CiS
@@ -197,7 +198,7 @@ Rcpp::List TVS_multi_stage_cpp(
 
     int count = 0;
     for (int b = 0; b < indiv_B; ++b) {
-      double perm_CiS = per_fun_cpp(j_idx, wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
+      double perm_CiS = per_fun_cpp(j_idx,
                                     dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
                                     SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
                                     hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS, add_correc_CiS
@@ -229,7 +230,7 @@ Rcpp::List TVS_multi_stage_cpp(
 
     int count = 0;
     for (int b = 0; b < B_final; ++b) {
-      double perm_CiS = per_fun_cpp(j_idx, wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma,
+      double perm_CiS = per_fun_cpp(j_idx,
                                     dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
                                     SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
                                     hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS, add_correc_CiS

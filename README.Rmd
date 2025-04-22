@@ -38,7 +38,7 @@ devtools::install_github("Jiasong-Duan/TVS")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to perform variable selection with the **TVS** method:
 
 ```{r example}
 library(TVS)
@@ -50,15 +50,15 @@ data(data_tvs)
 head(data_tvs$Y)
 head(data_tvs$X)
 #Parameter estimation
-par_est <- TVS_EM(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+par_est <- TVS_EM(data_tvs)
 par_est[1:7]
 #Variable selection with pre-screening. Requires about 30 seconds.
-VS_withscreening <- TVS_multi_stage(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+VS_withscreening <- TVS_multi_stage(data_tvs)
 # The output contains selected variables and the p-values for each predictor
 # while a p-value of "-1" denotes a variable that was not selected.
 print(VS_withscreening)
 #Variable selection without pre-screening. Requires about 80 seconds.
-VS_noscreening <- TVS(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, data_tvs)
+VS_noscreening <- TVS(data_tvs)
 print(VS_noscreening)
 ```
 

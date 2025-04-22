@@ -5,10 +5,6 @@
 \title{Multi-stage TVS algorithm}
 \usage{
 TVS_multi_stage(
-  wrapper_beta,
-  wrapper_beta0,
-  wrapper_nu,
-  wrapper_gamma,
   dataXY,
   init_beta_TVS = rep(1, 8),
   group_B = 20,
@@ -38,14 +34,6 @@ TVS_multi_stage(
 )
 }
 \arguments{
-\item{wrapper_beta}{Function wrapper for beta}
-
-\item{wrapper_beta0}{Function wrapper for beta0}
-
-\item{wrapper_nu}{Function wrapper for nu}
-
-\item{wrapper_gamma}{Function wrapper for gamma}
-
 \item{dataXY}{List containing data X and Y}
 
 \item{init_beta_TVS}{Initial vector for beta}
@@ -59,6 +47,8 @@ TVS_multi_stage(
 \item{group_cutoff}{Cutoff value for group stage (default: 3.0/20.0)}
 
 \item{indiv_cutoff}{Cutoff value for individual stage (default: 3.0/20.0)}
+
+\item{sig_cutoff}{Threshold used for significance cutoff in variable selection (default: 0.05)}
 
 \item{group_size}{Size of groups (default: 4)}
 

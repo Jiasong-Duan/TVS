@@ -23,10 +23,6 @@ double nu_neg_lk_cpp(double nu_lk, double ga_lk, Rcpp::NumericVector error_lk,
 double gamma_neg_lk_cpp(double ga_lk, double nu_lk, Rcpp::NumericVector error_lk,
                         double hyper_c=0.0001, double hyper_d=0.0001);
 Rcpp::List TVS_EM_cpp(
-    Rcpp::Function wrapper_beta,
-    Rcpp::Function wrapper_beta0,
-    Rcpp::Function wrapper_nu,
-    Rcpp::Function wrapper_gamma,
     Rcpp::List dataXY,
     arma::vec init_beta,
     double init_beta0=1,
@@ -56,10 +52,6 @@ double CiS_j_fun_cpp(int test_index,
                      Rcpp::List dataXY,
                      double add_correc_CiS = 0.001);
 double per_fun_cpp(int j_index,
-                   Rcpp::Function wrapper_beta,
-                   Rcpp::Function wrapper_beta0,
-                   Rcpp::Function wrapper_nu,
-                   Rcpp::Function wrapper_gamma,
                    Rcpp::List dataXY,
                    arma::vec init_beta_per,
                    double init_beta0_per=1,
@@ -87,10 +79,6 @@ double CiS_group_fun_cpp(const arma::uvec& test_indices,
                          Rcpp::List dataXY,
                          double add_correc_CiS = 0.001);
 double per_group_fun_cpp(const arma::uvec& j_indices,
-                         Rcpp::Function wrapper_beta,
-                         Rcpp::Function wrapper_beta0,
-                         Rcpp::Function wrapper_nu,
-                         Rcpp::Function wrapper_gamma,
                          Rcpp::List dataXY,
                          arma::vec init_beta_per,
                          double init_beta0_per=1,
@@ -111,14 +99,11 @@ double per_group_fun_cpp(const arma::uvec& j_indices,
                          double tol_per = 1e-6,
                          double add_correc_CiS = 0.001
 );
-arma::vec TVS_cpp(
-    Rcpp::Function wrapper_beta,
-    Rcpp::Function wrapper_beta0,
-    Rcpp::Function wrapper_nu,
-    Rcpp::Function wrapper_gamma,
+Rcpp::List TVS_cpp(
     Rcpp::List dataXY,
     arma::vec init_beta_TVS,
     int B = 300,
+    double sig_cutoff = 0.05,
     double init_beta0_TVS=1,
     double init_nu_TVS=1,
     double init_gamma_TVS=1,
@@ -138,10 +123,6 @@ arma::vec TVS_cpp(
     double add_correc_CiS = 0.001
 );
 Rcpp::List TVS_multi_stage_cpp(
-    Rcpp::Function wrapper_beta,
-    Rcpp::Function wrapper_beta0,
-    Rcpp::Function wrapper_nu,
-    Rcpp::Function wrapper_gamma,
     Rcpp::List dataXY,
     arma::vec init_beta_TVS,
     int group_B = 20,
@@ -149,6 +130,7 @@ Rcpp::List TVS_multi_stage_cpp(
     int B_final = 300,
     double group_cutoff = 3.0 / 20.0,
     double indiv_cutoff = 3.0 / 20.0,
+    double sig_cutoff = 0.05,
     int group_size = 4,
     double init_beta0_TVS=1,
     double init_nu_TVS=1,

@@ -5,10 +5,6 @@
 \title{EM algorithm for TVS}
 \usage{
 TVS_EM(
-  wrapper_beta,
-  wrapper_beta0,
-  wrapper_nu,
-  wrapper_gamma,
   dataXY,
   init_beta = rep(1, 8),
   init_beta0 = 1,
@@ -31,14 +27,6 @@ TVS_EM(
 )
 }
 \arguments{
-\item{wrapper_beta}{Function wrapper for beta}
-
-\item{wrapper_beta0}{Function wrapper for beta0}
-
-\item{wrapper_nu}{Function wrapper for nu}
-
-\item{wrapper_gamma}{Function wrapper for gamma}
-
 \item{dataXY}{List containing data X and Y}
 
 \item{init_beta}{Initial vector for beta}

@@ -55,16 +55,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // per_fun_cpp
-double per_fun_cpp(int j_index, Rcpp::Function wrapper_beta, Rcpp::Function wrapper_beta0, Rcpp::Function wrapper_nu, Rcpp::Function wrapper_gamma, Rcpp::List dataXY, arma::vec init_beta_per, double init_beta0_per, double init_nu_per, double init_gamma_per, double init_theta_per, double SS_t0_per, double SS_t1_per, double hyper_mu_beta0_per, double hyper_sigma_beta0_per, double hyper_mu_nu_per, double hyper_sigma_nu_per, double hyper_c_gamma_per, double hyper_d_gamma_per, double hyper_a_theta_per, double hyper_b_theta_per, int max_iter_per, double tol_per, double add_correc_CiS);
-RcppExport SEXP _TVS_per_fun_cpp(SEXP j_indexSEXP, SEXP wrapper_betaSEXP, SEXP wrapper_beta0SEXP, SEXP wrapper_nuSEXP, SEXP wrapper_gammaSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
+double per_fun_cpp(int j_index, Rcpp::List dataXY, arma::vec init_beta_per, double init_beta0_per, double init_nu_per, double init_gamma_per, double init_theta_per, double SS_t0_per, double SS_t1_per, double hyper_mu_beta0_per, double hyper_sigma_beta0_per, double hyper_mu_nu_per, double hyper_sigma_nu_per, double hyper_c_gamma_per, double hyper_d_gamma_per, double hyper_a_theta_per, double hyper_b_theta_per, int max_iter_per, double tol_per, double add_correc_CiS);
+RcppExport SEXP _TVS_per_fun_cpp(SEXP j_indexSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type j_index(j_indexSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta(wrapper_betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta0(wrapper_beta0SEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_nu(wrapper_nuSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_gamma(wrapper_gammaSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type init_beta_per(init_beta_perSEXP);
     Rcpp::traits::input_parameter< double >::type init_beta0_per(init_beta0_perSEXP);
@@ -84,7 +80,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max_iter_per(max_iter_perSEXP);
     Rcpp::traits::input_parameter< double >::type tol_per(tol_perSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(per_fun_cpp(j_index, wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, dataXY, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per, SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per, hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_per, max_iter_per, tol_per, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(per_fun_cpp(j_index, dataXY, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per, SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per, hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_per, max_iter_per, tol_per, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -106,16 +102,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // per_group_fun_cpp
-double per_group_fun_cpp(const arma::uvec& j_indices, Rcpp::Function wrapper_beta, Rcpp::Function wrapper_beta0, Rcpp::Function wrapper_nu, Rcpp::Function wrapper_gamma, Rcpp::List dataXY, arma::vec init_beta_per, double init_beta0_per, double init_nu_per, double init_gamma_per, double init_theta_per, double SS_t0_per, double SS_t1_per, double hyper_mu_beta0_per, double hyper_sigma_beta0_per, double hyper_mu_nu_per, double hyper_sigma_nu_per, double hyper_c_gamma_per, double hyper_d_gamma_per, double hyper_a_theta_per, double hyper_b_theta_per, int max_iter_per, double tol_per, double add_correc_CiS);
-RcppExport SEXP _TVS_per_group_fun_cpp(SEXP j_indicesSEXP, SEXP wrapper_betaSEXP, SEXP wrapper_beta0SEXP, SEXP wrapper_nuSEXP, SEXP wrapper_gammaSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
+double per_group_fun_cpp(const arma::uvec& j_indices, Rcpp::List dataXY, arma::vec init_beta_per, double init_beta0_per, double init_nu_per, double init_gamma_per, double init_theta_per, double SS_t0_per, double SS_t1_per, double hyper_mu_beta0_per, double hyper_sigma_beta0_per, double hyper_mu_nu_per, double hyper_sigma_nu_per, double hyper_c_gamma_per, double hyper_d_gamma_per, double hyper_a_theta_per, double hyper_b_theta_per, int max_iter_per, double tol_per, double add_correc_CiS);
+RcppExport SEXP _TVS_per_group_fun_cpp(SEXP j_indicesSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::uvec& >::type j_indices(j_indicesSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta(wrapper_betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta0(wrapper_beta0SEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_nu(wrapper_nuSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_gamma(wrapper_gammaSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type init_beta_per(init_beta_perSEXP);
     Rcpp::traits::input_parameter< double >::type init_beta0_per(init_beta0_perSEXP);
@@ -135,20 +127,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max_iter_per(max_iter_perSEXP);
     Rcpp::traits::input_parameter< double >::type tol_per(tol_perSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(per_group_fun_cpp(j_indices, wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, dataXY, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per, SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per, hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_per, max_iter_per, tol_per, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(per_group_fun_cpp(j_indices, dataXY, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per, SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per, hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_per, max_iter_per, tol_per, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
 // TVS_EM_cpp
-Rcpp::List TVS_EM_cpp(Rcpp::Function wrapper_beta, Rcpp::Function wrapper_beta0, Rcpp::Function wrapper_nu, Rcpp::Function wrapper_gamma, Rcpp::List dataXY, arma::vec init_beta, double init_beta0, double init_nu, double init_gamma, double init_theta, double SS_t0, double SS_t1, double hyper_mu_beta0, double hyper_sigma_beta0, double hyper_mu_nu, double hyper_sigma_nu, double hyper_c_gamma, double hyper_d_gamma, double hyper_a_theta, double hyper_b_theta, int max_iter, double tol, std::string conv_type);
-RcppExport SEXP _TVS_TVS_EM_cpp(SEXP wrapper_betaSEXP, SEXP wrapper_beta0SEXP, SEXP wrapper_nuSEXP, SEXP wrapper_gammaSEXP, SEXP dataXYSEXP, SEXP init_betaSEXP, SEXP init_beta0SEXP, SEXP init_nuSEXP, SEXP init_gammaSEXP, SEXP init_thetaSEXP, SEXP SS_t0SEXP, SEXP SS_t1SEXP, SEXP hyper_mu_beta0SEXP, SEXP hyper_sigma_beta0SEXP, SEXP hyper_mu_nuSEXP, SEXP hyper_sigma_nuSEXP, SEXP hyper_c_gammaSEXP, SEXP hyper_d_gammaSEXP, SEXP hyper_a_thetaSEXP, SEXP hyper_b_thetaSEXP, SEXP max_iterSEXP, SEXP tolSEXP, SEXP conv_typeSEXP) {
+Rcpp::List TVS_EM_cpp(Rcpp::List dataXY, arma::vec init_beta, double init_beta0, double init_nu, double init_gamma, double init_theta, double SS_t0, double SS_t1, double hyper_mu_beta0, double hyper_sigma_beta0, double hyper_mu_nu, double hyper_sigma_nu, double hyper_c_gamma, double hyper_d_gamma, double hyper_a_theta, double hyper_b_theta, int max_iter, double tol, std::string conv_type);
+RcppExport SEXP _TVS_TVS_EM_cpp(SEXP dataXYSEXP, SEXP init_betaSEXP, SEXP init_beta0SEXP, SEXP init_nuSEXP, SEXP init_gammaSEXP, SEXP init_thetaSEXP, SEXP SS_t0SEXP, SEXP SS_t1SEXP, SEXP hyper_mu_beta0SEXP, SEXP hyper_sigma_beta0SEXP, SEXP hyper_mu_nuSEXP, SEXP hyper_sigma_nuSEXP, SEXP hyper_c_gammaSEXP, SEXP hyper_d_gammaSEXP, SEXP hyper_a_thetaSEXP, SEXP hyper_b_thetaSEXP, SEXP max_iterSEXP, SEXP tolSEXP, SEXP conv_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta(wrapper_betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta0(wrapper_beta0SEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_nu(wrapper_nuSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_gamma(wrapper_gammaSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type init_beta(init_betaSEXP);
     Rcpp::traits::input_parameter< double >::type init_beta0(init_beta0SEXP);
@@ -168,23 +156,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< std::string >::type conv_type(conv_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_EM_cpp(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, dataXY, init_beta, init_beta0, init_nu, init_gamma, init_theta, SS_t0, SS_t1, hyper_mu_beta0, hyper_sigma_beta0, hyper_mu_nu, hyper_sigma_nu, hyper_c_gamma, hyper_d_gamma, hyper_a_theta, hyper_b_theta, max_iter, tol, conv_type));
+    rcpp_result_gen = Rcpp::wrap(TVS_EM_cpp(dataXY, init_beta, init_beta0, init_nu, init_gamma, init_theta, SS_t0, SS_t1, hyper_mu_beta0, hyper_sigma_beta0, hyper_mu_nu, hyper_sigma_nu, hyper_c_gamma, hyper_d_gamma, hyper_a_theta, hyper_b_theta, max_iter, tol, conv_type));
     return rcpp_result_gen;
 END_RCPP
 }
 // TVS_cpp
-arma::vec TVS_cpp(Rcpp::Function wrapper_beta, Rcpp::Function wrapper_beta0, Rcpp::Function wrapper_nu, Rcpp::Function wrapper_gamma, Rcpp::List dataXY, arma::vec init_beta_TVS, int B, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
-RcppExport SEXP _TVS_TVS_cpp(SEXP wrapper_betaSEXP, SEXP wrapper_beta0SEXP, SEXP wrapper_nuSEXP, SEXP wrapper_gammaSEXP, SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP BSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
+Rcpp::List TVS_cpp(Rcpp::List dataXY, arma::vec init_beta_TVS, int B, double sig_cutoff, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
+RcppExport SEXP _TVS_TVS_cpp(SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP BSEXP, SEXP sig_cutoffSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta(wrapper_betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta0(wrapper_beta0SEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_nu(wrapper_nuSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_gamma(wrapper_gammaSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type init_beta_TVS(init_beta_TVSSEXP);
     Rcpp::traits::input_parameter< int >::type B(BSEXP);
+    Rcpp::traits::input_parameter< double >::type sig_cutoff(sig_cutoffSEXP);
     Rcpp::traits::input_parameter< double >::type init_beta0_TVS(init_beta0_TVSSEXP);
     Rcpp::traits::input_parameter< double >::type init_nu_TVS(init_nu_TVSSEXP);
     Rcpp::traits::input_parameter< double >::type init_gamma_TVS(init_gamma_TVSSEXP);
@@ -202,20 +187,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max_iter_TVS(max_iter_TVSSEXP);
     Rcpp::traits::input_parameter< double >::type tol_TVS(tol_TVSSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_cpp(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, dataXY, init_beta_TVS, B, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(TVS_cpp(dataXY, init_beta_TVS, B, sig_cutoff, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
 // TVS_multi_stage_cpp
-Rcpp::List TVS_multi_stage_cpp(Rcpp::Function wrapper_beta, Rcpp::Function wrapper_beta0, Rcpp::Function wrapper_nu, Rcpp::Function wrapper_gamma, Rcpp::List dataXY, arma::vec init_beta_TVS, int group_B, int indiv_B, int B_final, double group_cutoff, double indiv_cutoff, double sig_cutoff, int group_size, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
-RcppExport SEXP _TVS_TVS_multi_stage_cpp(SEXP wrapper_betaSEXP, SEXP wrapper_beta0SEXP, SEXP wrapper_nuSEXP, SEXP wrapper_gammaSEXP, SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP group_BSEXP, SEXP indiv_BSEXP, SEXP B_finalSEXP, SEXP group_cutoffSEXP, SEXP indiv_cutoffSEXP, SEXP sig_cutoffSEXP, SEXP group_sizeSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
+Rcpp::List TVS_multi_stage_cpp(Rcpp::List dataXY, arma::vec init_beta_TVS, int group_B, int indiv_B, int B_final, double group_cutoff, double indiv_cutoff, double sig_cutoff, int group_size, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
+RcppExport SEXP _TVS_TVS_multi_stage_cpp(SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP group_BSEXP, SEXP indiv_BSEXP, SEXP B_finalSEXP, SEXP group_cutoffSEXP, SEXP indiv_cutoffSEXP, SEXP sig_cutoffSEXP, SEXP group_sizeSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta(wrapper_betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_beta0(wrapper_beta0SEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_nu(wrapper_nuSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Function >::type wrapper_gamma(wrapper_gammaSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type init_beta_TVS(init_beta_TVSSEXP);
     Rcpp::traits::input_parameter< int >::type group_B(group_BSEXP);
@@ -242,7 +223,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max_iter_TVS(max_iter_TVSSEXP);
     Rcpp::traits::input_parameter< double >::type tol_TVS(tol_TVSSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_multi_stage_cpp(wrapper_beta, wrapper_beta0, wrapper_nu, wrapper_gamma, dataXY, init_beta_TVS, group_B, indiv_B, B_final, group_cutoff, indiv_cutoff, sig_cutoff, group_size, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(TVS_multi_stage_cpp(dataXY, init_beta_TVS, group_B, indiv_B, B_final, group_cutoff, indiv_cutoff, sig_cutoff, group_size, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -339,12 +320,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TVS_slope_error_cpp", (DL_FUNC) &_TVS_slope_error_cpp, 3},
     {"_TVS_curvature_error_cpp", (DL_FUNC) &_TVS_curvature_error_cpp, 3},
     {"_TVS_CiS_j_fun_cpp", (DL_FUNC) &_TVS_CiS_j_fun_cpp, 7},
-    {"_TVS_per_fun_cpp", (DL_FUNC) &_TVS_per_fun_cpp, 24},
+    {"_TVS_per_fun_cpp", (DL_FUNC) &_TVS_per_fun_cpp, 20},
     {"_TVS_CiS_group_fun_cpp", (DL_FUNC) &_TVS_CiS_group_fun_cpp, 7},
-    {"_TVS_per_group_fun_cpp", (DL_FUNC) &_TVS_per_group_fun_cpp, 24},
-    {"_TVS_TVS_EM_cpp", (DL_FUNC) &_TVS_TVS_EM_cpp, 23},
-    {"_TVS_TVS_cpp", (DL_FUNC) &_TVS_TVS_cpp, 24},
-    {"_TVS_TVS_multi_stage_cpp", (DL_FUNC) &_TVS_TVS_multi_stage_cpp, 30},
+    {"_TVS_per_group_fun_cpp", (DL_FUNC) &_TVS_per_group_fun_cpp, 20},
+    {"_TVS_TVS_EM_cpp", (DL_FUNC) &_TVS_TVS_EM_cpp, 19},
+    {"_TVS_TVS_cpp", (DL_FUNC) &_TVS_TVS_cpp, 21},
+    {"_TVS_TVS_multi_stage_cpp", (DL_FUNC) &_TVS_TVS_multi_stage_cpp, 26},
     {"_TVS_beta_neg_lk_cpp", (DL_FUNC) &_TVS_beta_neg_lk_cpp, 10},
     {"_TVS_beta_neg_gradient_cpp", (DL_FUNC) &_TVS_beta_neg_gradient_cpp, 10},
     {"_TVS_beta0_neg_lk_cpp", (DL_FUNC) &_TVS_beta0_neg_lk_cpp, 8},

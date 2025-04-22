@@ -6,10 +6,6 @@
 \usage{
 per_fun(
   j_index,
-  wrapper_beta,
-  wrapper_beta0,
-  wrapper_nu,
-  wrapper_gamma,
   dataXY,
   init_beta_per = rep(1, 8),
   init_beta0_per = 1,
@@ -33,14 +29,6 @@ per_fun(
 }
 \arguments{
 \item{j_index}{Index for permutation}
-
-\item{wrapper_beta}{Function wrapper for beta}
-
-\item{wrapper_beta0}{Function wrapper for beta0}
-
-\item{wrapper_nu}{Function wrapper for nu}
-
-\item{wrapper_gamma}{Function wrapper for gamma}
 
 \item{dataXY}{List containing data X and Y}
 
