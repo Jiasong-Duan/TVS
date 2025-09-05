@@ -48,13 +48,14 @@ library(TVS)
 # Note: Among the 8 predictors, only the first and third are truly important predictors
 data(data_tvs)
 head(data_tvs$Y)
+hist(data_tvs$Y)
 head(data_tvs$X)
 #Parameter estimation
 par_est <- TVS_EM(data_tvs)
 par_est[1:7]
 #Variable selection with pre-screening. Requires about 30 seconds.
 VS_withscreening <- TVS_multi_stage(data_tvs)
-# The output contains selected variables and the p-values for each predictor
+# The output contains estimated parameters, including beta, beta0, nu, gamma, selected variables and p-values for each predictor
 # A p-value of -1 indicates a variable that was not selected during the initial two screening steps.
 print(VS_withscreening)
 #Variable selection without pre-screening. Requires about 80 seconds.
