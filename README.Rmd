@@ -1,0 +1,81 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# TVS
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+**TVS** is an R package for *Testing-driven Variable Selection in Modal Regression*.
+It implements efficient Bayesian variable selection methods based on a permutation-based hypothesis testing.
+
+## Installation
+
+You can install the development version of TVS from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("Jiasong-Duan/TVS")
+```
+
+Or,
+```r
+# install.packages("devtools")
+devtools::install_github("Jiasong-Duan/TVS")
+```
+
+## Example
+
+This is a basic example which shows you how to perform variable selection with the **TVS** method:
+
+```{r example}
+library(TVS)
+# Load example data containing:
+# - Response (Y): matrix with 100 subjects (rows) and 1 column
+# - Predictors (X): matrix with 100 subjects (rows) and 8 predictors (columns)
+# Note: Among the 8 predictors, only the first and third are truly important predictors
+# The true values of coefficients(denoted as B hereinafter) the intercept (denoted as B0 hereinafter) are
+#(2,0,1,0,0,0,0,0) and 2, respectively. 
+#the Predictors are generated from a multivariate normal with mean of zero and an identity covariance matrix. 
+#the Response is generated as Y= XB + epsilon, where epsilon follows MixHat(nu=3, gamma=2) which encodes a 
+#heavy-tailed and right skewed distribution.  
+data(data_tvs)
+head(data_tvs$Y)
+hist(data_tvs$Y)
+head(data_tvs$X)
+#Parameter estimation
+par_est <- TVS_EM(data_tvs)
+par_est[1:7]
+#Variable selection with multi-stage pre-screening.
+VS_scr_start <- proc.time()
+VS_withscreening <- TVS_multi_stage(data_tvs)
+VS_scr_elapsed <- proc.time() - VS_scr_start
+#computational time
+VS_scr_elapsed
+# The output contains selected variables and the p-values for each predictor
+# The output contains estimated parameters, including beta, beta0, nu, gamma, selected variables and 
+#p-values for each predictor
+# A p-value of -1 indicates a variable that was not selected because they failed to pass the initial two
+#screening steps.
+print(VS_withscreening)
+#Variable selection without pre-screening. Requires longer time than the multi-stage version.
+VS_noscr_start <- proc.time()
+VS_noscreening <- TVS(data_tvs)
+VS_noscr_elapsed <- proc.time() - VS_noscr_start
+#computational time
+VS_noscr_elapsed
+print(VS_noscreening)
+```
+
