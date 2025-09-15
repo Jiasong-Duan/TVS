@@ -9,8 +9,8 @@ wrapper_beta0(
   beta.lk,
   nu.lk,
   gamma.lk,
-  hyper.mu.beta0 = 0,
-  hyper.sigma.beta0 = 10^6,
+  hyper.mu.beta0,
+  hyper.sigma.beta0,
   Y.lk,
   X.lk
 )
@@ -24,9 +24,9 @@ wrapper_beta0(
 
 \item{gamma.lk}{Gamma parameter}
 
-\item{hyper.mu.beta0}{the mean hyperparameter in beta0's Normal prior (default: 0)}
+\item{hyper.mu.beta0}{the mean hyperparameter in beta0's Normal prior}
 
-\item{hyper.sigma.beta0}{the variance hyperparameter in beta0's Normal prior (default: 10e6)}
+\item{hyper.sigma.beta0}{the variance hyperparameter in beta0's Normal prior}
 
 \item{Y.lk}{Response vector}
 

@@ -4,7 +4,19 @@
 \alias{wrapper_beta}
 \title{Dispatcher for beta optimization}
 \usage{
-wrapper_beta(..., method = getOption("TVS_beta_method", "maxLik"))
+wrapper_beta(
+  beta,
+  beta0,
+  nu,
+  gamma,
+  betaPRE,
+  t0,
+  t1,
+  Y_lk,
+  X_lk,
+  theta_lk,
+  method = getOption("TVS_beta_method", "maxLik")
+)
 }
 \arguments{
 \item{method}{Estimation function for beta (default: Quasi-Newton method implemented by R optim() function)}

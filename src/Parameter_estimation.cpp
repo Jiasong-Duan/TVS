@@ -75,6 +75,7 @@ Rcpp::List TVS_EM_cpp(
 
   int iter = 0;
   bool converged = false;
+  double diff_val = 0.0;
 
   Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TVS");
   Rcpp::Function wrapper_beta = pkg_env["wrapper_beta"];
@@ -93,7 +94,7 @@ Rcpp::List TVS_EM_cpp(
     // M-step
     try {
       // M-step: update parameters via R wrappers
-      beta_upd = Rcpp::as<arma::vec>(wrapper_beta(beta_upd, beta0_pre, nu_pre, gamma_pre, beta_pre, SS_t0, SS_t1, dat_Y, dat_X));
+      beta_upd = Rcpp::as<arma::vec>(wrapper_beta(beta_upd, beta0_pre, nu_pre, gamma_pre, beta_pre, SS_t0, SS_t1, dat_Y, dat_X, theta_pre));
       beta0_upd = Rcpp::as<double>(wrapper_beta0(beta0_pre, beta_upd, nu_pre, gamma_pre, hyper_mu_beta0, hyper_sigma_beta0, dat_Y, dat_X));
       arma::vec error_upd = dat_Y - beta0_upd - dat_X * beta_upd;
       nu_upd = Rcpp::as<double>(wrapper_nu(nu_pre, gamma_pre, error_upd, hyper_mu_nu, hyper_sigma_nu));
@@ -118,7 +119,6 @@ Rcpp::List TVS_EM_cpp(
     }
 
     // Check convergence
-    double diff_val = 0.0;
     if (conv_type == "param") {
       arma::vec prev = arma::join_vert(beta_pre, arma::vec({beta0_pre, nu_pre, gamma_pre, theta_pre}));
       arma::vec upd = arma::join_vert(beta_upd, arma::vec({beta0_upd, nu_upd, gamma_upd, theta_upd}));
@@ -154,6 +154,7 @@ Rcpp::List TVS_EM_cpp(
     Rcpp::Named("theta") = theta_upd,
     Rcpp::Named("iter") = iter,
     Rcpp::Named("converged") = converged,
+    Rcpp::Named("diff_param") = diff_val,
     Rcpp::Named("history") = Rcpp::List::create(
       Rcpp::Named("beta") = beta_hist_trimmed,
       Rcpp::Named("beta0") = beta0_hist_trimmed,

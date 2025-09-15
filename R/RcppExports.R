@@ -45,8 +45,32 @@ beta_neg_lk_cpp <- function(beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_
     .Call(`_TVS_beta_neg_lk_cpp`, beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
 }
 
-beta_neg_gradient_cpp <- function(beta_lk, beta0_lk, ga_lk, nu_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
-    .Call(`_TVS_beta_neg_gradient_cpp`, beta_lk, beta0_lk, ga_lk, nu_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+beta_neg_gradient_cpp <- function(beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
+    .Call(`_TVS_beta_neg_gradient_cpp`, beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+}
+
+beta_neg_hessian_cpp <- function(beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk) {
+    .Call(`_TVS_beta_neg_hessian_cpp`, beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk)
+}
+
+jbeta_neg_gradient_cpp <- function(j_index, beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
+    .Call(`_TVS_jbeta_neg_gradient_cpp`, j_index, beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+}
+
+jbeta_neg_hessian_cpp <- function(j_index, beta_lk, beta0_lk, nu_lk, ga_lk, Y_lk, X_lk) {
+    .Call(`_TVS_jbeta_neg_hessian_cpp`, j_index, beta_lk, beta0_lk, nu_lk, ga_lk, Y_lk, X_lk)
+}
+
+jbeta_neg_lk_cpp_maxLik <- function(beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
+    .Call(`_TVS_jbeta_neg_lk_cpp_maxLik`, beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+}
+
+jbeta_neg_gradient_cpp_maxLik <- function(beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
+    .Call(`_TVS_jbeta_neg_gradient_cpp_maxLik`, beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+}
+
+jbeta_neg_hessian_cpp_maxLik <- function(beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, Y_lk, X_lk) {
+    .Call(`_TVS_jbeta_neg_hessian_cpp_maxLik`, beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, Y_lk, X_lk)
 }
 
 beta0_neg_lk_cpp <- function(beta0_lk, beta_lk, nu_lk, gamma_lk, hyper_mu_beta0, hyper_sigma_beta0, Y_lk, X_lk) {
@@ -59,5 +83,13 @@ nu_neg_lk_cpp <- function(nu_lk, ga_lk, error_lk, hyper_mu, hyper_sigma) {
 
 gamma_neg_lk_cpp <- function(ga_lk, nu_lk, error_lk, hyper_c, hyper_d) {
     .Call(`_TVS_gamma_neg_lk_cpp`, ga_lk, nu_lk, error_lk, hyper_c, hyper_d)
+}
+
+beta_coordinate_descent_cpp <- function(beta_cd, beta0_cd, ga_cd, nu_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd, maX_cd_iter, tol) {
+    .Call(`_TVS_beta_coordinate_descent_cpp`, beta_cd, beta0_cd, ga_cd, nu_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd, maX_cd_iter, tol)
+}
+
+beta_coordinate_descent_cpp_maxLik <- function(beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd, maX_cd_iter, tol) {
+    .Call(`_TVS_beta_coordinate_descent_cpp_maxLik`, beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd, maX_cd_iter, tol)
 }
 

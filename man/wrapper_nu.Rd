@@ -13,9 +13,9 @@ wrapper_nu(nu, gamma, error_lk, hyper_mu, hyper_sigma)
 
 \item{error_lk}{Error vector}
 
-\item{hyper_mu}{the location hyperparameter in nu's log-normal prior (default: 1)}
+\item{hyper_mu}{the location hyperparameter in nu's log-normal prior}
 
-\item{hyper_sigma}{the scale hyperparameter in nu's log-normal prior (default: 1)}
+\item{hyper_sigma}{the scale hyperparameter in nu's log-normal prior}
 }
 \value{
 Optimized nu parameter

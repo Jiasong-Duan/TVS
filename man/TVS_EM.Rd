@@ -24,7 +24,7 @@ TVS_EM(
   max_iter = 100,
   tol = 1e-06,
   conv_type = "param",
-  beta_method = c("optim", "maxLik")
+  beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")
 )
 }
 \arguments{
@@ -66,7 +66,7 @@ TVS_EM(
 
 \item{conv_type}{Convergence type (default: "param")}
 
-\item{beta_method}{Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".}
+\item{beta_method}{Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".}
 }
 \value{
 List of results from the EM algorithm

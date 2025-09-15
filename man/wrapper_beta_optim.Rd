@@ -10,11 +10,11 @@ wrapper_beta_optim(
   nu,
   gamma,
   betaPRE,
-  t0 = 10,
-  t1 = 1,
+  t0,
+  t1,
   Y_lk,
   X_lk,
-  theta_lk = -2
+  theta_lk
 )
 }
 \arguments{
@@ -28,9 +28,9 @@ wrapper_beta_optim(
 
 \item{betaPRE}{Previous beta value}
 
-\item{t0}{the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)}
+\item{t0}{the "spike" hyperparameter in beta's spike-and-slab prior}
 
-\item{t1}{the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)}
+\item{t1}{the "slab" hyperparameter in beta's spike-and-slab prior}
 
 \item{Y_lk}{Response vector}
 

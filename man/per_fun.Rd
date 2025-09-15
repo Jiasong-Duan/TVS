@@ -25,7 +25,7 @@ per_fun(
   max_iter_per = 100,
   tol_per = 1e-06,
   add_correc_CiS = 0.001,
-  beta_method = c("optim", "maxLik")
+  beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")
 )
 }
 \arguments{
@@ -69,7 +69,7 @@ per_fun(
 
 \item{add_correc_CiS}{Correction factor for CiS (default: 1e-3)}
 
-\item{beta_method}{Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".}
+\item{beta_method}{Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".}
 }
 \value{
 Permutation function value

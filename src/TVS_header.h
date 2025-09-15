@@ -15,6 +15,10 @@ arma::vec beta_neg_gradient_cpp(
     arma::vec beta_lk, double beta0_lk, double ga_lk, double nu_lk,
     arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
     double theta_lk = -1.0);
+arma::vec beta_neg_hessian_cpp(
+    arma::vec beta_lk, double beta0_lk, double ga_lk, double nu_lk,
+    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
+    double theta_lk = -1.0); 
 double beta0_neg_lk_cpp(double beta0_lk, arma::vec beta_lk, double nu_lk, double gamma_lk,
                         double hyper_mu_beta0, double hyper_sigma_beta0,
                         arma::vec Y_lk, arma::mat X_lk);
@@ -22,6 +26,35 @@ double nu_neg_lk_cpp(double nu_lk, double ga_lk, Rcpp::NumericVector error_lk,
                      double hyper_mu=1, double hyper_sigma=1);
 double gamma_neg_lk_cpp(double ga_lk, double nu_lk, Rcpp::NumericVector error_lk,
                         double hyper_c=0.0001, double hyper_d=0.0001);
+double jbeta_neg_gradient_cpp(
+    int j_index, arma::vec beta_lk, double beta0_lk, double ga_lk, double nu_lk,
+    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
+    double theta_lk);
+double jbeta_neg_hessian_cpp(
+    int j_index, arma::vec beta_lk, double beta0_lk, double ga_lk, double nu_lk,
+    arma::vec Y_lk, arma::mat X_lk
+    );
+arma::vec beta_coordinate_descent_cpp(
+    arma::vec beta_cd, double beta0_cd, double ga_cd, double nu_cd,
+    arma::vec betaPRE, double t0, double t1,
+    arma::vec Y_cd, arma::mat X_cd, double theta_cd,
+    int maX_cd_iter = 100, double tol = 1e-6);
+double jbeta_neg_lk_cpp_maxLik(
+    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double ga_lk, double nu_lk, 
+    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, 
+    double theta_lk);
+double jbeta_neg_gradient_cpp_maxLik(
+    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double ga_lk, double nu_lk,
+    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
+    double theta_lk);
+double jbeta_neg_hessian_cpp_maxLik(
+    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double ga_lk, double nu_lk,
+    arma::vec Y_lk, arma::mat X_lk);
+arma::vec beta_coordinate_descent_cpp_maxLik(
+    arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, 
+    arma::vec betaPRE, double t0, double t1,
+    arma::vec Y_cd, arma::mat X_cd, double theta_cd,
+    int maX_cd_iter, double tol);
 Rcpp::List TVS_EM_cpp(
     Rcpp::List dataXY,
     arma::vec init_beta,

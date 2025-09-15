@@ -3,14 +3,23 @@
 #' @param method Estimation function for beta (default: Quasi-Newton method implemented by R optim() function)
 #' @return Optimized beta parameter
 #' @export
-wrapper_beta <- function(..., method = getOption("TVS_beta_method", "maxLik")) {
-  method <- match.arg(method, c("optim", "maxLik"))
+wrapper_beta <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk, method = getOption("TVS_beta_method", "maxLik")) {
+  method <- match.arg(method, c("optim", "maxLik", "cd_maxLik", "cd_maxLik_R"))
   if (method == "optim") {
-    wrapper_beta_optim(...)
+    wrapper_beta_optim(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
   } else if (method == "maxLik") {
-    wrapper_beta_maxLik(...)
+    wrapper_beta_maxLik(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+  } else if (method == "cd_maxLik"){
+    beta_coordinate_descent_cpp_maxLik(beta_cd=beta, beta0_cd=beta0, nu_cd=nu, ga_cd=gamma,
+                                       betaPRE, t0, t1, Y_cd=Y_lk, X_cd=X_lk, theta_cd=theta_lk,
+                                       maX_cd_iter=2, tol=1e-6)
+  } else if (method == "cd_maxLik_R"){
+    beta_coordinate_descent_R_maxLik(beta_cd=beta, beta0_cd=beta0, nu_cd=nu, ga_cd=gamma,
+                                     betaPRE, t0, t1, Y_cd=Y_lk, X_cd=X_lk, theta_cd=theta_lk,
+                                     maX_cd_iter=2, tol=1e-6)
   }
 }
+
 
 #' Wrapper function for beta optimization using quasi-Newton method
 #'
@@ -19,20 +28,20 @@ wrapper_beta <- function(..., method = getOption("TVS_beta_method", "maxLik")) {
 #' @param nu Nu parameter
 #' @param gamma Gamma parameter
 #' @param betaPRE Previous beta value
-#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
-#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
+#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior
+#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior
 #' @param Y_lk Response vector
 #' @param X_lk Predictor matrix
 #' @param theta_lk Theta parameter (default: number of predictors)
 #' @return Optimized beta parameter
 #' @export
-wrapper_beta_optim <- function(beta, beta0, nu, gamma, betaPRE, t0=10, t1=1, Y_lk, X_lk, theta_lk=-2) {
+wrapper_beta_optim <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
   func_lk <- function(x) beta_neg_lk_cpp(beta_lk=x, beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
                                          t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
   func_gradient <- function(x) beta_neg_gradient_cpp(beta_lk=x, beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
                                                      t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
   result <- tryCatch(
-    optim(par = beta, fn = func_lk, gr= func_gradient, method = "L-BFGS-B"),
+    optim(par = beta, fn = func_lk, gr= func_gradient, method = "BFGS"),
     error = function(e) {
       warning("beta optimization failed: ", conditionMessage(e))
       list(par = NA)
@@ -48,22 +57,92 @@ wrapper_beta_optim <- function(beta, beta0, nu, gamma, betaPRE, t0=10, t1=1, Y_l
 #' @param nu Nu parameter
 #' @param gamma Gamma parameter
 #' @param betaPRE Previous beta value
-#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
-#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
+#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior
+#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior
 #' @param Y_lk Response vector
 #' @param X_lk Predictor matrix
 #' @param theta_lk Theta parameter (default: number of predictors)
 #' @return Optimized beta parameter
 #' @export
-wrapper_beta_maxLik <- function(beta, beta0, nu, gamma, betaPRE, t0=10, t1=1, Y_lk, X_lk, theta_lk=-2) {
+wrapper_beta_maxLik <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
   func_lk <- function(x) -beta_neg_lk_cpp(beta_lk=x, beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
                                           t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
   func_gradient <- function(x) -t(beta_neg_gradient_cpp(beta_lk=x, beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
                                                         t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk))
-  res <- maxLik::maxLik(logLik = func_lk, grad = func_gradient, start = beta)
-
+  func_Hessian <- function(x) -beta_neg_hessian_cpp(beta_lk=x, beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
+                                                        t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk)
   result <- tryCatch(
-    maxLik::maxLik(logLik = func_lk, grad = func_gradient, start = beta),
+    maxLik::maxLik(logLik = func_lk, grad = func_gradient, hess = func_Hessian, start = beta),
+    error = function(e) {
+      warning("maxLik() failed: ", conditionMessage(e))
+      list(estimate = NA)
+    }
+  )
+  return(result$estimate)
+}
+
+#' Wrapper function for beta optimization using coordinate ascend based on Newton–Raphson update
+#'
+#' @param beta_cd Initial beta parameter
+#' @param beta0_cd Beta0 parameter
+#' @param nu_cd Nu parameter
+#' @param ga_cd Gamma parameter
+#' @param betaPRE Previous beta value
+#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior
+#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior
+#' @param Y_cd Response vector
+#' @param X_cd Predictor matrix
+#' @param theta_cd Theta parameter (default: number of predictors)
+#' @return Optimized beta parameter
+#' @export
+beta_coordinate_descent_R_maxLik <- function(beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1,
+                                             Y_cd, X_cd, theta_cd, maX_cd_iter, tol) {
+  # Get p
+  p <- ncol(X_cd)
+  # Update beta
+  for (iter in 1: maX_cd_iter) {
+    beta_old <- beta_cd
+    # Update beta sequentially
+    for (j in 1:p) {
+      # Newton update using maxLik
+      beta_cd[j] <- wrapper_beta_cd(j, beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd)
+    }
+    # Check convergence
+    if (sqrt(sum((beta_cd - beta_old)^2)) < tol)
+      break
+  }
+  # Return updated beta
+  return(beta_cd);
+}
+
+#' Wrapper function for beta optimization using coordinate ascend Newton–Raphson method
+#'
+#' @param j the index of beta to update
+#' @param beta Initial beta parameter
+#' @param beta0 Beta0 parameter
+#' @param nu Nu parameter
+#' @param gamma Gamma parameter
+#' @param betaPRE Previous beta value
+#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior
+#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior
+#' @param Y_lk Response vector
+#' @param X_lk Predictor matrix
+#' @param theta_lk Theta parameter (default: number of predictors)
+#' @return Optimized beta parameter
+#' @export
+wrapper_beta_cd <- function(j, beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk){
+  func_lk <- function(x) -jbeta_neg_lk_cpp_maxLik(beta_j=x, j_index = j, beta_noj = beta[-j],
+                                                  beta0_lk=beta0, ga_lk=gamma, nu_lk=nu, betaPRE=betaPRE,
+                                                  t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
+  func_gradient <- function(x) -jbeta_neg_gradient_cpp_maxLik(beta_j=x, j_index = j, beta_noj = beta[-j],
+                                                              beta0_lk = beta0, ga_lk = gamma, nu_lk = nu,
+                                                              betaPRE = betaPRE, t0 = t0, t1 = t1,
+                                                              Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
+  func_Hessian <- function(x) -jbeta_neg_hessian_cpp_maxLik(beta_j=x, j_index = j, beta_noj = beta[-j],
+                                                            beta0_lk = beta0, ga_lk = gamma, nu_lk = nu,
+                                                            Y_lk=Y_lk, X_lk=X_lk)
+  result <- tryCatch(
+    maxLik::maxLik(logLik = func_lk, grad = func_gradient, hess = func_Hessian, start = beta[j]),
     error = function(e) {
       warning("maxLik() failed: ", conditionMessage(e))
       list(estimate = NA)
@@ -78,17 +157,17 @@ wrapper_beta_maxLik <- function(beta, beta0, nu, gamma, betaPRE, t0=10, t1=1, Y_
 #' @param beta.lk Beta parameter
 #' @param nu.lk Nu parameter
 #' @param gamma.lk Gamma parameter
-#' @param hyper.mu.beta0 the mean hyperparameter in beta0's Normal prior (default: 0)
-#' @param hyper.sigma.beta0 the variance hyperparameter in beta0's Normal prior (default: 10e6)
+#' @param hyper.mu.beta0 the mean hyperparameter in beta0's Normal prior
+#' @param hyper.sigma.beta0 the variance hyperparameter in beta0's Normal prior
 #' @param Y.lk Response vector
 #' @param X.lk Predictor matrix
 #' @return Optimized beta0 parameter
 #' @export
-wrapper_beta0 <- function(beta0.lk, beta.lk, nu.lk, gamma.lk, hyper.mu.beta0=0, hyper.sigma.beta0=10^6, Y.lk, X.lk){
+wrapper_beta0 <- function(beta0.lk, beta.lk, nu.lk, gamma.lk, hyper.mu.beta0, hyper.sigma.beta0, Y.lk, X.lk){
   func <- function(x) beta0_neg_lk_cpp(beta0_lk=x, beta_lk=beta.lk, nu_lk=nu.lk, gamma_lk=gamma.lk,
                                        hyper_mu_beta0= hyper.mu.beta0, hyper_sigma_beta0= hyper.sigma.beta0, Y_lk=Y.lk, X_lk=X.lk)
   result <- tryCatch(
-    optim(par = beta0.lk, fn = func, method = "L-BFGS-B", lower = -100, upper = 100),
+    optim(par = beta0.lk, fn = func, method = "BFGS"),
     error = function(e) {
       warning("beta0 optimization failed: ", conditionMessage(e))
       list(par = NA)
@@ -102,8 +181,8 @@ wrapper_beta0 <- function(beta0.lk, beta.lk, nu.lk, gamma.lk, hyper.mu.beta0=0, 
 #' @param nu Initial nu parameter
 #' @param gamma Gamma parameter
 #' @param error_lk Error vector
-#' @param hyper_mu the location hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_sigma the scale hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_mu the location hyperparameter in nu's log-normal prior
+#' @param hyper_sigma the scale hyperparameter in nu's log-normal prior
 #' @return Optimized nu parameter
 #' @export
 wrapper_nu <- function(nu, gamma, error_lk, hyper_mu, hyper_sigma) {
@@ -123,8 +202,8 @@ wrapper_nu <- function(nu, gamma, error_lk, hyper_mu, hyper_sigma) {
 #' @param gamma Initial gamma parameter
 #' @param nu Nu parameter
 #' @param error_lk Error vector
-#' @param hyper_c the shape hyperparameter in gamma's gamma prior (default: 10e-4)
-#' @param hyper_d the rate hyperparameter in gamma's gamma prior (default: 10e-4)
+#' @param hyper_c the shape hyperparameter in gamma's gamma prior
+#' @param hyper_d the rate hyperparameter in gamma's gamma prior
 #' @return Optimized gamma parameter
 #' @export
 wrapper_gamma <- function(gamma, nu, error_lk, hyper_c, hyper_d) {
@@ -160,7 +239,7 @@ wrapper_gamma <- function(gamma, nu, error_lk, hyper_c, hyper_d) {
 #' @param max_iter Maximum number of iterations (default: 100)
 #' @param tol Convergence tolerance (default: 1e-6)
 #' @param conv_type Convergence type (default: "param")
-#' @param beta_method Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
 #' @return List of results from the EM algorithm
 #' @export
 TVS_EM <- function(
@@ -183,7 +262,7 @@ TVS_EM <- function(
     max_iter = 100,
     tol = 1e-6,
     conv_type = "param",
-    beta_method = c("optim", "maxLik")) {
+    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -288,7 +367,7 @@ CiS_j_fun <- function(test_index,
 #' @param max_iter_per Maximum number of iterations (default: 100)
 #' @param tol_per Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
 #' @return Permutation function value
 #' @export
 per_fun <- function(j_index,
@@ -311,7 +390,7 @@ per_fun <- function(j_index,
                     max_iter_per = 100,
                     tol_per = 1e-6,
                     add_correc_CiS = 0.001,
-                    beta_method = c("optim", "maxLik")) {
+                    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -395,7 +474,7 @@ CiS_group_fun <- function(test_indices,
 #' @param max_iter_per Maximum number of iterations (default: 100)
 #' @param tol_per Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
 #' @return Group permutation function value
 #' @export
 per_group_fun <- function(j_indices,
@@ -418,7 +497,7 @@ per_group_fun <- function(j_indices,
                           max_iter_per = 100,
                           tol_per = 1e-6,
                           add_correc_CiS = 0.001,
-                          beta_method = c("optim", "maxLik")) {
+                          beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -473,7 +552,7 @@ per_group_fun <- function(j_indices,
 #' @param max_iter_TVS Maximum number of iterations (default: 100)
 #' @param tol_TVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
 #' @return List containing variable selection results
 #' @export
 TVS <- function(
@@ -498,7 +577,7 @@ TVS <- function(
     max_iter_TVS = 100,
     tol_TVS = 1e-6,
     add_correc_CiS = 0.001,
-    beta_method = c("optim", "maxLik")) {
+    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -555,7 +634,7 @@ TVS <- function(
 #' @param max_iter_TVS Maximum number of iterations (default: 100)
 #' @param tol_TVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
 #' @return List containing variable selection results
 #' @export
 TVS_j <- function(
@@ -581,7 +660,7 @@ TVS_j <- function(
     max_iter_TVS = 100,
     tol_TVS = 1e-6,
     add_correc_CiS = 0.001,
-    beta_method = c("optim", "maxLik")) {
+    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -643,7 +722,7 @@ TVS_j <- function(
 #' @param max_iter_TVS Maximum number of iterations (default: 100)
 #' @param tol_TVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("optim" or "maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
 #' @return List of multi-stage TVS results
 #' @export
 TVS_multi_stage <- function(
@@ -673,7 +752,7 @@ TVS_multi_stage <- function(
     max_iter_TVS = 100,
     tol_TVS = 1e-6,
     add_correc_CiS = 0.001,
-    beta_method = c("optim", "maxLik")) {
+    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)

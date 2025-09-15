@@ -13,9 +13,9 @@ wrapper_gamma(gamma, nu, error_lk, hyper_c, hyper_d)
 
 \item{error_lk}{Error vector}
 
-\item{hyper_c}{the shape hyperparameter in gamma's gamma prior (default: 10e-4)}
+\item{hyper_c}{the shape hyperparameter in gamma's gamma prior}
 
-\item{hyper_d}{the rate hyperparameter in gamma's gamma prior (default: 10e-4)}
+\item{hyper_d}{the rate hyperparameter in gamma's gamma prior}
 }
 \value{
 Optimized gamma parameter
