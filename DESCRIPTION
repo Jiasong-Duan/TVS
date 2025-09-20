@@ -1,6 +1,6 @@
 Package: TVS
 Title: Testing-driven Variable Selection in Modal Regression
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(
     person(given = "Jiasong", family = "Duan", email = "jiasong@email.sc.edu", role = c("aut", "cre")),
     person(given = "Xianzheng", family = "Huang", email = "huang@stat.sc.edu", role = c("aut")),
