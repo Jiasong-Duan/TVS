@@ -18,7 +18,7 @@ arma::vec beta_neg_gradient_cpp(
 arma::vec beta_neg_hessian_cpp(
     arma::vec beta_lk, double beta0_lk, double ga_lk, double nu_lk,
     arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
-    double theta_lk = -1.0); 
+    double theta_lk = -1.0);
 double beta0_neg_lk_cpp(double beta0_lk, arma::vec beta_lk, double nu_lk, double gamma_lk,
                         double hyper_mu_beta0, double hyper_sigma_beta0,
                         arma::vec Y_lk, arma::mat X_lk);
@@ -40,8 +40,8 @@ arma::vec beta_coordinate_descent_cpp(
     arma::vec Y_cd, arma::mat X_cd, double theta_cd,
     int maX_cd_iter = 100, double tol = 1e-6);
 double jbeta_neg_lk_cpp_maxLik(
-    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double ga_lk, double nu_lk, 
-    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, 
+    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double ga_lk, double nu_lk,
+    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
     double theta_lk);
 double jbeta_neg_gradient_cpp_maxLik(
     double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double ga_lk, double nu_lk,
@@ -51,7 +51,7 @@ double jbeta_neg_hessian_cpp_maxLik(
     double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double ga_lk, double nu_lk,
     arma::vec Y_lk, arma::mat X_lk);
 arma::vec beta_coordinate_descent_cpp_maxLik(
-    arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, 
+    arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd,
     arma::vec betaPRE, double t0, double t1,
     arma::vec Y_cd, arma::mat X_cd, double theta_cd,
     int maX_cd_iter, double tol);
@@ -179,6 +179,29 @@ Rcpp::List TVS_j_cpp(
     double tol_TVS = 1e-6,
     double add_correc_CiS = 0.001
 );
+Rcpp::List TVS_group_cpp(
+    const arma::uvec& test_indices,
+    Rcpp::List dataXY,
+    arma::vec init_beta_TVS,
+    int B,
+    double sig_cutoff,
+    double init_beta0_TVS,
+    double init_nu_TVS,
+    double init_gamma_TVS,
+    double init_theta_TVS,
+    double SS_t0_TVS,
+    double SS_t1_TVS,
+    double hyper_mu_beta0_TVS,
+    double hyper_sigma_beta0_TVS,
+    double hyper_mu_nu_TVS,
+    double hyper_sigma_nu_TVS,
+    double hyper_c_gamma_TVS,
+    double hyper_d_gamma_TVS,
+    double hyper_a_theta_TVS,
+    double hyper_b_theta_TVS,
+    int max_iter_TVS,
+    double tol_TVS,
+    double add_correc_CiS);
 Rcpp::List TVS_multi_stage_cpp(
     Rcpp::List dataXY,
     arma::vec init_beta_TVS,

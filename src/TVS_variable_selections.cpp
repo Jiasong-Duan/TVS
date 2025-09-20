@@ -144,7 +144,6 @@ Rcpp::List TVS_j_cpp(
                                   SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
                                   hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS);
 
-  arma::vec pvals(p, arma::fill::zeros);
   arma::uvec test_j = {static_cast<unsigned int>(test_index)};
 
   Rcpp::Rcout << "Predictor " << test_index << std::endl;
@@ -180,6 +179,85 @@ Rcpp::List TVS_j_cpp(
   );
 }
 
+// [[Rcpp::export]]
+Rcpp::List TVS_group_cpp(
+    const arma::uvec& test_indices,
+    Rcpp::List dataXY,
+    arma::vec init_beta_TVS,
+    int B,
+    double sig_cutoff,
+    double init_beta0_TVS,
+    double init_nu_TVS,
+    double init_gamma_TVS,
+    double init_theta_TVS,
+    double SS_t0_TVS,
+    double SS_t1_TVS,
+    double hyper_mu_beta0_TVS,
+    double hyper_sigma_beta0_TVS,
+    double hyper_mu_nu_TVS,
+    double hyper_sigma_nu_TVS,
+    double hyper_c_gamma_TVS,
+    double hyper_d_gamma_TVS,
+    double hyper_a_theta_TVS,
+    double hyper_b_theta_TVS,
+    int max_iter_TVS,
+    double tol_TVS,
+    double add_correc_CiS) {
+
+  arma::vec dat_Y = dataXY["Y"];
+  arma::mat dat_X = dataXY["X"];
+  int p = dat_X.n_cols;
+
+  double min_test_index = min(test_indices);
+  double max_test_index = max(test_indices);
+  // Check if test_index is within valid bounds (1-based to 0-based conversion)
+  if (min_test_index < 1 || max_test_index > p) {
+    Rcpp::stop(
+      "Invalid test_index (requested %d, but coefficient vector has length %d). "
+      "Must be between 1 and %d.",
+      test_indices, p, p
+    );
+  }
+
+  // Check if hyper_b_theta was provided
+  double hyper_b_theta_val = (hyper_b_theta_TVS < 0) ? p : hyper_b_theta_TVS;
+
+  // Original grouped CiS
+  Rcpp::List em_orig = TVS_EM_cpp(dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
+                                  SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
+                                  hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS);
+  arma::vec beta_orig = em_orig["beta"];
+  double beta0_orig = em_orig["beta0"];
+  double nu_orig = em_orig["nu"];
+  double gamma_orig = em_orig["gamma"];
+
+  Rcpp::Rcout << "Predictors " << test_indices << std::endl;
+
+  //observed CiSj
+  //the index is not 0-based, so don't need to add 1 within this function
+  double CiS_orig = CiS_group_fun_cpp(test_indices, beta_orig, beta0_orig, nu_orig, gamma_orig, dataXY, add_correc_CiS);
+
+  int count = 0;
+    for (int b = 0; b < B; ++b) {
+    //the index is 1-based, so just put test_indices directly;
+    double CiS_perm = per_group_fun_cpp(test_indices,
+                                  dataXY, init_beta_TVS, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS,
+                                  SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS,
+                                  hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_val, max_iter_TVS, tol_TVS, add_correc_CiS
+    );
+    if (CiS_perm >= CiS_orig) count++;
+  }
+  double pval_group = static_cast<double>(count) / (B);
+
+  return Rcpp::List::create(
+    Rcpp::Named("beta_group_estimate") = arma::vec(beta_orig.elem(test_indices-1)),
+    Rcpp::Named("beta0_estimate") = beta0_orig,
+    Rcpp::Named("nu_estimate") = nu_orig,
+    Rcpp::Named("gamma_estimate") = gamma_orig,
+    Rcpp::Named("test_indices") = test_indices,
+    Rcpp::Named("p_value_group") = pval_group
+  );
+}
 
 // [[Rcpp::export]]
 Rcpp::List TVS_multi_stage_cpp(

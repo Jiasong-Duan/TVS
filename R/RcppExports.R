@@ -37,6 +37,10 @@ TVS_j_cpp <- function(test_index, dataXY, init_beta_TVS, B, sig_cutoff, init_bet
     .Call(`_TVS_TVS_j_cpp`, test_index, dataXY, init_beta_TVS, B, sig_cutoff, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS)
 }
 
+TVS_group_cpp <- function(test_indices, dataXY, init_beta_TVS, B, sig_cutoff, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS) {
+    .Call(`_TVS_TVS_group_cpp`, test_indices, dataXY, init_beta_TVS, B, sig_cutoff, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS)
+}
+
 TVS_multi_stage_cpp <- function(dataXY, init_beta_TVS, group_B, indiv_B, B_final, group_cutoff, indiv_cutoff, sig_cutoff, group_size, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS) {
     .Call(`_TVS_TVS_multi_stage_cpp`, dataXY, init_beta_TVS, group_B, indiv_B, B_final, group_cutoff, indiv_cutoff, sig_cutoff, group_size, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS)
 }
