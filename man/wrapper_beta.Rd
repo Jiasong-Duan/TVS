@@ -15,7 +15,7 @@ wrapper_beta(
   Y_lk,
   X_lk,
   theta_lk,
-  method = getOption("TVS_beta_method", "maxLik")
+  method = getOption("TVS_beta_method", "nlm")
 )
 }
 \arguments{

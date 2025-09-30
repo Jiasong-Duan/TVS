@@ -450,6 +450,48 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// beta_neg_lk_cpp_nlm
+Rcpp::NumericVector beta_neg_lk_cpp_nlm(arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
+RcppExport SEXP _TVS_beta_neg_lk_cpp_nlm(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type beta_lk(beta_lkSEXP);
+    Rcpp::traits::input_parameter< double >::type beta0_lk(beta0_lkSEXP);
+    Rcpp::traits::input_parameter< double >::type nu_lk(nu_lkSEXP);
+    Rcpp::traits::input_parameter< double >::type ga_lk(ga_lkSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type betaPRE(betaPRESEXP);
+    Rcpp::traits::input_parameter< double >::type t0(t0SEXP);
+    Rcpp::traits::input_parameter< double >::type t1(t1SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Y_lk(Y_lkSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type X_lk(X_lkSEXP);
+    Rcpp::traits::input_parameter< double >::type theta_lk(theta_lkSEXP);
+    rcpp_result_gen = Rcpp::wrap(beta_neg_lk_cpp_nlm(beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk));
+    return rcpp_result_gen;
+END_RCPP
+}
+// jbeta_neg_lk_cpp_nlm
+Rcpp::NumericVector jbeta_neg_lk_cpp_nlm(double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
+RcppExport SEXP _TVS_jbeta_neg_lk_cpp_nlm(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type beta_j(beta_jSEXP);
+    Rcpp::traits::input_parameter< int >::type j_index(j_indexSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type beta_noj(beta_nojSEXP);
+    Rcpp::traits::input_parameter< double >::type beta0_lk(beta0_lkSEXP);
+    Rcpp::traits::input_parameter< double >::type nu_lk(nu_lkSEXP);
+    Rcpp::traits::input_parameter< double >::type ga_lk(ga_lkSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type betaPRE(betaPRESEXP);
+    Rcpp::traits::input_parameter< double >::type t0(t0SEXP);
+    Rcpp::traits::input_parameter< double >::type t1(t1SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Y_lk(Y_lkSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type X_lk(X_lkSEXP);
+    Rcpp::traits::input_parameter< double >::type theta_lk(theta_lkSEXP);
+    rcpp_result_gen = Rcpp::wrap(jbeta_neg_lk_cpp_nlm(beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk));
+    return rcpp_result_gen;
+END_RCPP
+}
 // beta0_neg_lk_cpp
 double beta0_neg_lk_cpp(double beta0_lk, arma::vec beta_lk, double nu_lk, double gamma_lk, double hyper_mu_beta0, double hyper_sigma_beta0, arma::vec Y_lk, arma::mat X_lk);
 RcppExport SEXP _TVS_beta0_neg_lk_cpp(SEXP beta0_lkSEXP, SEXP beta_lkSEXP, SEXP nu_lkSEXP, SEXP gamma_lkSEXP, SEXP hyper_mu_beta0SEXP, SEXP hyper_sigma_beta0SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
@@ -499,15 +541,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // beta_coordinate_descent_cpp
-arma::vec beta_coordinate_descent_cpp(arma::vec beta_cd, double beta0_cd, double ga_cd, double nu_cd, arma::vec betaPRE, double t0, double t1, arma::vec Y_cd, arma::mat X_cd, double theta_cd, int maX_cd_iter, double tol);
-RcppExport SEXP _TVS_beta_coordinate_descent_cpp(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP ga_cdSEXP, SEXP nu_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
+arma::vec beta_coordinate_descent_cpp(arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, arma::vec betaPRE, double t0, double t1, arma::vec Y_cd, arma::mat X_cd, double theta_cd, int maX_cd_iter, double tol);
+RcppExport SEXP _TVS_beta_coordinate_descent_cpp(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::vec >::type beta_cd(beta_cdSEXP);
     Rcpp::traits::input_parameter< double >::type beta0_cd(beta0_cdSEXP);
-    Rcpp::traits::input_parameter< double >::type ga_cd(ga_cdSEXP);
     Rcpp::traits::input_parameter< double >::type nu_cd(nu_cdSEXP);
+    Rcpp::traits::input_parameter< double >::type ga_cd(ga_cdSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type betaPRE(betaPRESEXP);
     Rcpp::traits::input_parameter< double >::type t0(t0SEXP);
     Rcpp::traits::input_parameter< double >::type t1(t1SEXP);
@@ -516,7 +558,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type theta_cd(theta_cdSEXP);
     Rcpp::traits::input_parameter< int >::type maX_cd_iter(maX_cd_iterSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
-    rcpp_result_gen = Rcpp::wrap(beta_coordinate_descent_cpp(beta_cd, beta0_cd, ga_cd, nu_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd, maX_cd_iter, tol));
+    rcpp_result_gen = Rcpp::wrap(beta_coordinate_descent_cpp(beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd, maX_cd_iter, tol));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -542,6 +584,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// beta_coordinate_descent_cpp_nlm
+arma::vec beta_coordinate_descent_cpp_nlm(arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, arma::vec betaPRE, double t0, double t1, arma::vec Y_cd, arma::mat X_cd, double theta_cd, int maX_cd_iter, double tol);
+RcppExport SEXP _TVS_beta_coordinate_descent_cpp_nlm(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type beta_cd(beta_cdSEXP);
+    Rcpp::traits::input_parameter< double >::type beta0_cd(beta0_cdSEXP);
+    Rcpp::traits::input_parameter< double >::type nu_cd(nu_cdSEXP);
+    Rcpp::traits::input_parameter< double >::type ga_cd(ga_cdSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type betaPRE(betaPRESEXP);
+    Rcpp::traits::input_parameter< double >::type t0(t0SEXP);
+    Rcpp::traits::input_parameter< double >::type t1(t1SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Y_cd(Y_cdSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type X_cd(X_cdSEXP);
+    Rcpp::traits::input_parameter< double >::type theta_cd(theta_cdSEXP);
+    Rcpp::traits::input_parameter< int >::type maX_cd_iter(maX_cd_iterSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(beta_coordinate_descent_cpp_nlm(beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd, maX_cd_iter, tol));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_TVS_slope_error_cpp", (DL_FUNC) &_TVS_slope_error_cpp, 3},
@@ -563,11 +627,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TVS_jbeta_neg_lk_cpp_maxLik", (DL_FUNC) &_TVS_jbeta_neg_lk_cpp_maxLik, 12},
     {"_TVS_jbeta_neg_gradient_cpp_maxLik", (DL_FUNC) &_TVS_jbeta_neg_gradient_cpp_maxLik, 12},
     {"_TVS_jbeta_neg_hessian_cpp_maxLik", (DL_FUNC) &_TVS_jbeta_neg_hessian_cpp_maxLik, 8},
+    {"_TVS_beta_neg_lk_cpp_nlm", (DL_FUNC) &_TVS_beta_neg_lk_cpp_nlm, 10},
+    {"_TVS_jbeta_neg_lk_cpp_nlm", (DL_FUNC) &_TVS_jbeta_neg_lk_cpp_nlm, 12},
     {"_TVS_beta0_neg_lk_cpp", (DL_FUNC) &_TVS_beta0_neg_lk_cpp, 8},
     {"_TVS_nu_neg_lk_cpp", (DL_FUNC) &_TVS_nu_neg_lk_cpp, 5},
     {"_TVS_gamma_neg_lk_cpp", (DL_FUNC) &_TVS_gamma_neg_lk_cpp, 5},
     {"_TVS_beta_coordinate_descent_cpp", (DL_FUNC) &_TVS_beta_coordinate_descent_cpp, 12},
     {"_TVS_beta_coordinate_descent_cpp_maxLik", (DL_FUNC) &_TVS_beta_coordinate_descent_cpp_maxLik, 12},
+    {"_TVS_beta_coordinate_descent_cpp_nlm", (DL_FUNC) &_TVS_beta_coordinate_descent_cpp_nlm, 12},
     {NULL, NULL, 0}
 };
 

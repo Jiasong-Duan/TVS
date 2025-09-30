@@ -70,7 +70,6 @@ arma::vec beta_neg_gradient_cpp(
   //return gradient;
 }
 
-
 // [[Rcpp::export]]
 arma::mat beta_neg_hessian_cpp(
     arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk,
@@ -105,7 +104,6 @@ arma::mat beta_neg_hessian_cpp(
   return H;
 }
 
-
 // [[Rcpp::export]]
 double jbeta_neg_gradient_cpp(
     int j_index, arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk,
@@ -117,7 +115,7 @@ double jbeta_neg_gradient_cpp(
   // Check if theta_lk was provided
   double theta_val = (theta_lk < 0) ? 1.0 / p : theta_lk;
   // a C++ based index
-  int j_index_cpp = j_index -1; 
+  int j_index_cpp = j_index -1;
   // Ensure beta_lk size matches X_lk columns
   if (static_cast<int>(beta_lk.n_elem) != p) {
     Rcpp::stop("Size of beta coefficients does not match predictor dimensions");
@@ -148,7 +146,7 @@ double jbeta_neg_hessian_cpp(
     ) {
   // Get n and p
   int n = Y_lk.n_elem;
-  int p = X_lk.n_cols;  
+  int p = X_lk.n_cols;
   // Ensure beta_lk size matches X_lk columns
   if (static_cast<int>(beta_lk.n_elem) != p) {
     Rcpp::stop("Size of beta coefficients does not match predictor dimensions");
@@ -170,7 +168,7 @@ double jbeta_neg_hessian_cpp(
            std::pow(1.0 + (gi/nu_lk) * r * r, 2.0);
   }
   // a C++ based index
-  int j_index_cpp = j_index -1; 
+  int j_index_cpp = j_index -1;
   arma::vec X_j = X_lk.col(j_index_cpp);
   // Hessian
   double H_j = (nu_lk/2.0 + 0.5) * arma::dot(X_j % X_j, h);
@@ -181,8 +179,8 @@ double jbeta_neg_hessian_cpp(
 
 // [[Rcpp::export]]
 double jbeta_neg_lk_cpp_maxLik(
-    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk, 
-    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, 
+    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk,
+    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
     double theta_lk) {
   // Get n and p
   int n = Y_lk.n_elem;
@@ -190,7 +188,7 @@ double jbeta_neg_lk_cpp_maxLik(
   // Check if theta_lk was provided
   double theta_val = (theta_lk < 0) ? 1.0 / p : theta_lk;
     // a C++ based index
-  int j_index_cpp = j_index -1; 
+  int j_index_cpp = j_index -1;
   // Ensure beta_lk size matches X_lk columns
   if (static_cast<int>(beta_noj.n_elem) != (p-1)) {
     Rcpp::stop("Size of beta coefficients does not match predictor dimensions");
@@ -225,7 +223,7 @@ double jbeta_neg_gradient_cpp_maxLik(
   // Check if theta_lk was provided
   double theta_val = (theta_lk < 0) ? 1.0 / p : theta_lk;
   // a C++ based index
-  int j_index_cpp = j_index -1; 
+  int j_index_cpp = j_index -1;
   // Ensure beta_lk size matches X_lk columns
   if (static_cast<int>(beta_noj.n_elem) != (p-1)) {
     Rcpp::stop("Size of beta coefficients does not match predictor dimensions");
@@ -292,6 +290,52 @@ double jbeta_neg_hessian_cpp_maxLik(
   return H_j;
 }
 
+// [[Rcpp::export]]
+Rcpp::NumericVector beta_neg_lk_cpp_nlm(
+    arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1,
+    arma::vec Y_lk, arma::mat X_lk, double theta_lk) {
+
+  // Get negtive log likelihood evaluated
+  double neg_lk = beta_neg_lk_cpp(beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk);
+  // Get gradient of negtive log likelihood evaluated
+  arma::vec neg_grad = beta_neg_gradient_cpp(beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk);
+  // Get hessian of negtive log likelihood evaluated
+  arma::mat neg_hess = beta_neg_hessian_cpp(beta_lk, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk);
+
+  // Wrap as NumericVector of length 1
+  Rcpp::NumericVector bneglog(1);
+  bneglog[0] = neg_lk;
+
+  // Attach attributes
+  bneglog.attr("gradient") = neg_grad;
+  bneglog.attr("hessian")  = neg_hess;
+
+  return bneglog;
+}
+
+// [[Rcpp::export]]
+Rcpp::NumericVector jbeta_neg_lk_cpp_nlm(
+    double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk,
+    arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk,
+    double theta_lk) {
+
+  // Get negtive log likelihood evaluated
+  double jneg_lk = jbeta_neg_lk_cpp_maxLik(beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk);
+  // Get gradient of negtive log likelihood evaluated
+  double jneg_grad = jbeta_neg_gradient_cpp_maxLik(beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, betaPRE, t0, t1, Y_lk, X_lk, theta_lk);
+  // Get hessian of negtive log likelihood evaluated
+  double jneg_hess = jbeta_neg_hessian_cpp_maxLik(beta_j, j_index, beta_noj, beta0_lk, nu_lk, ga_lk, Y_lk, X_lk);
+
+  // Wrap as NumericVector of length 1
+  Rcpp::NumericVector jbneglog(1);
+  jbneglog[0] = jneg_lk;
+
+  // Attach attributes
+  jbneglog.attr("gradient") = jneg_grad;
+  jbneglog.attr("hessian")  = jneg_hess;
+
+  return jbneglog;
+}
 
 // [[Rcpp::export]]
 double beta0_neg_lk_cpp(double beta0_lk, arma::vec beta_lk, double nu_lk, double gamma_lk,
@@ -368,7 +412,7 @@ double gamma_neg_lk_cpp(double ga_lk, double nu_lk, Rcpp::NumericVector error_lk
 
 // [[Rcpp::export]]
 arma::vec beta_coordinate_descent_cpp(
-    arma::vec beta_cd, double beta0_cd, double ga_cd, double nu_cd,
+    arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd,
     arma::vec betaPRE, double t0, double t1,
     arma::vec Y_cd, arma::mat X_cd, double theta_cd,
     int maX_cd_iter, double tol) {
@@ -390,7 +434,7 @@ arma::vec beta_coordinate_descent_cpp(
    double denom = (std::abs(h_jj) < 1e-12) ? ( (h_jj >= 0) ? 1e-12 : -1e-12 ) : h_jj;
     Rcpp::Rcout << "denom: " << denom << std::endl;
   // Newton update
-      beta_cd[j] -= 0.2 * (g_j / denom); 
+      beta_cd[j] -= 0.2 * (g_j / denom);
     }
   // Check convergence
     if (arma::norm(beta_cd - beta_old, 2) < tol)
@@ -403,7 +447,7 @@ arma::vec beta_coordinate_descent_cpp(
 
 // [[Rcpp::export]]
 arma::vec beta_coordinate_descent_cpp_maxLik(
-    arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, 
+    arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd,
     arma::vec betaPRE, double t0, double t1,
     arma::vec Y_cd, arma::mat X_cd, double theta_cd,
     int maX_cd_iter, double tol) {
@@ -411,13 +455,40 @@ arma::vec beta_coordinate_descent_cpp_maxLik(
   int p = X_cd.n_cols;
   // Update beta
   Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TVS");
-  Rcpp::Function wrapper_beta_cd = pkg_env["wrapper_beta_cd"];
+  Rcpp::Function wrapper_beta_cd_maxLik = pkg_env["wrapper_beta_cd_maxLik"];
   for (int iter = 0; iter < maX_cd_iter; ++iter) {
     arma::vec beta_old = beta_cd;
   // Update beta sequentially
-    for (int j_cpp = 0; j_cpp < p; ++j_cpp) {             
+    for (int j_cpp = 0; j_cpp < p; ++j_cpp) {
   // Newton update using maxLik
-    beta_cd[j_cpp] = Rcpp::as<double>(wrapper_beta_cd(j_cpp+1, beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd)); 
+    beta_cd[j_cpp] = Rcpp::as<double>(wrapper_beta_cd_maxLik(j_cpp+1, beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd));
+    }
+  // Check convergence
+    if (arma::norm(beta_cd - beta_old, 2) < tol)
+      break;
+  //  Rcpp::Rcout << "diff_val: " << arma::norm(beta_cd - beta_old, 2) << std::endl;
+  }
+  // Return updated beta
+  return beta_cd;
+}
+
+// [[Rcpp::export]]
+arma::vec beta_coordinate_descent_cpp_nlm(
+    arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd,
+    arma::vec betaPRE, double t0, double t1,
+    arma::vec Y_cd, arma::mat X_cd, double theta_cd,
+    int maX_cd_iter, double tol) {
+  // Get p
+  int p = X_cd.n_cols;
+  // Update beta
+  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TVS");
+  Rcpp::Function wrapper_beta_cd_nlm = pkg_env["wrapper_beta_cd_nlm"];
+  for (int iter = 0; iter < maX_cd_iter; ++iter) {
+    arma::vec beta_old = beta_cd;
+  // Update beta sequentially
+    for (int j_cpp = 0; j_cpp < p; ++j_cpp) {
+  // Newton update using nlm
+    beta_cd[j_cpp] = Rcpp::as<double>(wrapper_beta_cd_nlm(j_cpp+1, beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd));
     }
   // Check convergence
     if (arma::norm(beta_cd - beta_old, 2) < tol)

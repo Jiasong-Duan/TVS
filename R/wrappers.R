@@ -3,23 +3,24 @@
 #' @param method Estimation function for beta (default: Quasi-Newton method implemented by R optim() function)
 #' @return Optimized beta parameter
 #' @export
-wrapper_beta <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk, method = getOption("TVS_beta_method", "maxLik")) {
-  method <- match.arg(method, c("optim", "maxLik", "cd_maxLik", "cd_maxLik_R"))
-  if (method == "optim") {
+wrapper_beta <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk, method = getOption("TVS_beta_method", "nlm")) {
+  method <- match.arg(method, c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"))
+  if (method == "nlm") {
+    wrapper_beta_nlm(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+  } else if (method == "optim") {
     wrapper_beta_optim(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
   } else if (method == "maxLik") {
     wrapper_beta_maxLik(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
+  } else if (method == "cd_nlm"){
+    beta_coordinate_descent_cpp_nlm(beta_cd=beta, beta0_cd=beta0, nu_cd=nu, ga_cd=gamma,
+                                       betaPRE, t0, t1, Y_cd=Y_lk, X_cd=X_lk, theta_cd=theta_lk,
+                                       maX_cd_iter=2, tol=1e-6)
   } else if (method == "cd_maxLik"){
     beta_coordinate_descent_cpp_maxLik(beta_cd=beta, beta0_cd=beta0, nu_cd=nu, ga_cd=gamma,
                                        betaPRE, t0, t1, Y_cd=Y_lk, X_cd=X_lk, theta_cd=theta_lk,
                                        maX_cd_iter=2, tol=1e-6)
-  } else if (method == "cd_maxLik_R"){
-    beta_coordinate_descent_R_maxLik(beta_cd=beta, beta0_cd=beta0, nu_cd=nu, ga_cd=gamma,
-                                     betaPRE, t0, t1, Y_cd=Y_lk, X_cd=X_lk, theta_cd=theta_lk,
-                                     maX_cd_iter=2, tol=1e-6)
   }
 }
-
 
 #' Wrapper function for beta optimization using quasi-Newton method
 #'
@@ -50,7 +51,34 @@ wrapper_beta_optim <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_
   return(result$par)
 }
 
-#' Wrapper function for beta optimization using Newton–Raphson method
+#' Wrapper function for beta optimization using Newton–Raphson method by nlm
+#'
+#' @param beta Initial beta parameter
+#' @param beta0 Beta0 parameter
+#' @param nu Nu parameter
+#' @param gamma Gamma parameter
+#' @param betaPRE Previous beta value
+#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior
+#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior
+#' @param Y_lk Response vector
+#' @param X_lk Predictor matrix
+#' @param theta_lk Theta parameter (default: number of predictors)
+#' @return Optimized beta parameter
+#' @export
+wrapper_beta_nlm <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk) {
+  func_lk <- function(x) beta_neg_lk_cpp_nlm(beta_lk=x, beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
+                                         t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
+  result <- tryCatch(
+    nlm(f = func_lk, p = beta, check.analyticals= FALSE),
+    error = function(e) {
+      warning("beta optimization failed: ", conditionMessage(e))
+      list(estimate = NA)
+    }
+  )
+  return(result$estimate)
+}
+
+#' Wrapper function for beta optimization using Newton–Raphson method by maxLik
 #'
 #' @param beta Initial beta parameter
 #' @param beta0 Beta0 parameter
@@ -81,41 +109,7 @@ wrapper_beta_maxLik <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X
   return(result$estimate)
 }
 
-#' Wrapper function for beta optimization using coordinate ascend based on Newton–Raphson update
-#'
-#' @param beta_cd Initial beta parameter
-#' @param beta0_cd Beta0 parameter
-#' @param nu_cd Nu parameter
-#' @param ga_cd Gamma parameter
-#' @param betaPRE Previous beta value
-#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior
-#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior
-#' @param Y_cd Response vector
-#' @param X_cd Predictor matrix
-#' @param theta_cd Theta parameter (default: number of predictors)
-#' @return Optimized beta parameter
-#' @export
-beta_coordinate_descent_R_maxLik <- function(beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1,
-                                             Y_cd, X_cd, theta_cd, maX_cd_iter, tol) {
-  # Get p
-  p <- ncol(X_cd)
-  # Update beta
-  for (iter in 1: maX_cd_iter) {
-    beta_old <- beta_cd
-    # Update beta sequentially
-    for (j in 1:p) {
-      # Newton update using maxLik
-      beta_cd[j] <- wrapper_beta_cd(j, beta_cd, beta0_cd, nu_cd, ga_cd, betaPRE, t0, t1, Y_cd, X_cd, theta_cd)
-    }
-    # Check convergence
-    if (sqrt(sum((beta_cd - beta_old)^2)) < tol)
-      break
-  }
-  # Return updated beta
-  return(beta_cd);
-}
-
-#' Wrapper function for beta optimization using coordinate ascend Newton–Raphson method
+#' Wrapper function for beta optimization using coordinate ascend Newton–Raphson method via maxLik
 #'
 #' @param j the index of beta to update
 #' @param beta Initial beta parameter
@@ -130,21 +124,50 @@ beta_coordinate_descent_R_maxLik <- function(beta_cd, beta0_cd, nu_cd, ga_cd, be
 #' @param theta_lk Theta parameter (default: number of predictors)
 #' @return Optimized beta parameter
 #' @export
-wrapper_beta_cd <- function(j, beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk){
+wrapper_beta_cd_maxLik <- function(j, beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk){
   func_lk <- function(x) -jbeta_neg_lk_cpp_maxLik(beta_j=x, j_index = j, beta_noj = beta[-j],
-                                                  beta0_lk=beta0, ga_lk=gamma, nu_lk=nu, betaPRE=betaPRE,
+                                                  beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
                                                   t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
   func_gradient <- function(x) -jbeta_neg_gradient_cpp_maxLik(beta_j=x, j_index = j, beta_noj = beta[-j],
-                                                              beta0_lk = beta0, ga_lk = gamma, nu_lk = nu,
+                                                              beta0_lk = beta0, nu_lk = nu, ga_lk = gamma,
                                                               betaPRE = betaPRE, t0 = t0, t1 = t1,
                                                               Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
   func_Hessian <- function(x) -jbeta_neg_hessian_cpp_maxLik(beta_j=x, j_index = j, beta_noj = beta[-j],
-                                                            beta0_lk = beta0, ga_lk = gamma, nu_lk = nu,
+                                                            beta0_lk = beta0, nu_lk = nu, ga_lk = gamma,
                                                             Y_lk=Y_lk, X_lk=X_lk)
   result <- tryCatch(
     maxLik::maxLik(logLik = func_lk, grad = func_gradient, hess = func_Hessian, start = beta[j]),
     error = function(e) {
       warning("maxLik() failed: ", conditionMessage(e))
+      list(estimate = NA)
+    }
+  )
+  return(result$estimate)
+}
+
+#' Wrapper function for beta optimization using coordinate descend Newton–Raphson method via nlm
+#'
+#' @param j the index of beta to update
+#' @param beta Initial beta parameter
+#' @param beta0 Beta0 parameter
+#' @param nu Nu parameter
+#' @param gamma Gamma parameter
+#' @param betaPRE Previous beta value
+#' @param t0 the "spike" hyperparameter in beta's spike-and-slab prior
+#' @param t1 the "slab" hyperparameter in beta's spike-and-slab prior
+#' @param Y_lk Response vector
+#' @param X_lk Predictor matrix
+#' @param theta_lk Theta parameter (default: number of predictors)
+#' @return Optimized beta parameter
+#' @export
+wrapper_beta_cd_nlm <- function(j, beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk){
+  func_lk <- function(x) jbeta_neg_lk_cpp_nlm(beta_j=x, j_index = j, beta_noj = beta[-j],
+                                                  beta0_lk=beta0, nu_lk=nu, ga_lk=gamma, betaPRE=betaPRE,
+                                                  t0=t0, t1=t1, Y_lk=Y_lk, X_lk=X_lk, theta_lk=theta_lk)
+  result <- tryCatch(
+    nlm(f = func_lk, p = beta[j], check.analyticals= FALSE),
+    error = function(e) {
+      warning("nlm() failed: ", conditionMessage(e))
       list(estimate = NA)
     }
   )
@@ -239,7 +262,7 @@ wrapper_gamma <- function(gamma, nu, error_lk, hyper_c, hyper_d) {
 #' @param max_iter Maximum number of iterations (default: 100)
 #' @param tol Convergence tolerance (default: 1e-6)
 #' @param conv_type Convergence type (default: "param")
-#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List of results from the EM algorithm
 #' @export
 TVS_EM <- function(
@@ -262,7 +285,7 @@ TVS_EM <- function(
     max_iter = 100,
     tol = 1e-6,
     conv_type = "param",
-    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
+    beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -367,7 +390,7 @@ CiS_j_fun <- function(test_index,
 #' @param max_iter_per Maximum number of iterations (default: 100)
 #' @param tol_per Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return Permutation function value
 #' @export
 per_fun <- function(j_index,
@@ -390,7 +413,7 @@ per_fun <- function(j_index,
                     max_iter_per = 100,
                     tol_per = 1e-6,
                     add_correc_CiS = 0.001,
-                    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
+                    beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -474,7 +497,7 @@ CiS_group_fun <- function(test_indices,
 #' @param max_iter_per Maximum number of iterations (default: 100)
 #' @param tol_per Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return Group permutation function value
 #' @export
 per_group_fun <- function(j_indices,
@@ -497,7 +520,7 @@ per_group_fun <- function(j_indices,
                           max_iter_per = 100,
                           tol_per = 1e-6,
                           add_correc_CiS = 0.001,
-                          beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
+                          beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -552,7 +575,7 @@ per_group_fun <- function(j_indices,
 #' @param max_iter_TVS Maximum number of iterations (default: 100)
 #' @param tol_TVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List containing variable selection results
 #' @export
 TVS <- function(
@@ -577,7 +600,7 @@ TVS <- function(
     max_iter_TVS = 100,
     tol_TVS = 1e-6,
     add_correc_CiS = 0.001,
-    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
+    beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -634,7 +657,7 @@ TVS <- function(
 #' @param max_iter_TVS Maximum number of iterations (default: 100)
 #' @param tol_TVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List containing variable selection results
 #' @export
 TVS_j <- function(
@@ -660,7 +683,7 @@ TVS_j <- function(
     max_iter_TVS = 100,
     tol_TVS = 1e-6,
     add_correc_CiS = 0.001,
-    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
+    beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -718,7 +741,7 @@ TVS_j <- function(
 #' @param max_iter_TVS Maximum number of iterations (default: 100)
 #' @param tol_TVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List containing variable selection results
 #' @export
 TVS_group <- function(
@@ -744,7 +767,7 @@ TVS_group <- function(
     max_iter_TVS = 100,
     tol_TVS = 1e-6,
     add_correc_CiS = 0.001,
-    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
+    beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
@@ -806,7 +829,7 @@ TVS_group <- function(
 #' @param max_iter_TVS Maximum number of iterations (default: 100)
 #' @param tol_TVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
-#' @param beta_method Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".
+#' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List of multi-stage TVS results
 #' @export
 TVS_multi_stage <- function(
@@ -836,7 +859,7 @@ TVS_multi_stage <- function(
     max_iter_TVS = 100,
     tol_TVS = 1e-6,
     add_correc_CiS = 0.001,
-    beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")) {
+    beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)

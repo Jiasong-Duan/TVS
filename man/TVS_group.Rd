@@ -27,7 +27,7 @@ TVS_group(
   max_iter_TVS = 100,
   tol_TVS = 1e-06,
   add_correc_CiS = 0.001,
-  beta_method = c("maxLik", "optim", "cd_maxLik", "cd_maxLik_R")
+  beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")
 )
 }
 \arguments{
@@ -75,7 +75,7 @@ TVS_group(
 
 \item{add_correc_CiS}{Correction factor for CiS (default: 1e-3)}
 
-\item{beta_method}{Optimization method for beta updates ("maxLik", "optim", or "cd_maxLik"). Defaults to "maxLik".}
+\item{beta_method}{Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".}
 }
 \value{
 List containing variable selection results
