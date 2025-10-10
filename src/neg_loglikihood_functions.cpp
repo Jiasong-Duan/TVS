@@ -1,6 +1,6 @@
 //#include <Rcpp.h>
 #include <RcppArmadillo.h>
-#include "TVS_header.h"
+#include "TDVS_header.h"
 #include <random>
 #include <chrono>
 #include <numeric>
@@ -454,7 +454,7 @@ arma::vec beta_coordinate_descent_cpp_maxLik(
   // Get p
   int p = X_cd.n_cols;
   // Update beta
-  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TVS");
+  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TDVS");
   Rcpp::Function wrapper_beta_cd_maxLik = pkg_env["wrapper_beta_cd_maxLik"];
   for (int iter = 0; iter < maX_cd_iter; ++iter) {
     arma::vec beta_old = beta_cd;
@@ -481,7 +481,7 @@ arma::vec beta_coordinate_descent_cpp_nlm(
   // Get p
   int p = X_cd.n_cols;
   // Update beta
-  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TVS");
+  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TDVS");
   Rcpp::Function wrapper_beta_cd_nlm = pkg_env["wrapper_beta_cd_nlm"];
   for (int iter = 0; iter < maX_cd_iter; ++iter) {
     arma::vec beta_old = beta_cd;

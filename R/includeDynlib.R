@@ -1,4 +1,4 @@
-#' @useDynLib TVS, .registration = TRUE
+#' @useDynLib TDVS, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 #' @importFrom stats optim
 #' @import Rcpp

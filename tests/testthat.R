@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(TVS)
+library(TDVS)
 
-test_check("TVS")
+test_check("TDVS")

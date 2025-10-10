@@ -13,7 +13,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // slope_error_cpp
 arma::vec slope_error_cpp(const arma::vec& err, double nu_slo, double ga_slo);
-RcppExport SEXP _TVS_slope_error_cpp(SEXP errSEXP, SEXP nu_sloSEXP, SEXP ga_sloSEXP) {
+RcppExport SEXP _TDVS_slope_error_cpp(SEXP errSEXP, SEXP nu_sloSEXP, SEXP ga_sloSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -26,7 +26,7 @@ END_RCPP
 }
 // curvature_error_cpp
 arma::vec curvature_error_cpp(const arma::vec& err, double nu_cur, double ga_cur);
-RcppExport SEXP _TVS_curvature_error_cpp(SEXP errSEXP, SEXP nu_curSEXP, SEXP ga_curSEXP) {
+RcppExport SEXP _TDVS_curvature_error_cpp(SEXP errSEXP, SEXP nu_curSEXP, SEXP ga_curSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -39,7 +39,7 @@ END_RCPP
 }
 // CiS_j_fun_cpp
 double CiS_j_fun_cpp(int test_index, const arma::vec& beta_opt, double beta0_opt, double nu_opt, double ga_opt, Rcpp::List dataXY, double add_correc_CiS);
-RcppExport SEXP _TVS_CiS_j_fun_cpp(SEXP test_indexSEXP, SEXP beta_optSEXP, SEXP beta0_optSEXP, SEXP nu_optSEXP, SEXP ga_optSEXP, SEXP dataXYSEXP, SEXP add_correc_CiSSEXP) {
+RcppExport SEXP _TDVS_CiS_j_fun_cpp(SEXP test_indexSEXP, SEXP beta_optSEXP, SEXP beta0_optSEXP, SEXP nu_optSEXP, SEXP ga_optSEXP, SEXP dataXYSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -56,7 +56,7 @@ END_RCPP
 }
 // per_fun_cpp
 double per_fun_cpp(int j_index, Rcpp::List dataXY, arma::vec init_beta_per, double init_beta0_per, double init_nu_per, double init_gamma_per, double init_theta_per, double SS_t0_per, double SS_t1_per, double hyper_mu_beta0_per, double hyper_sigma_beta0_per, double hyper_mu_nu_per, double hyper_sigma_nu_per, double hyper_c_gamma_per, double hyper_d_gamma_per, double hyper_a_theta_per, double hyper_b_theta_per, int max_iter_per, double tol_per, double add_correc_CiS);
-RcppExport SEXP _TVS_per_fun_cpp(SEXP j_indexSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
+RcppExport SEXP _TDVS_per_fun_cpp(SEXP j_indexSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -86,7 +86,7 @@ END_RCPP
 }
 // CiS_group_fun_cpp
 double CiS_group_fun_cpp(const arma::uvec& test_indices, const arma::vec& beta_opt, double beta0_opt, double nu_opt, double ga_opt, Rcpp::List dataXY, double add_correc_CiS);
-RcppExport SEXP _TVS_CiS_group_fun_cpp(SEXP test_indicesSEXP, SEXP beta_optSEXP, SEXP beta0_optSEXP, SEXP nu_optSEXP, SEXP ga_optSEXP, SEXP dataXYSEXP, SEXP add_correc_CiSSEXP) {
+RcppExport SEXP _TDVS_CiS_group_fun_cpp(SEXP test_indicesSEXP, SEXP beta_optSEXP, SEXP beta0_optSEXP, SEXP nu_optSEXP, SEXP ga_optSEXP, SEXP dataXYSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -103,7 +103,7 @@ END_RCPP
 }
 // per_group_fun_cpp
 double per_group_fun_cpp(const arma::uvec& j_indices, Rcpp::List dataXY, arma::vec init_beta_per, double init_beta0_per, double init_nu_per, double init_gamma_per, double init_theta_per, double SS_t0_per, double SS_t1_per, double hyper_mu_beta0_per, double hyper_sigma_beta0_per, double hyper_mu_nu_per, double hyper_sigma_nu_per, double hyper_c_gamma_per, double hyper_d_gamma_per, double hyper_a_theta_per, double hyper_b_theta_per, int max_iter_per, double tol_per, double add_correc_CiS);
-RcppExport SEXP _TVS_per_group_fun_cpp(SEXP j_indicesSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
+RcppExport SEXP _TDVS_per_group_fun_cpp(SEXP j_indicesSEXP, SEXP dataXYSEXP, SEXP init_beta_perSEXP, SEXP init_beta0_perSEXP, SEXP init_nu_perSEXP, SEXP init_gamma_perSEXP, SEXP init_theta_perSEXP, SEXP SS_t0_perSEXP, SEXP SS_t1_perSEXP, SEXP hyper_mu_beta0_perSEXP, SEXP hyper_sigma_beta0_perSEXP, SEXP hyper_mu_nu_perSEXP, SEXP hyper_sigma_nu_perSEXP, SEXP hyper_c_gamma_perSEXP, SEXP hyper_d_gamma_perSEXP, SEXP hyper_a_theta_perSEXP, SEXP hyper_b_theta_perSEXP, SEXP max_iter_perSEXP, SEXP tol_perSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -131,9 +131,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// TVS_EM_cpp
-Rcpp::List TVS_EM_cpp(Rcpp::List dataXY, arma::vec init_beta, double init_beta0, double init_nu, double init_gamma, double init_theta, double SS_t0, double SS_t1, double hyper_mu_beta0, double hyper_sigma_beta0, double hyper_mu_nu, double hyper_sigma_nu, double hyper_c_gamma, double hyper_d_gamma, double hyper_a_theta, double hyper_b_theta, int max_iter, double tol, std::string conv_type);
-RcppExport SEXP _TVS_TVS_EM_cpp(SEXP dataXYSEXP, SEXP init_betaSEXP, SEXP init_beta0SEXP, SEXP init_nuSEXP, SEXP init_gammaSEXP, SEXP init_thetaSEXP, SEXP SS_t0SEXP, SEXP SS_t1SEXP, SEXP hyper_mu_beta0SEXP, SEXP hyper_sigma_beta0SEXP, SEXP hyper_mu_nuSEXP, SEXP hyper_sigma_nuSEXP, SEXP hyper_c_gammaSEXP, SEXP hyper_d_gammaSEXP, SEXP hyper_a_thetaSEXP, SEXP hyper_b_thetaSEXP, SEXP max_iterSEXP, SEXP tolSEXP, SEXP conv_typeSEXP) {
+// TDVS_EM_cpp
+Rcpp::List TDVS_EM_cpp(Rcpp::List dataXY, arma::vec init_beta, double init_beta0, double init_nu, double init_gamma, double init_theta, double SS_t0, double SS_t1, double hyper_mu_beta0, double hyper_sigma_beta0, double hyper_mu_nu, double hyper_sigma_nu, double hyper_c_gamma, double hyper_d_gamma, double hyper_a_theta, double hyper_b_theta, int max_iter, double tol, std::string conv_type);
+RcppExport SEXP _TDVS_TDVS_EM_cpp(SEXP dataXYSEXP, SEXP init_betaSEXP, SEXP init_beta0SEXP, SEXP init_nuSEXP, SEXP init_gammaSEXP, SEXP init_thetaSEXP, SEXP SS_t0SEXP, SEXP SS_t1SEXP, SEXP hyper_mu_beta0SEXP, SEXP hyper_sigma_beta0SEXP, SEXP hyper_mu_nuSEXP, SEXP hyper_sigma_nuSEXP, SEXP hyper_c_gammaSEXP, SEXP hyper_d_gammaSEXP, SEXP hyper_a_thetaSEXP, SEXP hyper_b_thetaSEXP, SEXP max_iterSEXP, SEXP tolSEXP, SEXP conv_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -156,113 +156,113 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< std::string >::type conv_type(conv_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_EM_cpp(dataXY, init_beta, init_beta0, init_nu, init_gamma, init_theta, SS_t0, SS_t1, hyper_mu_beta0, hyper_sigma_beta0, hyper_mu_nu, hyper_sigma_nu, hyper_c_gamma, hyper_d_gamma, hyper_a_theta, hyper_b_theta, max_iter, tol, conv_type));
+    rcpp_result_gen = Rcpp::wrap(TDVS_EM_cpp(dataXY, init_beta, init_beta0, init_nu, init_gamma, init_theta, SS_t0, SS_t1, hyper_mu_beta0, hyper_sigma_beta0, hyper_mu_nu, hyper_sigma_nu, hyper_c_gamma, hyper_d_gamma, hyper_a_theta, hyper_b_theta, max_iter, tol, conv_type));
     return rcpp_result_gen;
 END_RCPP
 }
-// TVS_cpp
-Rcpp::List TVS_cpp(Rcpp::List dataXY, arma::vec init_beta_TVS, int B, double sig_cutoff, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
-RcppExport SEXP _TVS_TVS_cpp(SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP BSEXP, SEXP sig_cutoffSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
+// TDVS_cpp
+Rcpp::List TDVS_cpp(Rcpp::List dataXY, arma::vec init_beta_TDVS, int B, double sig_cutoff, double init_beta0_TDVS, double init_nu_TDVS, double init_gamma_TDVS, double init_theta_TDVS, double SS_t0_TDVS, double SS_t1_TDVS, double hyper_mu_beta0_TDVS, double hyper_sigma_beta0_TDVS, double hyper_mu_nu_TDVS, double hyper_sigma_nu_TDVS, double hyper_c_gamma_TDVS, double hyper_d_gamma_TDVS, double hyper_a_theta_TDVS, double hyper_b_theta_TDVS, int max_iter_TDVS, double tol_TDVS, double add_correc_CiS);
+RcppExport SEXP _TDVS_TDVS_cpp(SEXP dataXYSEXP, SEXP init_beta_TDVSSEXP, SEXP BSEXP, SEXP sig_cutoffSEXP, SEXP init_beta0_TDVSSEXP, SEXP init_nu_TDVSSEXP, SEXP init_gamma_TDVSSEXP, SEXP init_theta_TDVSSEXP, SEXP SS_t0_TDVSSEXP, SEXP SS_t1_TDVSSEXP, SEXP hyper_mu_beta0_TDVSSEXP, SEXP hyper_sigma_beta0_TDVSSEXP, SEXP hyper_mu_nu_TDVSSEXP, SEXP hyper_sigma_nu_TDVSSEXP, SEXP hyper_c_gamma_TDVSSEXP, SEXP hyper_d_gamma_TDVSSEXP, SEXP hyper_a_theta_TDVSSEXP, SEXP hyper_b_theta_TDVSSEXP, SEXP max_iter_TDVSSEXP, SEXP tol_TDVSSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TVS(init_beta_TVSSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TDVS(init_beta_TDVSSEXP);
     Rcpp::traits::input_parameter< int >::type B(BSEXP);
     Rcpp::traits::input_parameter< double >::type sig_cutoff(sig_cutoffSEXP);
-    Rcpp::traits::input_parameter< double >::type init_beta0_TVS(init_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_nu_TVS(init_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_gamma_TVS(init_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_theta_TVS(init_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t0_TVS(SS_t0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t1_TVS(SS_t1_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TVS(hyper_mu_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TVS(hyper_sigma_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TVS(hyper_mu_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TVS(hyper_sigma_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TVS(hyper_c_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TVS(hyper_d_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TVS(hyper_a_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TVS(hyper_b_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< int >::type max_iter_TVS(max_iter_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type tol_TVS(tol_TVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_beta0_TDVS(init_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_nu_TDVS(init_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_gamma_TDVS(init_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_theta_TDVS(init_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t0_TDVS(SS_t0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t1_TDVS(SS_t1_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TDVS(hyper_mu_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TDVS(hyper_sigma_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TDVS(hyper_mu_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TDVS(hyper_sigma_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TDVS(hyper_c_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TDVS(hyper_d_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TDVS(hyper_a_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TDVS(hyper_b_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter_TDVS(max_iter_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type tol_TDVS(tol_TDVSSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_cpp(dataXY, init_beta_TVS, B, sig_cutoff, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(TDVS_cpp(dataXY, init_beta_TDVS, B, sig_cutoff, init_beta0_TDVS, init_nu_TDVS, init_gamma_TDVS, init_theta_TDVS, SS_t0_TDVS, SS_t1_TDVS, hyper_mu_beta0_TDVS, hyper_sigma_beta0_TDVS, hyper_mu_nu_TDVS, hyper_sigma_nu_TDVS, hyper_c_gamma_TDVS, hyper_d_gamma_TDVS, hyper_a_theta_TDVS, hyper_b_theta_TDVS, max_iter_TDVS, tol_TDVS, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
-// TVS_j_cpp
-Rcpp::List TVS_j_cpp(int test_index, Rcpp::List dataXY, arma::vec init_beta_TVS, int B, double sig_cutoff, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
-RcppExport SEXP _TVS_TVS_j_cpp(SEXP test_indexSEXP, SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP BSEXP, SEXP sig_cutoffSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
+// TDVS_j_cpp
+Rcpp::List TDVS_j_cpp(int test_index, Rcpp::List dataXY, arma::vec init_beta_TDVS, int B, double sig_cutoff, double init_beta0_TDVS, double init_nu_TDVS, double init_gamma_TDVS, double init_theta_TDVS, double SS_t0_TDVS, double SS_t1_TDVS, double hyper_mu_beta0_TDVS, double hyper_sigma_beta0_TDVS, double hyper_mu_nu_TDVS, double hyper_sigma_nu_TDVS, double hyper_c_gamma_TDVS, double hyper_d_gamma_TDVS, double hyper_a_theta_TDVS, double hyper_b_theta_TDVS, int max_iter_TDVS, double tol_TDVS, double add_correc_CiS);
+RcppExport SEXP _TDVS_TDVS_j_cpp(SEXP test_indexSEXP, SEXP dataXYSEXP, SEXP init_beta_TDVSSEXP, SEXP BSEXP, SEXP sig_cutoffSEXP, SEXP init_beta0_TDVSSEXP, SEXP init_nu_TDVSSEXP, SEXP init_gamma_TDVSSEXP, SEXP init_theta_TDVSSEXP, SEXP SS_t0_TDVSSEXP, SEXP SS_t1_TDVSSEXP, SEXP hyper_mu_beta0_TDVSSEXP, SEXP hyper_sigma_beta0_TDVSSEXP, SEXP hyper_mu_nu_TDVSSEXP, SEXP hyper_sigma_nu_TDVSSEXP, SEXP hyper_c_gamma_TDVSSEXP, SEXP hyper_d_gamma_TDVSSEXP, SEXP hyper_a_theta_TDVSSEXP, SEXP hyper_b_theta_TDVSSEXP, SEXP max_iter_TDVSSEXP, SEXP tol_TDVSSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type test_index(test_indexSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TVS(init_beta_TVSSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TDVS(init_beta_TDVSSEXP);
     Rcpp::traits::input_parameter< int >::type B(BSEXP);
     Rcpp::traits::input_parameter< double >::type sig_cutoff(sig_cutoffSEXP);
-    Rcpp::traits::input_parameter< double >::type init_beta0_TVS(init_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_nu_TVS(init_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_gamma_TVS(init_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_theta_TVS(init_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t0_TVS(SS_t0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t1_TVS(SS_t1_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TVS(hyper_mu_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TVS(hyper_sigma_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TVS(hyper_mu_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TVS(hyper_sigma_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TVS(hyper_c_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TVS(hyper_d_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TVS(hyper_a_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TVS(hyper_b_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< int >::type max_iter_TVS(max_iter_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type tol_TVS(tol_TVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_beta0_TDVS(init_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_nu_TDVS(init_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_gamma_TDVS(init_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_theta_TDVS(init_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t0_TDVS(SS_t0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t1_TDVS(SS_t1_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TDVS(hyper_mu_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TDVS(hyper_sigma_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TDVS(hyper_mu_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TDVS(hyper_sigma_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TDVS(hyper_c_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TDVS(hyper_d_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TDVS(hyper_a_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TDVS(hyper_b_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter_TDVS(max_iter_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type tol_TDVS(tol_TDVSSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_j_cpp(test_index, dataXY, init_beta_TVS, B, sig_cutoff, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(TDVS_j_cpp(test_index, dataXY, init_beta_TDVS, B, sig_cutoff, init_beta0_TDVS, init_nu_TDVS, init_gamma_TDVS, init_theta_TDVS, SS_t0_TDVS, SS_t1_TDVS, hyper_mu_beta0_TDVS, hyper_sigma_beta0_TDVS, hyper_mu_nu_TDVS, hyper_sigma_nu_TDVS, hyper_c_gamma_TDVS, hyper_d_gamma_TDVS, hyper_a_theta_TDVS, hyper_b_theta_TDVS, max_iter_TDVS, tol_TDVS, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
-// TVS_group_cpp
-Rcpp::List TVS_group_cpp(const arma::uvec& test_indices, Rcpp::List dataXY, arma::vec init_beta_TVS, int B, double sig_cutoff, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
-RcppExport SEXP _TVS_TVS_group_cpp(SEXP test_indicesSEXP, SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP BSEXP, SEXP sig_cutoffSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
+// TDVS_group_cpp
+Rcpp::List TDVS_group_cpp(const arma::uvec& test_indices, Rcpp::List dataXY, arma::vec init_beta_TDVS, int B, double sig_cutoff, double init_beta0_TDVS, double init_nu_TDVS, double init_gamma_TDVS, double init_theta_TDVS, double SS_t0_TDVS, double SS_t1_TDVS, double hyper_mu_beta0_TDVS, double hyper_sigma_beta0_TDVS, double hyper_mu_nu_TDVS, double hyper_sigma_nu_TDVS, double hyper_c_gamma_TDVS, double hyper_d_gamma_TDVS, double hyper_a_theta_TDVS, double hyper_b_theta_TDVS, int max_iter_TDVS, double tol_TDVS, double add_correc_CiS);
+RcppExport SEXP _TDVS_TDVS_group_cpp(SEXP test_indicesSEXP, SEXP dataXYSEXP, SEXP init_beta_TDVSSEXP, SEXP BSEXP, SEXP sig_cutoffSEXP, SEXP init_beta0_TDVSSEXP, SEXP init_nu_TDVSSEXP, SEXP init_gamma_TDVSSEXP, SEXP init_theta_TDVSSEXP, SEXP SS_t0_TDVSSEXP, SEXP SS_t1_TDVSSEXP, SEXP hyper_mu_beta0_TDVSSEXP, SEXP hyper_sigma_beta0_TDVSSEXP, SEXP hyper_mu_nu_TDVSSEXP, SEXP hyper_sigma_nu_TDVSSEXP, SEXP hyper_c_gamma_TDVSSEXP, SEXP hyper_d_gamma_TDVSSEXP, SEXP hyper_a_theta_TDVSSEXP, SEXP hyper_b_theta_TDVSSEXP, SEXP max_iter_TDVSSEXP, SEXP tol_TDVSSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::uvec& >::type test_indices(test_indicesSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TVS(init_beta_TVSSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TDVS(init_beta_TDVSSEXP);
     Rcpp::traits::input_parameter< int >::type B(BSEXP);
     Rcpp::traits::input_parameter< double >::type sig_cutoff(sig_cutoffSEXP);
-    Rcpp::traits::input_parameter< double >::type init_beta0_TVS(init_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_nu_TVS(init_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_gamma_TVS(init_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_theta_TVS(init_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t0_TVS(SS_t0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t1_TVS(SS_t1_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TVS(hyper_mu_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TVS(hyper_sigma_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TVS(hyper_mu_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TVS(hyper_sigma_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TVS(hyper_c_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TVS(hyper_d_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TVS(hyper_a_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TVS(hyper_b_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< int >::type max_iter_TVS(max_iter_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type tol_TVS(tol_TVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_beta0_TDVS(init_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_nu_TDVS(init_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_gamma_TDVS(init_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_theta_TDVS(init_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t0_TDVS(SS_t0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t1_TDVS(SS_t1_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TDVS(hyper_mu_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TDVS(hyper_sigma_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TDVS(hyper_mu_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TDVS(hyper_sigma_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TDVS(hyper_c_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TDVS(hyper_d_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TDVS(hyper_a_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TDVS(hyper_b_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter_TDVS(max_iter_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type tol_TDVS(tol_TDVSSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_group_cpp(test_indices, dataXY, init_beta_TVS, B, sig_cutoff, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(TDVS_group_cpp(test_indices, dataXY, init_beta_TDVS, B, sig_cutoff, init_beta0_TDVS, init_nu_TDVS, init_gamma_TDVS, init_theta_TDVS, SS_t0_TDVS, SS_t1_TDVS, hyper_mu_beta0_TDVS, hyper_sigma_beta0_TDVS, hyper_mu_nu_TDVS, hyper_sigma_nu_TDVS, hyper_c_gamma_TDVS, hyper_d_gamma_TDVS, hyper_a_theta_TDVS, hyper_b_theta_TDVS, max_iter_TDVS, tol_TDVS, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
-// TVS_multi_stage_cpp
-Rcpp::List TVS_multi_stage_cpp(Rcpp::List dataXY, arma::vec init_beta_TVS, int group_B, int indiv_B, int B_final, double group_cutoff, double indiv_cutoff, double sig_cutoff, int group_size, double init_beta0_TVS, double init_nu_TVS, double init_gamma_TVS, double init_theta_TVS, double SS_t0_TVS, double SS_t1_TVS, double hyper_mu_beta0_TVS, double hyper_sigma_beta0_TVS, double hyper_mu_nu_TVS, double hyper_sigma_nu_TVS, double hyper_c_gamma_TVS, double hyper_d_gamma_TVS, double hyper_a_theta_TVS, double hyper_b_theta_TVS, int max_iter_TVS, double tol_TVS, double add_correc_CiS);
-RcppExport SEXP _TVS_TVS_multi_stage_cpp(SEXP dataXYSEXP, SEXP init_beta_TVSSEXP, SEXP group_BSEXP, SEXP indiv_BSEXP, SEXP B_finalSEXP, SEXP group_cutoffSEXP, SEXP indiv_cutoffSEXP, SEXP sig_cutoffSEXP, SEXP group_sizeSEXP, SEXP init_beta0_TVSSEXP, SEXP init_nu_TVSSEXP, SEXP init_gamma_TVSSEXP, SEXP init_theta_TVSSEXP, SEXP SS_t0_TVSSEXP, SEXP SS_t1_TVSSEXP, SEXP hyper_mu_beta0_TVSSEXP, SEXP hyper_sigma_beta0_TVSSEXP, SEXP hyper_mu_nu_TVSSEXP, SEXP hyper_sigma_nu_TVSSEXP, SEXP hyper_c_gamma_TVSSEXP, SEXP hyper_d_gamma_TVSSEXP, SEXP hyper_a_theta_TVSSEXP, SEXP hyper_b_theta_TVSSEXP, SEXP max_iter_TVSSEXP, SEXP tol_TVSSEXP, SEXP add_correc_CiSSEXP) {
+// TDVS_multi_stage_cpp
+Rcpp::List TDVS_multi_stage_cpp(Rcpp::List dataXY, arma::vec init_beta_TDVS, int group_B, int indiv_B, int B_final, double group_cutoff, double indiv_cutoff, double sig_cutoff, int group_size, double init_beta0_TDVS, double init_nu_TDVS, double init_gamma_TDVS, double init_theta_TDVS, double SS_t0_TDVS, double SS_t1_TDVS, double hyper_mu_beta0_TDVS, double hyper_sigma_beta0_TDVS, double hyper_mu_nu_TDVS, double hyper_sigma_nu_TDVS, double hyper_c_gamma_TDVS, double hyper_d_gamma_TDVS, double hyper_a_theta_TDVS, double hyper_b_theta_TDVS, int max_iter_TDVS, double tol_TDVS, double add_correc_CiS);
+RcppExport SEXP _TDVS_TDVS_multi_stage_cpp(SEXP dataXYSEXP, SEXP init_beta_TDVSSEXP, SEXP group_BSEXP, SEXP indiv_BSEXP, SEXP B_finalSEXP, SEXP group_cutoffSEXP, SEXP indiv_cutoffSEXP, SEXP sig_cutoffSEXP, SEXP group_sizeSEXP, SEXP init_beta0_TDVSSEXP, SEXP init_nu_TDVSSEXP, SEXP init_gamma_TDVSSEXP, SEXP init_theta_TDVSSEXP, SEXP SS_t0_TDVSSEXP, SEXP SS_t1_TDVSSEXP, SEXP hyper_mu_beta0_TDVSSEXP, SEXP hyper_sigma_beta0_TDVSSEXP, SEXP hyper_mu_nu_TDVSSEXP, SEXP hyper_sigma_nu_TDVSSEXP, SEXP hyper_c_gamma_TDVSSEXP, SEXP hyper_d_gamma_TDVSSEXP, SEXP hyper_a_theta_TDVSSEXP, SEXP hyper_b_theta_TDVSSEXP, SEXP max_iter_TDVSSEXP, SEXP tol_TDVSSEXP, SEXP add_correc_CiSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type dataXY(dataXYSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TVS(init_beta_TVSSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type init_beta_TDVS(init_beta_TDVSSEXP);
     Rcpp::traits::input_parameter< int >::type group_B(group_BSEXP);
     Rcpp::traits::input_parameter< int >::type indiv_B(indiv_BSEXP);
     Rcpp::traits::input_parameter< int >::type B_final(B_finalSEXP);
@@ -270,30 +270,30 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type indiv_cutoff(indiv_cutoffSEXP);
     Rcpp::traits::input_parameter< double >::type sig_cutoff(sig_cutoffSEXP);
     Rcpp::traits::input_parameter< int >::type group_size(group_sizeSEXP);
-    Rcpp::traits::input_parameter< double >::type init_beta0_TVS(init_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_nu_TVS(init_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_gamma_TVS(init_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type init_theta_TVS(init_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t0_TVS(SS_t0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type SS_t1_TVS(SS_t1_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TVS(hyper_mu_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TVS(hyper_sigma_beta0_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TVS(hyper_mu_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TVS(hyper_sigma_nu_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TVS(hyper_c_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TVS(hyper_d_gamma_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TVS(hyper_a_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TVS(hyper_b_theta_TVSSEXP);
-    Rcpp::traits::input_parameter< int >::type max_iter_TVS(max_iter_TVSSEXP);
-    Rcpp::traits::input_parameter< double >::type tol_TVS(tol_TVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_beta0_TDVS(init_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_nu_TDVS(init_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_gamma_TDVS(init_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type init_theta_TDVS(init_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t0_TDVS(SS_t0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type SS_t1_TDVS(SS_t1_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_beta0_TDVS(hyper_mu_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_beta0_TDVS(hyper_sigma_beta0_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_mu_nu_TDVS(hyper_mu_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_sigma_nu_TDVS(hyper_sigma_nu_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_c_gamma_TDVS(hyper_c_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_d_gamma_TDVS(hyper_d_gamma_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_a_theta_TDVS(hyper_a_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type hyper_b_theta_TDVS(hyper_b_theta_TDVSSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter_TDVS(max_iter_TDVSSEXP);
+    Rcpp::traits::input_parameter< double >::type tol_TDVS(tol_TDVSSEXP);
     Rcpp::traits::input_parameter< double >::type add_correc_CiS(add_correc_CiSSEXP);
-    rcpp_result_gen = Rcpp::wrap(TVS_multi_stage_cpp(dataXY, init_beta_TVS, group_B, indiv_B, B_final, group_cutoff, indiv_cutoff, sig_cutoff, group_size, init_beta0_TVS, init_nu_TVS, init_gamma_TVS, init_theta_TVS, SS_t0_TVS, SS_t1_TVS, hyper_mu_beta0_TVS, hyper_sigma_beta0_TVS, hyper_mu_nu_TVS, hyper_sigma_nu_TVS, hyper_c_gamma_TVS, hyper_d_gamma_TVS, hyper_a_theta_TVS, hyper_b_theta_TVS, max_iter_TVS, tol_TVS, add_correc_CiS));
+    rcpp_result_gen = Rcpp::wrap(TDVS_multi_stage_cpp(dataXY, init_beta_TDVS, group_B, indiv_B, B_final, group_cutoff, indiv_cutoff, sig_cutoff, group_size, init_beta0_TDVS, init_nu_TDVS, init_gamma_TDVS, init_theta_TDVS, SS_t0_TDVS, SS_t1_TDVS, hyper_mu_beta0_TDVS, hyper_sigma_beta0_TDVS, hyper_mu_nu_TDVS, hyper_sigma_nu_TDVS, hyper_c_gamma_TDVS, hyper_d_gamma_TDVS, hyper_a_theta_TDVS, hyper_b_theta_TDVS, max_iter_TDVS, tol_TDVS, add_correc_CiS));
     return rcpp_result_gen;
 END_RCPP
 }
 // beta_neg_lk_cpp
 double beta_neg_lk_cpp(arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
-RcppExport SEXP _TVS_beta_neg_lk_cpp(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+RcppExport SEXP _TDVS_beta_neg_lk_cpp(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -313,7 +313,7 @@ END_RCPP
 }
 // beta_neg_gradient_cpp
 arma::vec beta_neg_gradient_cpp(arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
-RcppExport SEXP _TVS_beta_neg_gradient_cpp(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+RcppExport SEXP _TDVS_beta_neg_gradient_cpp(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -333,7 +333,7 @@ END_RCPP
 }
 // beta_neg_hessian_cpp
 arma::mat beta_neg_hessian_cpp(arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk);
-RcppExport SEXP _TVS_beta_neg_hessian_cpp(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
+RcppExport SEXP _TDVS_beta_neg_hessian_cpp(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -352,7 +352,7 @@ END_RCPP
 }
 // jbeta_neg_gradient_cpp
 double jbeta_neg_gradient_cpp(int j_index, arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
-RcppExport SEXP _TVS_jbeta_neg_gradient_cpp(SEXP j_indexSEXP, SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+RcppExport SEXP _TDVS_jbeta_neg_gradient_cpp(SEXP j_indexSEXP, SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -373,7 +373,7 @@ END_RCPP
 }
 // jbeta_neg_hessian_cpp
 double jbeta_neg_hessian_cpp(int j_index, arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec Y_lk, arma::mat X_lk);
-RcppExport SEXP _TVS_jbeta_neg_hessian_cpp(SEXP j_indexSEXP, SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
+RcppExport SEXP _TDVS_jbeta_neg_hessian_cpp(SEXP j_indexSEXP, SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -390,7 +390,7 @@ END_RCPP
 }
 // jbeta_neg_lk_cpp_maxLik
 double jbeta_neg_lk_cpp_maxLik(double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
-RcppExport SEXP _TVS_jbeta_neg_lk_cpp_maxLik(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+RcppExport SEXP _TDVS_jbeta_neg_lk_cpp_maxLik(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -412,7 +412,7 @@ END_RCPP
 }
 // jbeta_neg_gradient_cpp_maxLik
 double jbeta_neg_gradient_cpp_maxLik(double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
-RcppExport SEXP _TVS_jbeta_neg_gradient_cpp_maxLik(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+RcppExport SEXP _TDVS_jbeta_neg_gradient_cpp_maxLik(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -434,7 +434,7 @@ END_RCPP
 }
 // jbeta_neg_hessian_cpp_maxLik
 double jbeta_neg_hessian_cpp_maxLik(double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk, arma::vec Y_lk, arma::mat X_lk);
-RcppExport SEXP _TVS_jbeta_neg_hessian_cpp_maxLik(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
+RcppExport SEXP _TDVS_jbeta_neg_hessian_cpp_maxLik(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -452,7 +452,7 @@ END_RCPP
 }
 // beta_neg_lk_cpp_nlm
 Rcpp::NumericVector beta_neg_lk_cpp_nlm(arma::vec beta_lk, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
-RcppExport SEXP _TVS_beta_neg_lk_cpp_nlm(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+RcppExport SEXP _TDVS_beta_neg_lk_cpp_nlm(SEXP beta_lkSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -472,7 +472,7 @@ END_RCPP
 }
 // jbeta_neg_lk_cpp_nlm
 Rcpp::NumericVector jbeta_neg_lk_cpp_nlm(double beta_j, int j_index, arma::vec beta_noj, double beta0_lk, double nu_lk, double ga_lk, arma::vec betaPRE, double t0, double t1, arma::vec Y_lk, arma::mat X_lk, double theta_lk);
-RcppExport SEXP _TVS_jbeta_neg_lk_cpp_nlm(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
+RcppExport SEXP _TDVS_jbeta_neg_lk_cpp_nlm(SEXP beta_jSEXP, SEXP j_indexSEXP, SEXP beta_nojSEXP, SEXP beta0_lkSEXP, SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP, SEXP theta_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -494,7 +494,7 @@ END_RCPP
 }
 // beta0_neg_lk_cpp
 double beta0_neg_lk_cpp(double beta0_lk, arma::vec beta_lk, double nu_lk, double gamma_lk, double hyper_mu_beta0, double hyper_sigma_beta0, arma::vec Y_lk, arma::mat X_lk);
-RcppExport SEXP _TVS_beta0_neg_lk_cpp(SEXP beta0_lkSEXP, SEXP beta_lkSEXP, SEXP nu_lkSEXP, SEXP gamma_lkSEXP, SEXP hyper_mu_beta0SEXP, SEXP hyper_sigma_beta0SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
+RcppExport SEXP _TDVS_beta0_neg_lk_cpp(SEXP beta0_lkSEXP, SEXP beta_lkSEXP, SEXP nu_lkSEXP, SEXP gamma_lkSEXP, SEXP hyper_mu_beta0SEXP, SEXP hyper_sigma_beta0SEXP, SEXP Y_lkSEXP, SEXP X_lkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -512,7 +512,7 @@ END_RCPP
 }
 // nu_neg_lk_cpp
 double nu_neg_lk_cpp(double nu_lk, double ga_lk, Rcpp::NumericVector error_lk, double hyper_mu, double hyper_sigma);
-RcppExport SEXP _TVS_nu_neg_lk_cpp(SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP error_lkSEXP, SEXP hyper_muSEXP, SEXP hyper_sigmaSEXP) {
+RcppExport SEXP _TDVS_nu_neg_lk_cpp(SEXP nu_lkSEXP, SEXP ga_lkSEXP, SEXP error_lkSEXP, SEXP hyper_muSEXP, SEXP hyper_sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -527,7 +527,7 @@ END_RCPP
 }
 // gamma_neg_lk_cpp
 double gamma_neg_lk_cpp(double ga_lk, double nu_lk, Rcpp::NumericVector error_lk, double hyper_c, double hyper_d);
-RcppExport SEXP _TVS_gamma_neg_lk_cpp(SEXP ga_lkSEXP, SEXP nu_lkSEXP, SEXP error_lkSEXP, SEXP hyper_cSEXP, SEXP hyper_dSEXP) {
+RcppExport SEXP _TDVS_gamma_neg_lk_cpp(SEXP ga_lkSEXP, SEXP nu_lkSEXP, SEXP error_lkSEXP, SEXP hyper_cSEXP, SEXP hyper_dSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -542,7 +542,7 @@ END_RCPP
 }
 // beta_coordinate_descent_cpp
 arma::vec beta_coordinate_descent_cpp(arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, arma::vec betaPRE, double t0, double t1, arma::vec Y_cd, arma::mat X_cd, double theta_cd, int maX_cd_iter, double tol);
-RcppExport SEXP _TVS_beta_coordinate_descent_cpp(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
+RcppExport SEXP _TDVS_beta_coordinate_descent_cpp(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -564,7 +564,7 @@ END_RCPP
 }
 // beta_coordinate_descent_cpp_maxLik
 arma::vec beta_coordinate_descent_cpp_maxLik(arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, arma::vec betaPRE, double t0, double t1, arma::vec Y_cd, arma::mat X_cd, double theta_cd, int maX_cd_iter, double tol);
-RcppExport SEXP _TVS_beta_coordinate_descent_cpp_maxLik(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
+RcppExport SEXP _TDVS_beta_coordinate_descent_cpp_maxLik(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -586,7 +586,7 @@ END_RCPP
 }
 // beta_coordinate_descent_cpp_nlm
 arma::vec beta_coordinate_descent_cpp_nlm(arma::vec beta_cd, double beta0_cd, double nu_cd, double ga_cd, arma::vec betaPRE, double t0, double t1, arma::vec Y_cd, arma::mat X_cd, double theta_cd, int maX_cd_iter, double tol);
-RcppExport SEXP _TVS_beta_coordinate_descent_cpp_nlm(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
+RcppExport SEXP _TDVS_beta_coordinate_descent_cpp_nlm(SEXP beta_cdSEXP, SEXP beta0_cdSEXP, SEXP nu_cdSEXP, SEXP ga_cdSEXP, SEXP betaPRESEXP, SEXP t0SEXP, SEXP t1SEXP, SEXP Y_cdSEXP, SEXP X_cdSEXP, SEXP theta_cdSEXP, SEXP maX_cd_iterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -608,37 +608,37 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_TVS_slope_error_cpp", (DL_FUNC) &_TVS_slope_error_cpp, 3},
-    {"_TVS_curvature_error_cpp", (DL_FUNC) &_TVS_curvature_error_cpp, 3},
-    {"_TVS_CiS_j_fun_cpp", (DL_FUNC) &_TVS_CiS_j_fun_cpp, 7},
-    {"_TVS_per_fun_cpp", (DL_FUNC) &_TVS_per_fun_cpp, 20},
-    {"_TVS_CiS_group_fun_cpp", (DL_FUNC) &_TVS_CiS_group_fun_cpp, 7},
-    {"_TVS_per_group_fun_cpp", (DL_FUNC) &_TVS_per_group_fun_cpp, 20},
-    {"_TVS_TVS_EM_cpp", (DL_FUNC) &_TVS_TVS_EM_cpp, 19},
-    {"_TVS_TVS_cpp", (DL_FUNC) &_TVS_TVS_cpp, 21},
-    {"_TVS_TVS_j_cpp", (DL_FUNC) &_TVS_TVS_j_cpp, 22},
-    {"_TVS_TVS_group_cpp", (DL_FUNC) &_TVS_TVS_group_cpp, 22},
-    {"_TVS_TVS_multi_stage_cpp", (DL_FUNC) &_TVS_TVS_multi_stage_cpp, 26},
-    {"_TVS_beta_neg_lk_cpp", (DL_FUNC) &_TVS_beta_neg_lk_cpp, 10},
-    {"_TVS_beta_neg_gradient_cpp", (DL_FUNC) &_TVS_beta_neg_gradient_cpp, 10},
-    {"_TVS_beta_neg_hessian_cpp", (DL_FUNC) &_TVS_beta_neg_hessian_cpp, 9},
-    {"_TVS_jbeta_neg_gradient_cpp", (DL_FUNC) &_TVS_jbeta_neg_gradient_cpp, 11},
-    {"_TVS_jbeta_neg_hessian_cpp", (DL_FUNC) &_TVS_jbeta_neg_hessian_cpp, 7},
-    {"_TVS_jbeta_neg_lk_cpp_maxLik", (DL_FUNC) &_TVS_jbeta_neg_lk_cpp_maxLik, 12},
-    {"_TVS_jbeta_neg_gradient_cpp_maxLik", (DL_FUNC) &_TVS_jbeta_neg_gradient_cpp_maxLik, 12},
-    {"_TVS_jbeta_neg_hessian_cpp_maxLik", (DL_FUNC) &_TVS_jbeta_neg_hessian_cpp_maxLik, 8},
-    {"_TVS_beta_neg_lk_cpp_nlm", (DL_FUNC) &_TVS_beta_neg_lk_cpp_nlm, 10},
-    {"_TVS_jbeta_neg_lk_cpp_nlm", (DL_FUNC) &_TVS_jbeta_neg_lk_cpp_nlm, 12},
-    {"_TVS_beta0_neg_lk_cpp", (DL_FUNC) &_TVS_beta0_neg_lk_cpp, 8},
-    {"_TVS_nu_neg_lk_cpp", (DL_FUNC) &_TVS_nu_neg_lk_cpp, 5},
-    {"_TVS_gamma_neg_lk_cpp", (DL_FUNC) &_TVS_gamma_neg_lk_cpp, 5},
-    {"_TVS_beta_coordinate_descent_cpp", (DL_FUNC) &_TVS_beta_coordinate_descent_cpp, 12},
-    {"_TVS_beta_coordinate_descent_cpp_maxLik", (DL_FUNC) &_TVS_beta_coordinate_descent_cpp_maxLik, 12},
-    {"_TVS_beta_coordinate_descent_cpp_nlm", (DL_FUNC) &_TVS_beta_coordinate_descent_cpp_nlm, 12},
+    {"_TDVS_slope_error_cpp", (DL_FUNC) &_TDVS_slope_error_cpp, 3},
+    {"_TDVS_curvature_error_cpp", (DL_FUNC) &_TDVS_curvature_error_cpp, 3},
+    {"_TDVS_CiS_j_fun_cpp", (DL_FUNC) &_TDVS_CiS_j_fun_cpp, 7},
+    {"_TDVS_per_fun_cpp", (DL_FUNC) &_TDVS_per_fun_cpp, 20},
+    {"_TDVS_CiS_group_fun_cpp", (DL_FUNC) &_TDVS_CiS_group_fun_cpp, 7},
+    {"_TDVS_per_group_fun_cpp", (DL_FUNC) &_TDVS_per_group_fun_cpp, 20},
+    {"_TDVS_TDVS_EM_cpp", (DL_FUNC) &_TDVS_TDVS_EM_cpp, 19},
+    {"_TDVS_TDVS_cpp", (DL_FUNC) &_TDVS_TDVS_cpp, 21},
+    {"_TDVS_TDVS_j_cpp", (DL_FUNC) &_TDVS_TDVS_j_cpp, 22},
+    {"_TDVS_TDVS_group_cpp", (DL_FUNC) &_TDVS_TDVS_group_cpp, 22},
+    {"_TDVS_TDVS_multi_stage_cpp", (DL_FUNC) &_TDVS_TDVS_multi_stage_cpp, 26},
+    {"_TDVS_beta_neg_lk_cpp", (DL_FUNC) &_TDVS_beta_neg_lk_cpp, 10},
+    {"_TDVS_beta_neg_gradient_cpp", (DL_FUNC) &_TDVS_beta_neg_gradient_cpp, 10},
+    {"_TDVS_beta_neg_hessian_cpp", (DL_FUNC) &_TDVS_beta_neg_hessian_cpp, 9},
+    {"_TDVS_jbeta_neg_gradient_cpp", (DL_FUNC) &_TDVS_jbeta_neg_gradient_cpp, 11},
+    {"_TDVS_jbeta_neg_hessian_cpp", (DL_FUNC) &_TDVS_jbeta_neg_hessian_cpp, 7},
+    {"_TDVS_jbeta_neg_lk_cpp_maxLik", (DL_FUNC) &_TDVS_jbeta_neg_lk_cpp_maxLik, 12},
+    {"_TDVS_jbeta_neg_gradient_cpp_maxLik", (DL_FUNC) &_TDVS_jbeta_neg_gradient_cpp_maxLik, 12},
+    {"_TDVS_jbeta_neg_hessian_cpp_maxLik", (DL_FUNC) &_TDVS_jbeta_neg_hessian_cpp_maxLik, 8},
+    {"_TDVS_beta_neg_lk_cpp_nlm", (DL_FUNC) &_TDVS_beta_neg_lk_cpp_nlm, 10},
+    {"_TDVS_jbeta_neg_lk_cpp_nlm", (DL_FUNC) &_TDVS_jbeta_neg_lk_cpp_nlm, 12},
+    {"_TDVS_beta0_neg_lk_cpp", (DL_FUNC) &_TDVS_beta0_neg_lk_cpp, 8},
+    {"_TDVS_nu_neg_lk_cpp", (DL_FUNC) &_TDVS_nu_neg_lk_cpp, 5},
+    {"_TDVS_gamma_neg_lk_cpp", (DL_FUNC) &_TDVS_gamma_neg_lk_cpp, 5},
+    {"_TDVS_beta_coordinate_descent_cpp", (DL_FUNC) &_TDVS_beta_coordinate_descent_cpp, 12},
+    {"_TDVS_beta_coordinate_descent_cpp_maxLik", (DL_FUNC) &_TDVS_beta_coordinate_descent_cpp_maxLik, 12},
+    {"_TDVS_beta_coordinate_descent_cpp_nlm", (DL_FUNC) &_TDVS_beta_coordinate_descent_cpp_nlm, 12},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_TVS(DllInfo *dll) {
+RcppExport void R_init_TDVS(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

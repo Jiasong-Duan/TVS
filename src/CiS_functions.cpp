@@ -1,6 +1,6 @@
 //#include <Rcpp.h>
 #include <RcppArmadillo.h>
-#include "TVS_header.h"
+#include "TDVS_header.h"
 #include <random>
 #include <chrono>
 #include <numeric>
@@ -157,7 +157,7 @@ double per_fun_cpp(int j_index,
     Rcpp::Named("X") = dat_X
   );
 
-  Rcpp::List em_results_per_j = TVS_EM_cpp(dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
+  Rcpp::List em_results_per_j = TDVS_EM_cpp(dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
                                            SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per,
                                            hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_val, max_iter_per, tol_per);
 
@@ -270,7 +270,7 @@ double per_group_fun_cpp(const arma::uvec& j_indices,
   );
 
   // Run E-M algorithm
-  Rcpp::List em_results = TVS_EM_cpp(dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
+  Rcpp::List em_results = TDVS_EM_cpp(dat_per, init_beta_per, init_beta0_per, init_nu_per, init_gamma_per, init_theta_per,
                                      SS_t0_per, SS_t1_per, hyper_mu_beta0_per, hyper_sigma_beta0_per, hyper_mu_nu_per, hyper_sigma_nu_per,
                                      hyper_c_gamma_per, hyper_d_gamma_per, hyper_a_theta_per, hyper_b_theta_val, max_iter_per, tol_per);
 

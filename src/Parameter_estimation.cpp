@@ -1,6 +1,6 @@
 //#include <Rcpp.h>
 #include <RcppArmadillo.h>
-#include "TVS_header.h"
+#include "TDVS_header.h"
 #include <random>
 #include <chrono>
 #include <numeric>
@@ -11,7 +11,7 @@ using namespace arma;
 // [[Rcpp::depends(RcppArmadillo)]]
 //
 // [[Rcpp::export]]
-Rcpp::List TVS_EM_cpp(
+Rcpp::List TDVS_EM_cpp(
     Rcpp::List dataXY,
     arma::vec init_beta,
     double init_beta0,
@@ -77,7 +77,7 @@ Rcpp::List TVS_EM_cpp(
   bool converged = false;
   double diff_val = 0.0;
 
-  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TVS");
+  Rcpp::Environment pkg_env = Rcpp::Environment::namespace_env("TDVS");
   Rcpp::Function wrapper_beta = pkg_env["wrapper_beta"];
   Rcpp::Function wrapper_beta0 = pkg_env["wrapper_beta0"];
   Rcpp::Function wrapper_nu = pkg_env["wrapper_nu"];

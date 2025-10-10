@@ -1,40 +1,40 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# TVS
+# TDVS
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-**TVS** is an R package for *Testing-driven Variable Selection in Modal
-Regression*. It implements efficient Bayesian variable selection methods
-based on a permutation-based hypothesis testing.
+**TDVS** is an R package for *Testing-driven Variable Selection in
+Bayesian Modal Regression*. It implements efficient Bayesian variable
+selection methods based on a permutation-based hypothesis testing.
 
 ## Installation
 
-You can install the development version of TVS from
+You can install the development version of TDVS from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
-pak::pak("Jiasong-Duan/TVS")
+pak::pak("Jiasong-Duan/TDVS")
 ```
 
 Or,
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("Jiasong-Duan/TVS")
+devtools::install_github("Jiasong-Duan/TDVS")
 ```
 
 ## Example
 
 This is a basic example which shows you how to perform variable
-selection with the **TVS** method:
+selection with the **TDVS** method:
 
 ``` r
-library(TVS)
+library(TDVS)
 # Load example data containing:
 # - Response (Y): matrix with 100 subjects (rows) and 1 column
 # - Predictors (X): matrix with 100 subjects (rows) and 8 predictors (columns)
@@ -44,8 +44,8 @@ library(TVS)
 #the Predictors are generated from a multivariate normal with mean of zero and an identity covariance matrix. 
 #the Response is generated as Y= XB + epsilon, where epsilon follows MixHat(nu=3, gamma=2) which encodes a 
 #heavy-tailed and right skewed distribution.  
-data(data_tvs)
-head(data_tvs$Y)
+data(data_tdvs)
+head(data_tdvs$Y)
 #>           [,1]
 #> [1,]  6.040409
 #> [2,] -1.285562
@@ -53,13 +53,13 @@ head(data_tvs$Y)
 #> [4,]  2.965520
 #> [5,]  1.003568
 #> [6,]  6.905395
-hist(data_tvs$Y)
+hist(data_tdvs$Y)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
 ``` r
-head(data_tvs$X)
+head(data_tdvs$X)
 #>            [,1]        [,2]       [,3]        [,4]       [,5]        [,6]
 #> [1,]  0.3563288 -0.74948617  0.8232656 -1.17007162  1.0684467 -0.02063172
 #> [2,] -1.9805344  0.02754626 -1.2848831 -0.34758835  0.9163480 -0.90366751
@@ -75,39 +75,39 @@ head(data_tvs$X)
 #> [5,] -0.55869661  0.8474600
 #> [6,] -0.80676768  0.2660220
 #Parameter estimation
-par_est <- TVS_EM(data_tvs)
+par_est <- TDVS_EM(data_tdvs)
 par_est[1:7]
 #> $beta
 #>               [,1]
-#> [1,]  1.587087e+00
-#> [2,]  4.935202e-02
-#> [3,]  8.588229e-01
-#> [4,] -1.188661e-04
-#> [5,] -2.436718e-07
-#> [6,] -1.370160e-11
-#> [7,]  1.087022e-11
-#> [8,] -2.686820e-12
+#> [1,]  1.572024e+00
+#> [2,]  4.388240e-02
+#> [3,]  8.539474e-01
+#> [4,] -2.343970e-03
+#> [5,] -2.806984e-03
+#> [6,] -1.872387e-07
+#> [7,]  4.844744e-08
+#> [8,] -8.197210e-08
 #> 
 #> $beta0
-#> [1] 2.42524
+#> [1] 2.424715
 #> 
 #> $nu
-#> [1] 2.344347
+#> [1] 2.340779
 #> 
 #> $gamma
-#> [1] 1.752573
+#> [1] 1.754636
 #> 
 #> $theta
-#> [1] 0.1384584
+#> [1] 0.1383434
 #> 
 #> $iter
-#> [1] 48
+#> [1] 47
 #> 
 #> $converged
 #> [1] TRUE
 #Variable selection with multi-stage pre-screening.
 VS_scr_start <- proc.time()
-VS_withscreening <- TVS_multi_stage(data_tvs)
+VS_withscreening <- TDVS_multi_stage(data_tdvs)
 #> [Info] Group screening done.
 #> [Info] Individual screening done.
 #> [Info] Final step done.
@@ -115,7 +115,7 @@ VS_scr_elapsed <- proc.time() - VS_scr_start
 #computational time
 VS_scr_elapsed
 #>    user  system elapsed 
-#>  330.99    7.24  339.19
+#>   82.86    0.27   83.36
 # The output contains selected variables and the p-values for each predictor
 # The output contains estimated parameters, including beta, beta0, nu, gamma, selected variables and 
 #p-values for each predictor
@@ -124,23 +124,23 @@ VS_scr_elapsed
 print(VS_withscreening)
 #> $beta_estimates
 #>               [,1]
-#> [1,]  1.587087e+00
-#> [2,]  4.935202e-02
-#> [3,]  8.588229e-01
-#> [4,] -1.188661e-04
-#> [5,] -2.436718e-07
-#> [6,] -1.370160e-11
-#> [7,]  1.087022e-11
-#> [8,] -2.686820e-12
+#> [1,]  1.572024e+00
+#> [2,]  4.388240e-02
+#> [3,]  8.539474e-01
+#> [4,] -2.343970e-03
+#> [5,] -2.806984e-03
+#> [6,] -1.872387e-07
+#> [7,]  4.844744e-08
+#> [8,] -8.197210e-08
 #> 
 #> $beta0_estimate
-#> [1] 2.42524
+#> [1] 2.424715
 #> 
 #> $nu_estimate
-#> [1] 2.344347
+#> [1] 2.340779
 #> 
 #> $gamma_estimate
-#> [1] 1.752573
+#> [1] 1.754636
 #> 
 #> $selected_indices
 #>      [,1]
@@ -148,18 +148,18 @@ print(VS_withscreening)
 #> [2,]    3
 #> 
 #> $p_values
-#>            [,1]
-#> [1,]  0.0000000
-#> [2,]  0.2033333
-#> [3,]  0.0000000
-#> [4,] -1.0000000
-#> [5,] -1.0000000
-#> [6,] -1.0000000
-#> [7,] -1.0000000
-#> [8,] -1.0000000
+#>      [,1]
+#> [1,]    0
+#> [2,]   -1
+#> [3,]    0
+#> [4,]   -1
+#> [5,]   -1
+#> [6,]   -1
+#> [7,]   -1
+#> [8,]   -1
 #Variable selection without pre-screening. Requires longer time than the multi-stage version.
 VS_noscr_start <- proc.time()
-VS_noscreening <- TVS(data_tvs)
+VS_noscreening <- TDVS(data_tdvs)
 #> Predictor 1
 #> Predictor 2
 #> Predictor 3
@@ -172,27 +172,27 @@ VS_noscr_elapsed <- proc.time() - VS_noscr_start
 #computational time
 VS_noscr_elapsed
 #>    user  system elapsed 
-#>  731.55   16.45  749.69
+#>  128.81    0.59  129.68
 print(VS_noscreening)
 #> $beta_estimates
 #>               [,1]
-#> [1,]  1.587087e+00
-#> [2,]  4.935202e-02
-#> [3,]  8.588229e-01
-#> [4,] -1.188661e-04
-#> [5,] -2.436718e-07
-#> [6,] -1.370160e-11
-#> [7,]  1.087022e-11
-#> [8,] -2.686820e-12
+#> [1,]  1.572024e+00
+#> [2,]  4.388240e-02
+#> [3,]  8.539474e-01
+#> [4,] -2.343970e-03
+#> [5,] -2.806984e-03
+#> [6,] -1.872387e-07
+#> [7,]  4.844744e-08
+#> [8,] -8.197210e-08
 #> 
 #> $beta0_estimate
-#> [1] 2.42524
+#> [1] 2.424715
 #> 
 #> $nu_estimate
-#> [1] 2.344347
+#> [1] 2.340779
 #> 
 #> $gamma_estimate
-#> [1] 1.752573
+#> [1] 1.754636
 #> 
 #> $selected_indices
 #>      [,1]
@@ -202,11 +202,11 @@ print(VS_noscreening)
 #> $p_values
 #>           [,1]
 #> [1,] 0.0000000
-#> [2,] 0.2200000
+#> [2,] 0.2166667
 #> [3,] 0.0000000
-#> [4,] 0.4366667
-#> [5,] 0.4900000
-#> [6,] 0.7900000
+#> [4,] 0.4700000
+#> [5,] 0.3933333
+#> [6,] 0.6833333
 #> [7,] 0.8500000
-#> [8,] 0.9233333
+#> [8,] 0.7666667
 ```

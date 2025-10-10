@@ -13,35 +13,35 @@ knitr::opts_chunk$set(
 )
 ```
 
-# TVS
+# TDVS
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-**TVS** is an R package for *Testing-driven Variable Selection in Modal Regression*.
+**TDVS** is an R package for *Testing-driven Variable Selection in Bayesian Modal Regression*.
 It implements efficient Bayesian variable selection methods based on a permutation-based hypothesis testing.
 
 ## Installation
 
-You can install the development version of TVS from [GitHub](https://github.com/) with:
+You can install the development version of TDVS from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
-pak::pak("Jiasong-Duan/TVS")
+pak::pak("Jiasong-Duan/TDVS")
 ```
 
 Or,
 ```r
 # install.packages("devtools")
-devtools::install_github("Jiasong-Duan/TVS")
+devtools::install_github("Jiasong-Duan/TDVS")
 ```
 
 ## Example
 
-This is a basic example which shows you how to perform variable selection with the **TVS** method:
+This is a basic example which shows you how to perform variable selection with the **TDVS** method:
 
 ```{r example}
-library(TVS)
+library(TDVS)
 # Load example data containing:
 # - Response (Y): matrix with 100 subjects (rows) and 1 column
 # - Predictors (X): matrix with 100 subjects (rows) and 8 predictors (columns)
@@ -51,16 +51,16 @@ library(TVS)
 #the Predictors are generated from a multivariate normal with mean of zero and an identity covariance matrix. 
 #the Response is generated as Y= XB + epsilon, where epsilon follows MixHat(nu=3, gamma=2) which encodes a 
 #heavy-tailed and right skewed distribution.  
-data(data_tvs)
-head(data_tvs$Y)
-hist(data_tvs$Y)
-head(data_tvs$X)
+data(data_tdvs)
+head(data_tdvs$Y)
+hist(data_tdvs$Y)
+head(data_tdvs$X)
 #Parameter estimation
-par_est <- TVS_EM(data_tvs)
+par_est <- TDVS_EM(data_tdvs)
 par_est[1:7]
 #Variable selection with multi-stage pre-screening.
 VS_scr_start <- proc.time()
-VS_withscreening <- TVS_multi_stage(data_tvs)
+VS_withscreening <- TDVS_multi_stage(data_tdvs)
 VS_scr_elapsed <- proc.time() - VS_scr_start
 #computational time
 VS_scr_elapsed
@@ -72,7 +72,7 @@ VS_scr_elapsed
 print(VS_withscreening)
 #Variable selection without pre-screening. Requires longer time than the multi-stage version.
 VS_noscr_start <- proc.time()
-VS_noscreening <- TVS(data_tvs)
+VS_noscreening <- TDVS(data_tdvs)
 VS_noscr_elapsed <- proc.time() - VS_noscr_start
 #computational time
 VS_noscr_elapsed

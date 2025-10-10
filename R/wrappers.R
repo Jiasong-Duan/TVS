@@ -3,7 +3,7 @@
 #' @param method Estimation function for beta (default: Quasi-Newton method implemented by R optim() function)
 #' @return Optimized beta parameter
 #' @export
-wrapper_beta <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk, method = getOption("TVS_beta_method", "nlm")) {
+wrapper_beta <- function(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk, method = getOption("TDVS_beta_method", "nlm")) {
   method <- match.arg(method, c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"))
   if (method == "nlm") {
     wrapper_beta_nlm(beta, beta0, nu, gamma, betaPRE, t0, t1, Y_lk, X_lk, theta_lk)
@@ -241,7 +241,7 @@ wrapper_gamma <- function(gamma, nu, error_lk, hyper_c, hyper_d) {
   return(result$par)
 }
 
-#' EM algorithm for TVS
+#' EM algorithm for TDVS
 #'
 #' @param dataXY List containing data X and Y
 #' @param init_beta Initial vector for beta (default: rep(1, number of predictors))
@@ -265,7 +265,7 @@ wrapper_gamma <- function(gamma, nu, error_lk, hyper_c, hyper_d) {
 #' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List of results from the EM algorithm
 #' @export
-TVS_EM <- function(
+TDVS_EM <- function(
     dataXY,
     init_beta = rep(1,8),
     init_beta0 = 1,
@@ -290,10 +290,10 @@ TVS_EM <- function(
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
   # set temporarily for dispatcher
-  old <- options(TVS_beta_method = beta.method)
+  old <- options(TDVS_beta_method = beta.method)
   on.exit(options(old), add = TRUE)
 
-  TVS_EM_cpp(
+  TDVS_EM_cpp(
     dataXY = dataXY,
     init_beta = init_beta,
     init_beta0 = init_beta0,
@@ -418,7 +418,7 @@ per_fun <- function(j_index,
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
   # set temporarily for dispatcher
-  old <- options(TVS_beta_method = beta.method)
+  old <- options(TDVS_beta_method = beta.method)
   on.exit(options(old), add = TRUE)
 
   per_fun_cpp(
@@ -525,7 +525,7 @@ per_group_fun <- function(j_indices,
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
   # set temporarily for dispatcher
-  old <- options(TVS_beta_method = beta.method)
+  old <- options(TDVS_beta_method = beta.method)
   on.exit(options(old), add = TRUE)
 
   per_group_fun_cpp(
@@ -552,259 +552,259 @@ per_group_fun <- function(j_indices,
   )
 }
 
-#' TVS variable selection without Multi-stage pre-screening process
+#' TDVS variable selection without Multi-stage pre-screening process
 #'
 #' @param dataXY List containing data X and Y
-#' @param init_beta_TVS Initial vector for beta (default: rep(1, number of predictors))
+#' @param init_beta_TDVS Initial vector for beta (default: rep(1, number of predictors))
 #' @param B Number of iterations (default: 300)
 #' @param sig_cutoff Threshold used for significance cutoff in variable selection (default: 0.05)
-#' @param init_beta0_TVS Initial value for beta0 (default: 1)
-#' @param init_nu_TVS Initial value for nu (default: 1)
-#' @param init_gamma_TVS Initial value for gamma (default: 1)
-#' @param init_theta_TVS Initial value for theta (default: 0.5)
-#' @param SS_t0_TVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
-#' @param SS_t1_TVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
-#' @param hyper_mu_beta0_TVS the mean hyperparameter in beta0's Normal prior (default: 0)
-#' @param hyper_sigma_beta0_TVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
-#' @param hyper_mu_nu_TVS the location hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_sigma_nu_TVS the scale hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_c_gamma_TVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_d_gamma_TVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_a_theta_TVS the shape hyperparameter a in theta's beta prior (default: 1)
-#' @param hyper_b_theta_TVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
-#' @param max_iter_TVS Maximum number of iterations (default: 100)
-#' @param tol_TVS Convergence tolerance (default: 1e-6)
+#' @param init_beta0_TDVS Initial value for beta0 (default: 1)
+#' @param init_nu_TDVS Initial value for nu (default: 1)
+#' @param init_gamma_TDVS Initial value for gamma (default: 1)
+#' @param init_theta_TDVS Initial value for theta (default: 0.5)
+#' @param SS_t0_TDVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
+#' @param SS_t1_TDVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
+#' @param hyper_mu_beta0_TDVS the mean hyperparameter in beta0's Normal prior (default: 0)
+#' @param hyper_sigma_beta0_TDVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
+#' @param hyper_mu_nu_TDVS the location hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_sigma_nu_TDVS the scale hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_c_gamma_TDVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_d_gamma_TDVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_a_theta_TDVS the shape hyperparameter a in theta's beta prior (default: 1)
+#' @param hyper_b_theta_TDVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
+#' @param max_iter_TDVS Maximum number of iterations (default: 100)
+#' @param tol_TDVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
 #' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List containing variable selection results
 #' @export
-TVS <- function(
+TDVS <- function(
     dataXY,
-    init_beta_TVS = rep(1,8),
+    init_beta_TDVS = rep(1,8),
     B = 300,
     sig_cutoff = 0.05,
-    init_beta0_TVS = 1,
-    init_nu_TVS = 1,
-    init_gamma_TVS = 1,
-    init_theta_TVS = 0.5,
-    SS_t0_TVS = 10.0,
-    SS_t1_TVS = 1.0,
-    hyper_mu_beta0_TVS = 0,
-    hyper_sigma_beta0_TVS = 1e6,
-    hyper_mu_nu_TVS = 1,
-    hyper_sigma_nu_TVS = 1,
-    hyper_c_gamma_TVS = 0.0001,
-    hyper_d_gamma_TVS = 0.0001,
-    hyper_a_theta_TVS = 1,
-    hyper_b_theta_TVS = -1.0,
-    max_iter_TVS = 100,
-    tol_TVS = 1e-6,
+    init_beta0_TDVS = 1,
+    init_nu_TDVS = 1,
+    init_gamma_TDVS = 1,
+    init_theta_TDVS = 0.5,
+    SS_t0_TDVS = 10.0,
+    SS_t1_TDVS = 1.0,
+    hyper_mu_beta0_TDVS = 0,
+    hyper_sigma_beta0_TDVS = 1e6,
+    hyper_mu_nu_TDVS = 1,
+    hyper_sigma_nu_TDVS = 1,
+    hyper_c_gamma_TDVS = 0.0001,
+    hyper_d_gamma_TDVS = 0.0001,
+    hyper_a_theta_TDVS = 1,
+    hyper_b_theta_TDVS = -1.0,
+    max_iter_TDVS = 100,
+    tol_TDVS = 1e-6,
     add_correc_CiS = 0.001,
     beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
   # set temporarily for dispatcher
-  old <- options(TVS_beta_method = beta.method)
+  old <- options(TDVS_beta_method = beta.method)
   on.exit(options(old), add = TRUE)
 
-  TVS_cpp(
+  TDVS_cpp(
     dataXY = dataXY,
-    init_beta_TVS = init_beta_TVS,
+    init_beta_TDVS = init_beta_TDVS,
     B = B,
     sig_cutoff = sig_cutoff,
-    init_beta0_TVS = init_beta0_TVS,
-    init_nu_TVS = init_nu_TVS,
-    init_gamma_TVS = init_gamma_TVS,
-    init_theta_TVS = init_theta_TVS,
-    SS_t0_TVS = SS_t0_TVS,
-    SS_t1_TVS = SS_t1_TVS,
-    hyper_mu_beta0_TVS = hyper_mu_beta0_TVS,
-    hyper_sigma_beta0_TVS = hyper_sigma_beta0_TVS,
-    hyper_mu_nu_TVS = hyper_mu_nu_TVS,
-    hyper_sigma_nu_TVS = hyper_sigma_nu_TVS,
-    hyper_c_gamma_TVS = hyper_c_gamma_TVS,
-    hyper_d_gamma_TVS = hyper_d_gamma_TVS,
-    hyper_a_theta_TVS = hyper_a_theta_TVS,
-    hyper_b_theta_TVS = hyper_b_theta_TVS,
-    max_iter_TVS = max_iter_TVS,
-    tol_TVS = tol_TVS,
+    init_beta0_TDVS = init_beta0_TDVS,
+    init_nu_TDVS = init_nu_TDVS,
+    init_gamma_TDVS = init_gamma_TDVS,
+    init_theta_TDVS = init_theta_TDVS,
+    SS_t0_TDVS = SS_t0_TDVS,
+    SS_t1_TDVS = SS_t1_TDVS,
+    hyper_mu_beta0_TDVS = hyper_mu_beta0_TDVS,
+    hyper_sigma_beta0_TDVS = hyper_sigma_beta0_TDVS,
+    hyper_mu_nu_TDVS = hyper_mu_nu_TDVS,
+    hyper_sigma_nu_TDVS = hyper_sigma_nu_TDVS,
+    hyper_c_gamma_TDVS = hyper_c_gamma_TDVS,
+    hyper_d_gamma_TDVS = hyper_d_gamma_TDVS,
+    hyper_a_theta_TDVS = hyper_a_theta_TDVS,
+    hyper_b_theta_TDVS = hyper_b_theta_TDVS,
+    max_iter_TDVS = max_iter_TDVS,
+    tol_TDVS = tol_TDVS,
     add_correc_CiS = add_correc_CiS
   )
 }
 
-#' TVS variable selection for a single predictor j
+#' TDVS variable selection for a single predictor j
 #'
 #' @param test_index Index of predictor to test
 #' @param dataXY List containing data X and Y
-#' @param init_beta_TVS Initial vector for beta (default: rep(1, number of predictors))
+#' @param init_beta_TDVS Initial vector for beta (default: rep(1, number of predictors))
 #' @param B Number of iterations (default: 300)
 #' @param sig_cutoff Threshold used for significance cutoff in variable selection (default: 0.05)
-#' @param init_beta0_TVS Initial value for beta0 (default: 1)
-#' @param init_nu_TVS Initial value for nu (default: 1)
-#' @param init_gamma_TVS Initial value for gamma (default: 1)
-#' @param init_theta_TVS Initial value for theta (default: 0.5)
-#' @param SS_t0_TVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
-#' @param SS_t1_TVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
-#' @param hyper_mu_beta0_TVS the mean hyperparameter in beta0's Normal prior (default: 0)
-#' @param hyper_sigma_beta0_TVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
-#' @param hyper_mu_nu_TVS the location hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_sigma_nu_TVS the scale hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_c_gamma_TVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_d_gamma_TVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_a_theta_TVS the shape hyperparameter a in theta's beta prior (default: 1)
-#' @param hyper_b_theta_TVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
-#' @param max_iter_TVS Maximum number of iterations (default: 100)
-#' @param tol_TVS Convergence tolerance (default: 1e-6)
+#' @param init_beta0_TDVS Initial value for beta0 (default: 1)
+#' @param init_nu_TDVS Initial value for nu (default: 1)
+#' @param init_gamma_TDVS Initial value for gamma (default: 1)
+#' @param init_theta_TDVS Initial value for theta (default: 0.5)
+#' @param SS_t0_TDVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
+#' @param SS_t1_TDVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
+#' @param hyper_mu_beta0_TDVS the mean hyperparameter in beta0's Normal prior (default: 0)
+#' @param hyper_sigma_beta0_TDVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
+#' @param hyper_mu_nu_TDVS the location hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_sigma_nu_TDVS the scale hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_c_gamma_TDVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_d_gamma_TDVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_a_theta_TDVS the shape hyperparameter a in theta's beta prior (default: 1)
+#' @param hyper_b_theta_TDVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
+#' @param max_iter_TDVS Maximum number of iterations (default: 100)
+#' @param tol_TDVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
 #' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List containing variable selection results
 #' @export
-TVS_j <- function(
+TDVS_j <- function(
     test_index,
     dataXY,
-    init_beta_TVS = rep(1,8),
+    init_beta_TDVS = rep(1,8),
     B = 300,
     sig_cutoff = 0.05,
-    init_beta0_TVS = 1,
-    init_nu_TVS = 1,
-    init_gamma_TVS = 1,
-    init_theta_TVS = 0.5,
-    SS_t0_TVS = 10.0,
-    SS_t1_TVS = 1.0,
-    hyper_mu_beta0_TVS = 0,
-    hyper_sigma_beta0_TVS = 1e6,
-    hyper_mu_nu_TVS = 1,
-    hyper_sigma_nu_TVS = 1,
-    hyper_c_gamma_TVS = 0.0001,
-    hyper_d_gamma_TVS = 0.0001,
-    hyper_a_theta_TVS = 1,
-    hyper_b_theta_TVS = -1.0,
-    max_iter_TVS = 100,
-    tol_TVS = 1e-6,
+    init_beta0_TDVS = 1,
+    init_nu_TDVS = 1,
+    init_gamma_TDVS = 1,
+    init_theta_TDVS = 0.5,
+    SS_t0_TDVS = 10.0,
+    SS_t1_TDVS = 1.0,
+    hyper_mu_beta0_TDVS = 0,
+    hyper_sigma_beta0_TDVS = 1e6,
+    hyper_mu_nu_TDVS = 1,
+    hyper_sigma_nu_TDVS = 1,
+    hyper_c_gamma_TDVS = 0.0001,
+    hyper_d_gamma_TDVS = 0.0001,
+    hyper_a_theta_TDVS = 1,
+    hyper_b_theta_TDVS = -1.0,
+    max_iter_TDVS = 100,
+    tol_TDVS = 1e-6,
     add_correc_CiS = 0.001,
     beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
   # set temporarily for dispatcher
-  old <- options(TVS_beta_method = beta.method)
+  old <- options(TDVS_beta_method = beta.method)
   on.exit(options(old), add = TRUE)
 
-  TVS_j_cpp(
+  TDVS_j_cpp(
     test_index = test_index,
     dataXY = dataXY,
-    init_beta_TVS = init_beta_TVS,
+    init_beta_TDVS = init_beta_TDVS,
     B = B,
     sig_cutoff = sig_cutoff,
-    init_beta0_TVS = init_beta0_TVS,
-    init_nu_TVS = init_nu_TVS,
-    init_gamma_TVS = init_gamma_TVS,
-    init_theta_TVS = init_theta_TVS,
-    SS_t0_TVS = SS_t0_TVS,
-    SS_t1_TVS = SS_t1_TVS,
-    hyper_mu_beta0_TVS = hyper_mu_beta0_TVS,
-    hyper_sigma_beta0_TVS = hyper_sigma_beta0_TVS,
-    hyper_mu_nu_TVS = hyper_mu_nu_TVS,
-    hyper_sigma_nu_TVS = hyper_sigma_nu_TVS,
-    hyper_c_gamma_TVS = hyper_c_gamma_TVS,
-    hyper_d_gamma_TVS = hyper_d_gamma_TVS,
-    hyper_a_theta_TVS = hyper_a_theta_TVS,
-    hyper_b_theta_TVS = hyper_b_theta_TVS,
-    max_iter_TVS = max_iter_TVS,
-    tol_TVS = tol_TVS,
+    init_beta0_TDVS = init_beta0_TDVS,
+    init_nu_TDVS = init_nu_TDVS,
+    init_gamma_TDVS = init_gamma_TDVS,
+    init_theta_TDVS = init_theta_TDVS,
+    SS_t0_TDVS = SS_t0_TDVS,
+    SS_t1_TDVS = SS_t1_TDVS,
+    hyper_mu_beta0_TDVS = hyper_mu_beta0_TDVS,
+    hyper_sigma_beta0_TDVS = hyper_sigma_beta0_TDVS,
+    hyper_mu_nu_TDVS = hyper_mu_nu_TDVS,
+    hyper_sigma_nu_TDVS = hyper_sigma_nu_TDVS,
+    hyper_c_gamma_TDVS = hyper_c_gamma_TDVS,
+    hyper_d_gamma_TDVS = hyper_d_gamma_TDVS,
+    hyper_a_theta_TDVS = hyper_a_theta_TDVS,
+    hyper_b_theta_TDVS = hyper_b_theta_TDVS,
+    max_iter_TDVS = max_iter_TDVS,
+    tol_TDVS = tol_TDVS,
     add_correc_CiS = add_correc_CiS
   )
 }
 
-#' TVS variable selection for a group of predictors
+#' TDVS variable selection for a group of predictors
 #'
 #' @param test_indices Indices of predictors to test
 #' @param dataXY List containing data X and Y
-#' @param init_beta_TVS Initial vector for beta (default: rep(1, number of predictors))
+#' @param init_beta_TDVS Initial vector for beta (default: rep(1, number of predictors))
 #' @param B Number of iterations (default: 300)
 #' @param sig_cutoff Threshold used for significance cutoff in variable selection (default: 0.05)
-#' @param init_beta0_TVS Initial value for beta0 (default: 1)
-#' @param init_nu_TVS Initial value for nu (default: 1)
-#' @param init_gamma_TVS Initial value for gamma (default: 1)
-#' @param init_theta_TVS Initial value for theta (default: 0.5)
-#' @param SS_t0_TVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
-#' @param SS_t1_TVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
-#' @param hyper_mu_beta0_TVS the mean hyperparameter in beta0's Normal prior (default: 0)
-#' @param hyper_sigma_beta0_TVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
-#' @param hyper_mu_nu_TVS the location hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_sigma_nu_TVS the scale hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_c_gamma_TVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_d_gamma_TVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_a_theta_TVS the shape hyperparameter a in theta's beta prior (default: 1)
-#' @param hyper_b_theta_TVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
-#' @param max_iter_TVS Maximum number of iterations (default: 100)
-#' @param tol_TVS Convergence tolerance (default: 1e-6)
+#' @param init_beta0_TDVS Initial value for beta0 (default: 1)
+#' @param init_nu_TDVS Initial value for nu (default: 1)
+#' @param init_gamma_TDVS Initial value for gamma (default: 1)
+#' @param init_theta_TDVS Initial value for theta (default: 0.5)
+#' @param SS_t0_TDVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
+#' @param SS_t1_TDVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
+#' @param hyper_mu_beta0_TDVS the mean hyperparameter in beta0's Normal prior (default: 0)
+#' @param hyper_sigma_beta0_TDVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
+#' @param hyper_mu_nu_TDVS the location hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_sigma_nu_TDVS the scale hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_c_gamma_TDVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_d_gamma_TDVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_a_theta_TDVS the shape hyperparameter a in theta's beta prior (default: 1)
+#' @param hyper_b_theta_TDVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
+#' @param max_iter_TDVS Maximum number of iterations (default: 100)
+#' @param tol_TDVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
 #' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
 #' @return List containing variable selection results
 #' @export
-TVS_group <- function(
+TDVS_group <- function(
     test_indices,
     dataXY,
-    init_beta_TVS = rep(1,8),
+    init_beta_TDVS = rep(1,8),
     B = 300,
     sig_cutoff = 0.05,
-    init_beta0_TVS = 1,
-    init_nu_TVS = 1,
-    init_gamma_TVS = 1,
-    init_theta_TVS = 0.5,
-    SS_t0_TVS = 10.0,
-    SS_t1_TVS = 1.0,
-    hyper_mu_beta0_TVS = 0,
-    hyper_sigma_beta0_TVS = 1e6,
-    hyper_mu_nu_TVS = 1,
-    hyper_sigma_nu_TVS = 1,
-    hyper_c_gamma_TVS = 0.0001,
-    hyper_d_gamma_TVS = 0.0001,
-    hyper_a_theta_TVS = 1,
-    hyper_b_theta_TVS = -1.0,
-    max_iter_TVS = 100,
-    tol_TVS = 1e-6,
+    init_beta0_TDVS = 1,
+    init_nu_TDVS = 1,
+    init_gamma_TDVS = 1,
+    init_theta_TDVS = 0.5,
+    SS_t0_TDVS = 10.0,
+    SS_t1_TDVS = 1.0,
+    hyper_mu_beta0_TDVS = 0,
+    hyper_sigma_beta0_TDVS = 1e6,
+    hyper_mu_nu_TDVS = 1,
+    hyper_sigma_nu_TDVS = 1,
+    hyper_c_gamma_TDVS = 0.0001,
+    hyper_d_gamma_TDVS = 0.0001,
+    hyper_a_theta_TDVS = 1,
+    hyper_b_theta_TDVS = -1.0,
+    max_iter_TDVS = 100,
+    tol_TDVS = 1e-6,
     add_correc_CiS = 0.001,
     beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
   # set temporarily for dispatcher
-  old <- options(TVS_beta_method = beta.method)
+  old <- options(TDVS_beta_method = beta.method)
   on.exit(options(old), add = TRUE)
 
-  TVS_group_cpp(
+  TDVS_group_cpp(
     test_indices = test_indices,
     dataXY = dataXY,
-    init_beta_TVS = init_beta_TVS,
+    init_beta_TDVS = init_beta_TDVS,
     B = B,
     sig_cutoff = sig_cutoff,
-    init_beta0_TVS = init_beta0_TVS,
-    init_nu_TVS = init_nu_TVS,
-    init_gamma_TVS = init_gamma_TVS,
-    init_theta_TVS = init_theta_TVS,
-    SS_t0_TVS = SS_t0_TVS,
-    SS_t1_TVS = SS_t1_TVS,
-    hyper_mu_beta0_TVS = hyper_mu_beta0_TVS,
-    hyper_sigma_beta0_TVS = hyper_sigma_beta0_TVS,
-    hyper_mu_nu_TVS = hyper_mu_nu_TVS,
-    hyper_sigma_nu_TVS = hyper_sigma_nu_TVS,
-    hyper_c_gamma_TVS = hyper_c_gamma_TVS,
-    hyper_d_gamma_TVS = hyper_d_gamma_TVS,
-    hyper_a_theta_TVS = hyper_a_theta_TVS,
-    hyper_b_theta_TVS = hyper_b_theta_TVS,
-    max_iter_TVS = max_iter_TVS,
-    tol_TVS = tol_TVS,
+    init_beta0_TDVS = init_beta0_TDVS,
+    init_nu_TDVS = init_nu_TDVS,
+    init_gamma_TDVS = init_gamma_TDVS,
+    init_theta_TDVS = init_theta_TDVS,
+    SS_t0_TDVS = SS_t0_TDVS,
+    SS_t1_TDVS = SS_t1_TDVS,
+    hyper_mu_beta0_TDVS = hyper_mu_beta0_TDVS,
+    hyper_sigma_beta0_TDVS = hyper_sigma_beta0_TDVS,
+    hyper_mu_nu_TDVS = hyper_mu_nu_TDVS,
+    hyper_sigma_nu_TDVS = hyper_sigma_nu_TDVS,
+    hyper_c_gamma_TDVS = hyper_c_gamma_TDVS,
+    hyper_d_gamma_TDVS = hyper_d_gamma_TDVS,
+    hyper_a_theta_TDVS = hyper_a_theta_TDVS,
+    hyper_b_theta_TDVS = hyper_b_theta_TDVS,
+    max_iter_TDVS = max_iter_TDVS,
+    tol_TDVS = tol_TDVS,
     add_correc_CiS = add_correc_CiS
   )
 }
 
-#' TVS variable selection with Multi-stage pre-screening process
+#' TDVS variable selection with Multi-stage pre-screening process
 #'
 #' @param dataXY List containing data X and Y
-#' @param init_beta_TVS Initial vector for beta (default: rep(1, number of predictors))
+#' @param init_beta_TDVS Initial vector for beta (default: rep(1, number of predictors))
 #' @param group_B Number of iterations for group stage (default: 20)
 #' @param indiv_B Number of iterations for individual stage (default: 20)
 #' @param B_final Number of iterations for final stage (default: 300)
@@ -812,29 +812,29 @@ TVS_group <- function(
 #' @param indiv_cutoff Cutoff value for individual stage (default: 3.0/20.0)
 #' @param sig_cutoff Threshold used for significance cutoff in variable selection (default: 0.05)
 #' @param group_size Size of groups (default: 4)
-#' @param init_beta0_TVS Initial value for beta0 (default: 1)
-#' @param init_nu_TVS Initial value for nu (default: 1)
-#' @param init_gamma_TVS Initial value for gamma (default: 1)
-#' @param init_theta_TVS Initial value for theta (default: 0.5)
-#' @param SS_t0_TVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
-#' @param SS_t1_TVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
-#' @param hyper_mu_beta0_TVS the mean hyperparameter in beta0's Normal prior (default: 0)
-#' @param hyper_sigma_beta0_TVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
-#' @param hyper_mu_nu_TVS the location hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_sigma_nu_TVS the scale hyperparameter in nu's log-normal prior (default: 1)
-#' @param hyper_c_gamma_TVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_d_gamma_TVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
-#' @param hyper_a_theta_TVS the shape hyperparameter a in theta's beta prior (default: 1)
-#' @param hyper_b_theta_TVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
-#' @param max_iter_TVS Maximum number of iterations (default: 100)
-#' @param tol_TVS Convergence tolerance (default: 1e-6)
+#' @param init_beta0_TDVS Initial value for beta0 (default: 1)
+#' @param init_nu_TDVS Initial value for nu (default: 1)
+#' @param init_gamma_TDVS Initial value for gamma (default: 1)
+#' @param init_theta_TDVS Initial value for theta (default: 0.5)
+#' @param SS_t0_TDVS the "spike" hyperparameter in beta's spike-and-slab prior (default: 10)
+#' @param SS_t1_TDVS the "slab" hyperparameter in beta's spike-and-slab prior (default: 1)
+#' @param hyper_mu_beta0_TDVS the mean hyperparameter in beta0's Normal prior (default: 0)
+#' @param hyper_sigma_beta0_TDVS the variance hyperparameter in beta0's Normal prior (default: 1e6)
+#' @param hyper_mu_nu_TDVS the location hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_sigma_nu_TDVS the scale hyperparameter in nu's log-normal prior (default: 1)
+#' @param hyper_c_gamma_TDVS the shape hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_d_gamma_TDVS the rate hyperparameter in gamma's gamma prior (default: 1e-4)
+#' @param hyper_a_theta_TDVS the shape hyperparameter a in theta's beta prior (default: 1)
+#' @param hyper_b_theta_TDVS the shape hyperparameter b in theta's beta prior (default: the number of predictors)
+#' @param max_iter_TDVS Maximum number of iterations (default: 100)
+#' @param tol_TDVS Convergence tolerance (default: 1e-6)
 #' @param add_correc_CiS Correction factor for CiS (default: 1e-3)
 #' @param beta_method Optimization method for beta updates ("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik"). Defaults to "nlm".
-#' @return List of multi-stage TVS results
+#' @return List of multi-stage TDVS results
 #' @export
-TVS_multi_stage <- function(
+TDVS_multi_stage <- function(
     dataXY,
-    init_beta_TVS = rep(1,8),
+    init_beta_TDVS = rep(1,8),
     group_B = 20,
     indiv_B = 20,
     B_final = 300,
@@ -842,34 +842,34 @@ TVS_multi_stage <- function(
     indiv_cutoff = 3.0/20.0,
     sig_cutoff = 0.05,
     group_size = 4,
-    init_beta0_TVS = 1,
-    init_nu_TVS = 1,
-    init_gamma_TVS = 1,
-    init_theta_TVS = 0.5,
-    SS_t0_TVS = 10.0,
-    SS_t1_TVS = 1.0,
-    hyper_mu_beta0_TVS = 0,
-    hyper_sigma_beta0_TVS = 1e6,
-    hyper_mu_nu_TVS = 1,
-    hyper_sigma_nu_TVS = 1,
-    hyper_c_gamma_TVS = 0.0001,
-    hyper_d_gamma_TVS = 0.0001,
-    hyper_a_theta_TVS = 1,
-    hyper_b_theta_TVS = -1.0,
-    max_iter_TVS = 100,
-    tol_TVS = 1e-6,
+    init_beta0_TDVS = 1,
+    init_nu_TDVS = 1,
+    init_gamma_TDVS = 1,
+    init_theta_TDVS = 0.5,
+    SS_t0_TDVS = 10.0,
+    SS_t1_TDVS = 1.0,
+    hyper_mu_beta0_TDVS = 0,
+    hyper_sigma_beta0_TDVS = 1e6,
+    hyper_mu_nu_TDVS = 1,
+    hyper_sigma_nu_TDVS = 1,
+    hyper_c_gamma_TDVS = 0.0001,
+    hyper_d_gamma_TDVS = 0.0001,
+    hyper_a_theta_TDVS = 1,
+    hyper_b_theta_TDVS = -1.0,
+    max_iter_TDVS = 100,
+    tol_TDVS = 1e-6,
     add_correc_CiS = 0.001,
     beta_method = c("nlm", "optim", "maxLik", "cd_nlm", "cd_maxLik")) {
 
   #Pick the estimation method for beta estimation
   beta.method <- match.arg(beta_method)
   # set temporarily for dispatcher
-  old <- options(TVS_beta_method = beta.method)
+  old <- options(TDVS_beta_method = beta.method)
   on.exit(options(old), add = TRUE)
 
-  TVS_multi_stage_cpp(
+  TDVS_multi_stage_cpp(
     dataXY = dataXY,
-    init_beta_TVS = init_beta_TVS,
+    init_beta_TDVS = init_beta_TDVS,
     group_B = group_B,
     indiv_B = indiv_B,
     B_final = B_final,
@@ -877,22 +877,22 @@ TVS_multi_stage <- function(
     indiv_cutoff = indiv_cutoff,
     sig_cutoff = sig_cutoff,
     group_size = group_size,
-    init_beta0_TVS = init_beta0_TVS,
-    init_nu_TVS = init_nu_TVS,
-    init_gamma_TVS = init_gamma_TVS,
-    init_theta_TVS = init_theta_TVS,
-    SS_t0_TVS = SS_t0_TVS,
-    SS_t1_TVS = SS_t1_TVS,
-    hyper_mu_beta0_TVS = hyper_mu_beta0_TVS,
-    hyper_sigma_beta0_TVS = hyper_sigma_beta0_TVS,
-    hyper_mu_nu_TVS = hyper_mu_nu_TVS,
-    hyper_sigma_nu_TVS = hyper_sigma_nu_TVS,
-    hyper_c_gamma_TVS = hyper_c_gamma_TVS,
-    hyper_d_gamma_TVS = hyper_d_gamma_TVS,
-    hyper_a_theta_TVS = hyper_a_theta_TVS,
-    hyper_b_theta_TVS = hyper_b_theta_TVS,
-    max_iter_TVS = max_iter_TVS,
-    tol_TVS = tol_TVS,
+    init_beta0_TDVS = init_beta0_TDVS,
+    init_nu_TDVS = init_nu_TDVS,
+    init_gamma_TDVS = init_gamma_TDVS,
+    init_theta_TDVS = init_theta_TDVS,
+    SS_t0_TDVS = SS_t0_TDVS,
+    SS_t1_TDVS = SS_t1_TDVS,
+    hyper_mu_beta0_TDVS = hyper_mu_beta0_TDVS,
+    hyper_sigma_beta0_TDVS = hyper_sigma_beta0_TDVS,
+    hyper_mu_nu_TDVS = hyper_mu_nu_TDVS,
+    hyper_sigma_nu_TDVS = hyper_sigma_nu_TDVS,
+    hyper_c_gamma_TDVS = hyper_c_gamma_TDVS,
+    hyper_d_gamma_TDVS = hyper_d_gamma_TDVS,
+    hyper_a_theta_TDVS = hyper_a_theta_TDVS,
+    hyper_b_theta_TDVS = hyper_b_theta_TDVS,
+    max_iter_TDVS = max_iter_TDVS,
+    tol_TDVS = tol_TDVS,
     add_correc_CiS = add_correc_CiS
   )
 }
